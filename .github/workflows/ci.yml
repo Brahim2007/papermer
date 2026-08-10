@@ -102,6 +102,7 @@ jobs:
         env:
           ALLOW_CI_SEED: "1"
           DJANGO_DEBUG: "true"
+          DJANGO_ALLOWED_HOSTS: "127.0.0.1,localhost,testserver"
           DJANGO_SECURE_SSL_REDIRECT: "false"
         run: |
           python manage.py seed_accessibility_ci
