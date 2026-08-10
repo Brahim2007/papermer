@@ -50,7 +50,7 @@
           {% if object.publisher %}<li>{{ object.publisher }}</li>{% endif %}
         </ul>
 
-        <div class="paper-primary-actions" aria-label="{% trans 'Primary paper actions' %}">
+        <div class="paper-primary-actions" role="group" aria-label="{% trans 'Primary paper actions' %}">
           {% if object.pdf %}
             <a class="button button--primary" href="{{ object.pdf }}" rel="noopener noreferrer" target="_blank">{% trans "Read PDF" %}<span aria-hidden="true"> ↗</span><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
           {% endif %}

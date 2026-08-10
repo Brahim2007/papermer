@@ -12,6 +12,7 @@
   --primary-dark: #0b5142;
   --primary-soft: #def2ea;
   --accent: #f26b38;
+  --accent-strong: #a9431f;
   --accent-soft: #fff0e9;
   --danger: #b93838;
   --danger-soft: #fff0f0;
@@ -1870,7 +1871,7 @@ img {
 }
 
 .principle-grid article > span {
-  color: var(--accent);
+  color: var(--accent-strong);
   font-size: 0.72rem;
   font-weight: 850;
 }
