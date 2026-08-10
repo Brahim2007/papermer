@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "About PaperMetrix" %} · PaperMetrix{% endblock %}
+{% block meta_description %}{% trans "Learn how PaperMetrix makes scientific paper retrieval transparent, reproducible, and evaluation-ready." %}{% endblock %}
+{% block body_class %}page-about{% endblock %}
+{% block content %}
+<section class="about-hero">
+  <div class="about-hero__copy">
+    <span class="eyebrow">{% trans "A research system, not a black box" %}</span>
+    <h1>{% trans "Scientific discovery should be explainable, testable, and honest about uncertainty." %}</h1>
+    <p>{% trans "PaperMetrix is a research platform for retrieving and recommending scientific papers. It combines established information-retrieval methods with modern scholarly embeddings, while preserving the evidence needed to understand and evaluate every ranking." %}</p>
+    <div class="about-hero__actions"><a class="button button--primary" href="{% url 'search' %}">{% trans "Search the corpus" %}</a><a class="button button--secondary" href="#how-it-works">{% trans "See how it works" %}</a></div>
+  </div>
+  <div class="about-signal" aria-label="{% trans 'PaperMetrix retrieval architecture' %}">
+    <div class="about-signal__core"><span>RRF</span><strong>{% trans "Transparent fusion" %}</strong></div>
+    <div class="about-signal__node about-signal__node--one"><span>BM25</span><small>{% trans "Lexical" %}</small></div>
+    <div class="about-signal__node about-signal__node--two"><span>S2</span><small>{% trans "Semantic" %}</small></div>
+    <div class="about-signal__node about-signal__node--three"><span>Graph</span><small>{% trans "Citation" %}</small></div>
+  </div>
+</section>
+
+<dl class="about-stats" aria-label="{% trans 'Current corpus' %}">
+  <div><dt>{% trans "Papers" %}</dt><dd>{{ about_stats.papers }}</dd></div>
+  <div><dt>{% trans "Authors" %}</dt><dd>{{ about_stats.authors }}</dd></div>
+  <div><dt>{% trans "Scholarly sources" %}</dt><dd>{{ about_stats.sources }}</dd></div>
+  <div><dt>{% trans "Open-access records" %}</dt><dd>{{ about_stats.open_access }}</dd></div>
+</dl>
+
+<section class="about-section about-philosophy" aria-labelledby="philosophy-heading">
+  <div class="about-section__heading"><span class="eyebrow">{% trans "Our philosophy" %}</span><h2 id="philosophy-heading">{% trans "Useful recommendations require visible evidence." %}</h2><p>{% trans "A ranking can be helpful without pretending to be an objective measure of scientific quality." %}</p></div>
+  <div class="principle-grid">
+    <article><span>01</span><h3>{% trans "Traceable by design" %}</h3><p>{% trans "Component ranks, matched terms, retrieval methods, latency, and experiment identifiers are recorded instead of hidden." %}</p></article>
+    <article><span>02</span><h3>{% trans "Time-aware evaluation" %}</h3><p>{% trans "Temporal benchmarks prevent a system from recommending papers that did not exist at the simulated query date." %}</p></article>
+    <article><span>03</span><h3>{% trans "Humans remain the judge" %}</h3><p>{% trans "Offline metrics and interaction logs support analysis, but independent relevance judgments remain essential for publishable claims." %}</p></article>
+  </div>
+</section>
+
+<section class="about-section" id="how-it-works" aria-labelledby="workflow-heading">
+  <div class="about-section__heading"><span class="eyebrow">{% trans "How it works" %}</span><h2 id="workflow-heading">{% trans "From fragmented metadata to an inspectable ranking." %}</h2></div>
+  <ol class="about-workflow">
+    <li><span>01</span><div><h3>{% trans "Acquire" %}</h3><p>{% trans "OpenAlex, Semantic Scholar, Crossref, arXiv, and Unpaywall contribute complementary metadata and access signals." %}</p></div></li>
+    <li><span>02</span><div><h3>{% trans "Normalize" %}</h3><p>{% trans "DOIs and source identifiers are reconciled into a canonical scholarly record with provenance and missing-data reasons." %}</p></div></li>
+    <li><span>03</span><div><h3>{% trans "Retrieve" %}</h3><p>{% trans "BM25 captures exact terminology; SPECTER2 captures scholarly meaning; graph signals can contribute citation structure." %}</p></div></li>
+    <li><span>04</span><div><h3>{% trans "Fuse and explain" %}</h3><p>{% trans "Reciprocal Rank Fusion combines positions without pretending that unrelated score scales are directly comparable." %}</p></div></li>
+    <li><span>05</span><div><h3>{% trans "Evaluate" %}</h3><p>{% trans "Frozen splits, request-level telemetry, independent judgments, and reproducible artifacts connect results to defensible claims." %}</p></div></li>
+  </ol>
+</section>
+
+<section class="about-section about-new" aria-labelledby="new-heading">
+  <div class="about-section__heading"><span class="eyebrow">{% trans "What is new here" %}</span><h2 id="new-heading">{% trans "LLMs are an auditable channel—not the foundation of truth." %}</h2><p>{% trans "PaperMetrix introduces generative models only where they can be isolated, disabled, priced, and compared against a fixed baseline." %}</p></div>
+  <div class="new-grid">
+    <article><strong>{% trans "Independent LLM expansion" %}</strong><p>{% trans "Query expansion is versioned by model and prompt, protected by budgets and circuit breakers, and currently restricted to staff experiments." %}</p></article>
+    <article><strong>{% trans "Hybrid retrieval with provenance" %}</strong><p>{% trans "Lexical, semantic, and graph channels remain independently observable before fusion." %}</p></article>
+    <article><strong>{% trans "Publication-ready evaluation" %}</strong><p>{% trans "Temporal integrity, frozen development/test partitions, pooling, agreement, and cost/latency reporting are first-class parts of the platform." %}</p></article>
+    <article><strong>{% trans "Online and offline connection" %}</strong><p>{% trans "Impressions, clicks, saves, and relevance feedback can be linked to the exact retrieval request without turning behavior into automatic truth." %}</p></article>
+  </div>
+</section>
+
+<section class="about-boundary" aria-labelledby="boundary-heading">
+  <div><span class="eyebrow">{% trans "A clear boundary" %}</span><h2 id="boundary-heading">{% trans "What PaperMetrix does—and does not do." %}</h2></div>
+  <div class="boundary-columns"><div><h3>{% trans "It helps you" %}</h3><ul><li>{% trans "find related and topically relevant literature" %}</li><li>{% trans "inspect why a result was retrieved" %}</li><li>{% trans "organize papers into reusable research collections" %}</li><li>{% trans "run reproducible retrieval experiments" %}</li></ul></div><div><h3>{% trans "It does not claim to" %}</h3><ul><li>{% trans "measure scientific quality from rank alone" %}</li><li>{% trans "replace systematic-review screening" %}</li><li>{% trans "treat citations or clicks as unbiased relevance" %}</li><li>{% trans "let an LLM silently rewrite the benchmark" %}</li></ul></div></div>
+</section>
+
+<section class="about-cta"><span class="eyebrow">{% trans "Start with a question" %}</span><h2>{% trans "Follow the evidence trail from query to paper." %}</h2><p>{% trans "Search the current corpus and inspect the retrieval signals behind every live result." %}</p><a class="button button--primary" href="{% url 'search' %}">{% trans "Open scholarly search" %} →</a></section>
+{% endblock %}

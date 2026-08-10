@@ -1,0 +1,16 @@
+# Production web and background-worker dependencies.
+Django==5.2.17
+djangorestframework==3.16.0
+django-crispy-forms==2.4
+crispy-bootstrap4==2025.6
+psycopg2-binary==2.9.10
+python-dotenv==1.2.2
+gunicorn==26.0.0
+
+celery==5.5.3
+redis==6.2.0
+django-celery-beat==2.8.1
+
+numpy==2.2.6
+scikit-learn==1.5.2
+requests==2.32.3

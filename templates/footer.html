@@ -1,0 +1,18 @@
+{% load i18n %}
+<footer class="site-footer">
+  <div class="site-footer__signal" aria-hidden="true"><span></span><span></span><span></span></div>
+  <div class="site-footer__inner">
+    <div class="footer-brand">
+      <a class="brand brand--footer" href="{% url 'home' %}">
+        <span class="brand__mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand__identity"><span class="brand__word">Paper<span>Metrix</span></span><small>{% trans "Evidence-aware discovery" %}</small></span>
+      </a>
+      <p>{% trans "Find, explain, and organize scientific literature through transparent retrieval designed for reproducible research." %}</p>
+      <div class="footer-methods" aria-label="{% trans 'Retrieval methods' %}"><span>BM25</span><span>SPECTER2</span><span>Hybrid-RRF</span></div>
+    </div>
+    <nav class="footer-nav" aria-label="{% trans 'Discovery links' %}"><strong>{% trans "Discover" %}</strong><a href="{% url 'search' %}">{% trans "Search papers" %}</a>{% if request.user.is_authenticated %}<a href="{% url 'reccomend' %}">{% trans "For you" %}</a><a href="{% url 'library' %}">{% trans "Your library" %}</a><a href="{% url 'topics' %}">{% trans "Research topics" %}</a>{% else %}<a href="{% url 'signup' %}">{% trans "Create account" %}</a>{% endif %}</nav>
+    <nav class="footer-nav" aria-label="{% trans 'Research links' %}"><strong>{% trans "Research" %}</strong><a href="{% url 'about' %}#philosophy-heading">{% trans "Our philosophy" %}</a><a href="{% url 'about' %}#workflow-heading">{% trans "How retrieval works" %}</a><a href="{% url 'about' %}#new-heading">{% trans "What is new" %}</a>{% if request.user.is_staff %}<a href="{% url 'evaluation_dashboard' %}">{% trans "Evaluation dashboard" %}</a>{% endif %}</nav>
+    <nav class="footer-nav" aria-label="{% trans 'Platform links' %}"><strong>{% trans "Platform" %}</strong><a href="{% url 'about' %}">{% trans "About PaperMetrix" %}</a><a href="{% url 'healthz' %}"><span class="status-dot" aria-hidden="true"></span>{% trans "System status" %}</a>{% if request.user.is_authenticated %}<a href="{% url 'profile' %}">{% trans "Research profile" %}</a>{% else %}<a href="{% url 'login' %}">{% trans "Log in" %}</a>{% endif %}</nav>
+  </div>
+  <div class="footer-bottom"><div><p>© {% now "Y" %} PaperMetrix</p><p>{% trans "Research prototype—not a measure of scientific quality." %}</p></div><a href="#main-content">{% trans "Back to top" %} <span aria-hidden="true">↑</span></a></div>
+</footer>

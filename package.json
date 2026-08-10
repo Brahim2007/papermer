@@ -1,0 +1,11 @@
+{
+  "name": "papermetrix-quality",
+  "private": true,
+  "scripts": {
+    "test:accessibility": "node scripts/accessibility-ci.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.10.2",
+    "playwright": "1.55.0"
+  }
+}

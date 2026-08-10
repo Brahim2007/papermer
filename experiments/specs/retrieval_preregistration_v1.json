@@ -1,0 +1,153 @@
+{
+  "format_version": 1,
+  "name": "papermatrix-retrieval-preregistration-v1",
+  "corpus": "artifacts/paper_recommendation_scope_v1.csv",
+  "corpus_sha256": "e857ba08538d2585ff233e22e9ecf8dc595dde21afc82e868cd2d80622ccbe27",
+  "citation_graph": "artifacts/paper_recommendation_scope_v1.citations.tsv",
+  "citation_graph_sha256": "8eec3dfcd27715421caab8c6c2e3cbec34a918429d8ce175073323a1daa85688",
+  "specter_cache": "artifacts/paper_recommendation_scope_v1.specter2.npz",
+  "specter_cache_sha256": "fd6cd6b47c2485887db98f9adafe7d46041373a00166d2a6440e8bbd52cff561",
+  "frozen_query_split": "artifacts/benchmark_query_split_scope_v1_frozen.json",
+  "frozen_query_split_sha256": "313c5ad51d23e5f71e4aa074f880847b438cf729704766244905eaf429aa399b",
+  "train_end": "2014-12-31",
+  "test_end": "2024-12-31",
+  "top_k": 100,
+  "save_rankings": true,
+  "primary_metric": "ndcg@10",
+  "secondary_metrics": [
+    "recall@20",
+    "recall@100",
+    "mrr"
+  ],
+  "recommendation_metrics": {
+    "topic_diversity@10": "higher is more topically diverse",
+    "citation_novelty@10": "higher favors less citation-popular papers",
+    "long_tail_share@10": "descriptive share at or below eligible-corpus median citations",
+    "mean_age_days@10": "descriptive result age at query time",
+    "catalog_coverage@20": "higher covers more temporally eligible catalog items"
+  },
+  "selection_rule": "maximize primary metric within method family; break exact ties by lower query latency p95",
+  "confirmatory_baseline": "bm25-default",
+  "multiple_comparison_policy": "Holm correction across confirmatory test comparisons",
+  "random_seed": 20260804,
+  "development_runs": [
+    {
+      "run_id": "popularity-control",
+      "method": "popularity",
+      "params": {}
+    },
+    {
+      "run_id": "recency-control",
+      "method": "recency",
+      "params": {}
+    },
+    {
+      "run_id": "bm25-default",
+      "method": "bm25",
+      "params": {
+        "bm25-k1": 1.2,
+        "bm25-b": 0.75
+      }
+    },
+    {
+      "run_id": "specter2-fixed",
+      "method": "specter2",
+      "params": {}
+    },
+    {
+      "run_id": "hybrid-rrf20",
+      "method": "hybrid",
+      "params": {
+        "rrf-k": 20,
+        "candidate-k": 100
+      }
+    },
+    {
+      "run_id": "hybrid-rrf60",
+      "method": "hybrid",
+      "params": {
+        "rrf-k": 60,
+        "candidate-k": 100
+      }
+    },
+    {
+      "run_id": "hybrid-rrf100",
+      "method": "hybrid",
+      "params": {
+        "rrf-k": 100,
+        "candidate-k": 100
+      }
+    },
+    {
+      "run_id": "graph-fixed",
+      "method": "graph",
+      "params": {}
+    },
+    {
+      "run_id": "hybrid-graph-w010",
+      "method": "hybrid_graph",
+      "params": {
+        "graph-rrf-weight": 0.1
+      }
+    },
+    {
+      "run_id": "hybrid-graph-w025",
+      "method": "hybrid_graph",
+      "params": {
+        "graph-rrf-weight": 0.25
+      }
+    },
+    {
+      "run_id": "hybrid-graph-w050",
+      "method": "hybrid_graph",
+      "params": {
+        "graph-rrf-weight": 0.5
+      }
+    },
+    {
+      "run_id": "hybrid-graph-w100",
+      "method": "hybrid_graph",
+      "params": {
+        "graph-rrf-weight": 1.0
+      }
+    },
+    {
+      "run_id": "hybrid-rerank-k050",
+      "method": "hybrid_rerank",
+      "params": {
+        "reranker-candidate-k": 50,
+        "reranker-model": "BAAI/bge-reranker-v2-m3",
+        "reranker-revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+      }
+    },
+    {
+      "run_id": "hybrid-rerank-k100",
+      "method": "hybrid_rerank",
+      "params": {
+        "reranker-candidate-k": 100,
+        "reranker-model": "BAAI/bge-reranker-v2-m3",
+        "reranker-revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+      }
+    },
+    {
+      "run_id": "full-w010-k100",
+      "method": "hybrid_graph_rerank",
+      "params": {
+        "graph-rrf-weight": 0.1,
+        "reranker-candidate-k": 100,
+        "reranker-model": "BAAI/bge-reranker-v2-m3",
+        "reranker-revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+      }
+    },
+    {
+      "run_id": "full-w025-k100",
+      "method": "hybrid_graph_rerank",
+      "params": {
+        "graph-rrf-weight": 0.25,
+        "reranker-candidate-k": 100,
+        "reranker-model": "BAAI/bge-reranker-v2-m3",
+        "reranker-revision": "953dc6f6f85a1b2dbfca4c34a2796e7dde08d41e"
+      }
+    }
+  ]
+}

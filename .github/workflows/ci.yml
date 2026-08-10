@@ -1,0 +1,137 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: papermetrix
+          POSTGRES_USER: papermetrix
+          POSTGRES_PASSWORD: test-only-password
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U papermetrix -d papermetrix"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+      redis:
+        image: redis:7.4-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DJANGO_SETTINGS_MODULE: PaperMetrics.settings
+      DJANGO_SECRET_KEY: ci-only-not-a-production-secret
+      DJANGO_DEBUG: "false"
+      DJANGO_ALLOWED_HOSTS: example.test
+      DJANGO_CSRF_TRUSTED_ORIGINS: https://example.test
+      DJANGO_SECURE_SSL_REDIRECT: "true"
+      DJANGO_SECURE_HSTS_SECONDS: "31536000"
+      DJANGO_SECURE_HSTS_PRELOAD: "true"
+      DATABASE_URL: postgresql://papermetrix:test-only-password@127.0.0.1:5432/papermetrix
+      CELERY_BROKER_URL: redis://127.0.0.1:6379/0
+      CELERY_RESULT_BACKEND: redis://127.0.0.1:6379/1
+      SEMANTIC_SEARCH_ENABLED: "false"
+      AXE_TEST_EMAIL: axe-ci@papermetrix.invalid
+      AXE_TEST_PASSWORD: ci-only-accessibility-password-2026
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements/development.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements/development.txt
+          python -m pip check
+
+      - name: Check migrations
+        run: |
+          python manage.py makemigrations --check --dry-run
+          python manage.py migrate --noinput
+
+      - name: Check Django deployment configuration
+        run: |
+          python manage.py check
+          python manage.py check --deploy --fail-level WARNING
+
+      - name: Run tests
+        run: pytest -q
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install accessibility test dependencies
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Run authenticated accessibility checks
+        env:
+          ALLOW_CI_SEED: "1"
+          DJANGO_DEBUG: "true"
+          DJANGO_SECURE_SSL_REDIRECT: "false"
+        run: |
+          python manage.py seed_accessibility_ci
+          python manage.py runserver 127.0.0.1:8000 --noreload > /tmp/papermetrix-axe-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid"' EXIT
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:8000/healthz/ > /dev/null; then
+              break
+            fi
+            sleep 1
+          done
+          curl --fail --silent http://127.0.0.1:8000/healthz/ > /dev/null
+          npm run test:accessibility
+
+  container:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build production image
+        uses: docker/build-push-action@v7
+        with:
+          context: .
+          push: false
+          tags: papermetrix:ci
+          build-args: |
+            REQUIREMENTS_FILE=requirements/production.txt
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

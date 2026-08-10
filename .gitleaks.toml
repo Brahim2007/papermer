@@ -1,0 +1,11 @@
+title = "PaperMetrix secret scanning policy"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Documentation and configuration templates contain placeholders only"
+paths = [
+  '''(^|/)\.env(\.[^/]+)?\.example$''',
+  '''(^|/)docs/DEPLOYMENT\.md$''',
+]

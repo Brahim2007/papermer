@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{{ doc.title|default:"Document metadata" }}</title>
+</head>
+<body>
+  <h1>{{ doc.title|default:"Untitled document" }}</h1>
+  <dl>
+    <dt>Year</dt><dd>{{ doc.year|default:"Unknown" }}</dd>
+    <dt>Source</dt><dd>{{ doc.source|default:"Unknown" }}</dd>
+    <dt>Abstract</dt><dd>{{ doc.abstract|default:"No abstract available." }}</dd>
+  </dl>
+</body>
+</html>

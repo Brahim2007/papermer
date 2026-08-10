@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Retrieval evaluation" %} · PaperMetrix{% endblock %}
+{% block content %}
+<section class="page-shell evaluation-page">
+  <header class="page-header page-header--split">
+    <div>
+      <span class="eyebrow">{% trans "Research operations" %}</span>
+      <h1>{% trans "Retrieval evaluation" %}</h1>
+      <p>{% trans "A comparable view of privacy-safe online behavior and checksum-locked offline experiments." %}</p>
+    </div>
+    <a class="button button--secondary" href="{% url 'evaluation_export' %}">{% trans "Export JSON" %}</a>
+  </header>
+
+  <aside class="method-banner evaluation-arm" aria-label="{% trans 'Experiment status' %}">
+    <div>
+      <strong>{% trans "LLM query expansion" %}</strong>
+      <p>{% trans "Independent intent-to-treat arm; provider failures remain attributed to the selected arm." %}</p>
+    </div>
+    <div class="evaluation-arm__status">
+      <span class="status-badge {% if expansion_enabled %}status-badge--positive{% endif %}">{% if expansion_enabled and expansion_staff_only %}{% trans "Staff only" %} · {{ expansion_traffic }}% {% trans "public traffic" %}{% elif expansion_enabled %}{{ expansion_traffic }}% {% trans "traffic" %}{% else %}{% trans "Off" %}{% endif %}</span>
+      {% if experiment_protocol %}<span class="status-badge status-badge--positive">{% trans "Protocol frozen" %} · {{ experiment_protocol.spec_sha256|slice:":12" }}</span>{% endif %}
+    </div>
+  </aside>
+
+  <section class="paired-evaluation" aria-labelledby="paired-title">
+    <div class="section-heading">
+      <div><span class="eyebrow">{% trans "Paired canary" %}</span><h2 id="paired-title">{% trans "Baseline vs LLM-expanded by query" %}</h2></div>
+      <span>{% blocktrans with count=paired.pair_count %}{{ count }} comparable query pairs{% endblocktrans %}</span>
+    </div>
+    <div class="evaluation-caveat" role="note">
+      <strong>{% trans "Interpret effectiveness carefully" %}</strong>
+      <p>{% trans "A pair is matched by staff user, query digest, frozen protocol, and search filters. Clicks and saves are behavioral signals; an effectiveness delta appears only when both requests have explicit relevance judgments." %}</p>
+    </div>
+    <dl class="evaluation-metrics evaluation-metrics--paired">
+      <div><dt>{% trans "Comparable pairs" %}</dt><dd>{{ paired.pair_count }}</dd></div>
+      <div><dt>{% trans "Pairs with judgments" %}</dt><dd>{{ paired.judged_pair_count }}</dd></div>
+      <div><dt>{% trans "Mean overlap@10" %}</dt><dd>{{ paired.average_overlap_at_10|floatformat:3 }}</dd></div>
+      <div><dt>{% trans "Mean latency delta" %}</dt><dd>{% if paired.average_latency_delta_ms > 0 %}+{% endif %}{{ paired.average_latency_delta_ms|floatformat:1 }} ms</dd></div>
+      <div><dt>{% trans "LLM provider errors" %}</dt><dd>{{ paired.provider_error_count }}</dd></div>
+      <div><dt>{% trans "Paired LLM cost" %}</dt><dd>{% if paired.estimated_cost_usd is not None %}${{ paired.estimated_cost_usd }}{% else %}{% trans "Unpriced" %}{% endif %}</dd></div>
+    </dl>
+
+    <div class="paired-list">
+      {% for pair in paired.pairs|slice:":100" %}
+        <article class="paired-card">
+          <header class="paired-card__header">
+            <div><span class="paired-card__index">#{{ forloop.counter }}</span><h3>{% if pair.query %}{{ pair.query }}{% else %}<code>{{ pair.query_digest|slice:":16" }}</code>{% endif %}</h3><p>{{ pair.created_at|date:"Y-m-d H:i" }} · {% trans "pair gap" %} {{ pair.gap_minutes }} min · <code>{{ pair.pair_id }}</code></p></div>
+            <div class="metric-chips"><span>{% trans "Common@10" %} {{ pair.overlap.common_at_10 }}</span><span>Jaccard {{ pair.overlap.jaccard_at_10|floatformat:3 }}</span><span>{% trans "LLM-only" %} {{ pair.overlap.llm_only }}</span></div>
+          </header>
+
+          <div class="paired-card__comparison">
+            <section aria-label="Baseline">
+              <div class="paired-arm-title"><span>Baseline</span><strong>{{ pair.baseline.latency_ms|floatformat:1 }} ms</strong></div>
+              <dl class="paired-arm-metrics"><div><dt>{% trans "Positive / judged" %}</dt><dd>{{ pair.baseline.outcomes.positive }} / {{ pair.baseline.outcomes.judgments }}</dd></div><div><dt>{% trans "Clicks / saves" %}</dt><dd>{{ pair.baseline.outcomes.clicks }} / {{ pair.baseline.outcomes.saves }}</dd></div><div><dt>{% trans "Cost" %}</dt><dd>$0</dd></div></dl>
+              <small><code>{{ pair.baseline.request_id }}</code></small>
+            </section>
+            <div class="paired-delta" aria-label="{% trans 'Difference' %}"><span>{% trans "Latency delta" %}</span><strong>{% if pair.delta.latency_ms > 0 %}+{% endif %}{{ pair.delta.latency_ms|floatformat:1 }} ms</strong>{% if pair.delta.positive is not None %}<span>{% trans "Relevant delta" %}</span><strong>{% if pair.delta.positive > 0 %}+{% endif %}{{ pair.delta.positive }}</strong>{% else %}<small>{% trans "Awaiting paired judgments" %}</small>{% endif %}</div>
+            <section aria-label="LLM-expanded">
+              <div class="paired-arm-title"><span>LLM-expanded</span><strong>{{ pair.llm.latency_ms|floatformat:1 }} ms</strong></div>
+              <dl class="paired-arm-metrics"><div><dt>{% trans "Positive / judged" %}</dt><dd>{{ pair.llm.outcomes.positive }} / {{ pair.llm.outcomes.judgments }}</dd></div><div><dt>{% trans "Clicks / saves" %}</dt><dd>{{ pair.llm.outcomes.clicks }} / {{ pair.llm.outcomes.saves }}</dd></div><div><dt>{% trans "Cost" %}</dt><dd>{% if pair.llm.cost_usd is not None %}${{ pair.llm.cost_usd|floatformat:6 }}{% else %}{% trans "Unpriced" %}{% endif %}</dd></div></dl>
+              <small>{{ pair.llm.model|default:"—" }} · {{ pair.llm.prompt_version|default:"—" }}</small><small><code>{{ pair.llm.request_id }}</code></small>
+            </section>
+          </div>
+
+          <div class="paired-card__status"><span class="status-badge {% if pair.llm.status == 'expanded' %}status-badge--positive{% endif %}">LLM: {{ pair.llm.status }}</span>{% if pair.llm.error %}<span class="status-badge status-badge--warning">{{ pair.llm.error }}</span>{% endif %}{% if pair.search_filters %}<span class="status-badge">{% trans "Filtered" %}</span>{% endif %}{% if pair.protocol_sha256 %}<span class="status-badge">{% trans "Protocol" %} {{ pair.protocol_sha256|slice:":12" }}</span>{% endif %}</div>
+          <details class="paired-results"><summary>{% trans "Compare top-10 result lists" %}</summary><div><ol>{% for result in pair.baseline.results %}<li><span>{{ result.rank }}</span><a href="{% url 'article' result.id %}">{{ result.title|truncatechars:90 }}</a></li>{% empty %}<li>{% trans "No results" %}</li>{% endfor %}</ol><ol>{% for result in pair.llm.results %}<li><span>{{ result.rank }}</span><a href="{% url 'article' result.id %}">{{ result.title|truncatechars:90 }}</a></li>{% empty %}<li>{% trans "No results" %}</li>{% endfor %}</ol></div></details>
+        </article>
+      {% empty %}
+        <div class="empty-state"><strong>{% trans "No paired staff queries yet." %}</strong><p>{% trans "Run the same development query once with LLM expansion off and once with it on, using identical filters." %}</p></div>
+      {% endfor %}
+    </div>
+  </section>
+
+  <section aria-labelledby="online-title">
+    <div class="section-heading">
+      <div><span class="eyebrow">{% trans "Online" %}</span><h2 id="online-title">{% trans "Live retrieval health" %}</h2></div>
+      <span>{% blocktrans with count=online.event_count %}Latest {{ count }} requests{% endblocktrans %}</span>
+    </div>
+    <dl class="evaluation-metrics">
+      <div><dt>{% trans "Requests" %}</dt><dd>{{ online.event_count }}</dd></div>
+      <div><dt>{% trans "Latency p50" %}</dt><dd>{{ online.latency_p50_ms }} ms</dd></div>
+      <div><dt>{% trans "Latency p95" %}</dt><dd>{{ online.latency_p95_ms }} ms</dd></div>
+      <div><dt>{% trans "Cache hit rate" %}</dt><dd>{{ online.cache_hit_rate }}%</dd></div>
+      <div><dt>{% trans "Semantic availability" %}</dt><dd>{{ online.semantic_rate }}%</dd></div>
+      <div><dt>{% trans "LLM input tokens" %}</dt><dd>{{ online.llm.input_tokens }}</dd></div>
+      <div><dt>{% trans "LLM output tokens" %}</dt><dd>{{ online.llm.output_tokens }}</dd></div>
+      <div><dt>{% trans "LLM cache hit rate" %}</dt><dd>{{ online.llm.cache_hit_rate }}%</dd></div>
+      <div><dt>{% trans "Estimated LLM cost" %}</dt><dd>{% if online.llm.estimated_cost_usd is not None %}${{ online.llm.estimated_cost_usd }}{% else %}{% trans "Pricing not configured" %}{% endif %}</dd></div>
+    </dl>
+    <dl class="evaluation-outcomes">
+      <div><dt>{% trans "Impressions" %}</dt><dd>{{ online.interactions.impression|default:0 }}</dd></div>
+      <div><dt>{% trans "Clicks" %}</dt><dd>{{ online.interactions.click|default:0 }}</dd></div>
+      <div><dt>{% trans "Saves" %}</dt><dd>{{ online.interactions.save|default:0 }}</dd></div>
+      <div><dt>{% trans "Positive judgments" %}</dt><dd>{{ online.positive_relevance_rate }}%</dd></div>
+    </dl>
+    <div class="evaluation-grid">
+      <div class="content-panel">
+        <h3>{% trans "Experiment arms" %}</h3>
+        <div class="table-shell table-shell--flat" tabindex="0" role="region" aria-label="{% trans 'Experiment arm comparison' %}">
+          <table class="evaluation-table evaluation-table--compact"><thead><tr><th>{% trans "Arm" %}</th><th>n</th><th>p50</th><th>p95</th><th>CTR</th><th>{% trans "Save rate" %}</th><th>{% trans "Positive relevance" %}</th><th>{% trans "Search success" %}</th><th>{% trans "Provider failure" %}</th></tr></thead><tbody>
+            {% for arm in online.arm_summaries %}<tr><td>{{ arm.name }}</td><td>{{ arm.count }}</td><td>{{ arm.latency_p50_ms }} ms</td><td>{{ arm.latency_p95_ms }} ms</td><td>{{ arm.ctr }}%</td><td>{{ arm.save_rate }}%</td><td>{{ arm.positive_relevance_rate }}%</td><td>{{ arm.successful_search_rate }}%</td><td>{{ arm.failure_rate }}%</td></tr>{% empty %}<tr><td colspan="9">{% trans "No online events yet." %}</td></tr>{% endfor %}
+          </tbody></table>
+        </div>
+      </div>
+      <div class="content-panel">
+        <h3>{% trans "Ranking methods" %}</h3>
+        <ul class="compact-metrics">
+          {% for name, count in online.methods.items %}<li><span>{{ name }}</span><strong>{{ count }}</strong></li>{% empty %}<li>{% trans "No methods recorded yet." %}</li>{% endfor %}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-labelledby="offline-title">
+    <div class="section-heading">
+      <div><span class="eyebrow">{% trans "Offline" %}</span><h2 id="offline-title">{% trans "Frozen benchmark runs" %}</h2></div>
+    </div>
+    <div class="table-shell" tabindex="0" role="region" aria-label="{% trans 'Offline benchmark results' %}">
+      <table class="evaluation-table">
+        <thead><tr><th>{% trans "Run" %}</th><th>{% trans "Split" %}</th><th>{% trans "Queries" %}</th><th>{% trans "Metrics" %}</th><th>{% trans "Integrity" %}</th></tr></thead>
+        <tbody>
+          {% for run in offline_runs %}
+            <tr>
+              <td><strong>{{ run.label }}</strong><small>{{ run.method }} · {{ run.protocol }}</small></td>
+              <td>{{ run.split }}</td><td>{{ run.query_count }}</td>
+              <td><div class="metric-chips">{% for key, value in run.metrics.items %}<span>{{ key }} {{ value|floatformat:3 }}</span>{% endfor %}</div></td>
+              <td><span class="status-badge {% if run.is_frozen %}status-badge--positive{% endif %}">{% if run.is_frozen %}{% trans "Frozen" %}{% else %}{% trans "Development" %}{% endif %}</span><small>{{ run.artifact_sha256|slice:":12" }}</small></td>
+            </tr>
+          {% empty %}<tr><td colspan="5">{% trans "Import benchmark JSON artifacts to populate this table." %}</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="events-title">
+    <div class="section-heading"><div><span class="eyebrow">{% trans "Audit trail" %}</span><h2 id="events-title">{% trans "Recent query traces" %}</h2></div></div>
+    <div class="table-shell" tabindex="0" role="region" aria-label="{% trans 'Recent retrieval traces' %}">
+      <table class="evaluation-table">
+        <thead><tr><th>{% trans "Time" %}</th><th>{% trans "Query digest" %}</th><th>{% trans "Arm" %}</th><th>{% trans "Latency" %}</th><th>{% trans "Components" %}</th></tr></thead>
+        <tbody>
+          {% for event in recent_events %}<tr><td>{{ event.created_at|date:"Y-m-d H:i:s" }}</td><td><code>{{ event.query_digest|slice:":12" }}</code></td><td>{{ event.experiment_arm }}<small>{{ event.expansion_status }}{% if event.expansion_prompt_version %} · {{ event.expansion_prompt_version }}{% endif %}</small></td><td>{{ event.total_latency_ms|floatformat:1 }} ms{% if event.cache_hit %}<small>{% trans "search cache hit" %}</small>{% endif %}{% if event.expansion_cache_hit %}<small>{% trans "expansion cache hit" %}</small>{% endif %}</td><td><div class="metric-chips">{% for name, value in event.component_latencies_ms.items %}<span>{{ name }} {{ value|floatformat:1 }}</span>{% endfor %}{% if event.expansion_input_tokens or event.expansion_output_tokens %}<span>LLM {{ event.expansion_input_tokens }}/{{ event.expansion_output_tokens }} tok</span>{% endif %}</div></td></tr>
+          {% empty %}<tr><td colspan="5">{% trans "No privacy-safe traces recorded yet." %}</td></tr>{% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</section>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}{% if query %}{{ query }} · {% endif %}{% trans "Search papers" %} · PaperMetrix{% endblock %}
+{% block meta_description %}{% trans "Search scholarly literature with transparent lexical, semantic, and hybrid retrieval." %}{% endblock %}
+{% block body_class %}page-search{% endblock %}
+{% block content %}
+{% trans "Abstract not available for this record." as missing_abstract %}
+<section class="search-page" data-live-search data-endpoint="{% url 'api_live_search' %}" data-interaction-endpoint="{% url 'api_retrieval_interaction' %}" data-library-endpoint="{% url 'add_to_library' %}" data-csrf-token="{{ csrf_token }}" data-authenticated="{% if request.user.is_authenticated %}true{% else %}false{% endif %}" data-staff="{% if request.user.is_staff %}true{% else %}false{% endif %}" data-article-url="{% url 'article' '__ARTICLE_ID__' %}">
+  <header class="search-hero">
+    <div class="search-hero__copy">
+      <span class="eyebrow">{% trans "Transparent scholarly retrieval" %}</span>
+      <h1>{% trans "Search by the idea—not only the exact words." %}</h1>
+      <p>{% trans "Ask a research question or enter a title, author, venue, or DOI. PaperMetrix combines lexical precision with semantic similarity and shows the evidence behind the ranking." %}</p>
+    </div>
+
+    <form id="paper-search-form" class="search-bar search-bar--hero" method="get" action="{% url 'search' %}" role="search" data-search-form>
+      <label class="sr-only" for="search-query">{% trans "Search scientific papers" %}</label>
+      <span class="search-bar__icon" aria-hidden="true">⌕</span>
+      <input id="search-query" name="query" type="search" value="{{ query }}" required autofocus autocomplete="off" placeholder="{% trans 'Describe the paper, method, problem, or evidence you need…' %}">
+      <button class="button button--primary" type="submit">{% trans "Search papers" %}</button>
+    </form>
+
+    <div class="search-examples" aria-label="{% trans 'Example searches' %}">
+      <span>{% trans "Try" %}</span>
+      <a href="{% url 'search' %}?query=hybrid+scientific+paper+recommendation">{% trans "hybrid paper recommendation" %}</a>
+      <a href="{% url 'search' %}?query=explainable+AI+in+healthcare">{% trans "explainable AI in healthcare" %}</a>
+      <a href="{% url 'search' %}?query=systematic+review+reporting+guidelines">{% trans "systematic review guidelines" %}</a>
+    </div>
+
+    <fieldset class="search-filters" data-search-filters>
+      <legend><span>{% trans "Refine results" %}</span><small data-filter-count></small></legend>
+      <div class="search-filters__grid">
+        <label><span>{% trans "From year" %}</span><input form="paper-search-form" type="number" name="year_from" min="1900" max="{% now 'Y' %}" value="{{ filters.year_from|default:'' }}" placeholder="2018" data-search-filter></label>
+        <label><span>{% trans "To year" %}</span><input form="paper-search-form" type="number" name="year_to" min="1900" max="{% now 'Y' %}" value="{{ filters.year_to|default:'' }}" placeholder="{% now 'Y' %}" data-search-filter></label>
+        <label><span>{% trans "Paper type" %}</span><select form="paper-search-form" name="paper_type" data-search-filter><option value="">{% trans "All types" %}</option>{% for item in search_facets.paper_types %}<option value="{{ item }}"{% if filters.paper_type == item %} selected{% endif %}>{{ item }}</option>{% endfor %}</select></label>
+        <label><span>{% trans "Source or venue" %}</span><select form="paper-search-form" name="source" data-search-filter><option value="">{% trans "All sources" %}</option>{% for item in search_facets.sources %}<option value="{{ item }}"{% if filters.source == item %} selected{% endif %}>{{ item|truncatechars:42 }}</option>{% endfor %}</select></label>
+        <label><span>{% trans "Minimum citations" %}</span><input form="paper-search-form" type="number" name="min_citations" min="0" max="10000000" value="{{ filters.min_citations|default:'' }}" placeholder="0" data-search-filter></label>
+        <label class="search-filter-check"><input form="paper-search-form" type="checkbox" name="open_access" value="1"{% if filters.open_access %} checked{% endif %} data-search-filter><span>{% trans "Open access only" %}</span></label>
+      </div>
+      <a class="search-filters__clear" href="{% url 'search' %}{% if query %}?query={{ query|urlencode }}{% endif %}" data-clear-filters>{% trans "Clear filters" %}</a>
+    </fieldset>
+
+    <div class="retrieval-pipeline" aria-label="{% trans 'Retrieval pipeline' %}">
+      <div><span>01</span><strong>BM25</strong><small>{% trans "Exact concepts" %}</small></div>
+      <i aria-hidden="true">→</i>
+      <div><span>02</span><strong>SPECTER2</strong><small>{% trans "Semantic meaning" %}</small></div>
+      <i aria-hidden="true">→</i>
+      <div><span>03</span><strong>Hybrid-RRF</strong><small>{% trans "Evidence fusion" %}</small></div>
+    </div>
+
+    {% if staff_expansion_available %}
+      <aside class="staff-experiment" aria-label="{% trans 'Internal LLM experiment' %}">
+        <label class="staff-experiment__toggle" for="staff-llm-expansion"><input id="staff-llm-expansion" type="checkbox" data-expansion-toggle><span>{% trans "Use LLM query expansion for this internal search" %}</span></label>
+        <p>{% trans "Staff-only test. The public allocation remains 0%; cost and provider latency are recorded." %}</p>
+        <div class="staff-experiment__details" data-expansion-details hidden aria-live="polite"></div>
+      </aside>
+    {% endif %}
+
+    <div class="live-search-feedback" aria-live="polite" aria-atomic="true"><span data-live-status></span><span class="retrieval-label" data-live-method hidden></span></div>
+  </header>
+
+  <div class="search-results live-search-results" data-live-results hidden></div>
+
+  {% if query %}
+    <div class="search-results__summary" data-server-summary>
+      <div><strong>{% blocktrans count counter=article_list|length %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %}</strong><span>{% blocktrans %}for “{{ query }}”{% endblocktrans %}</span></div>
+      <span class="retrieval-label" data-server-method><span aria-hidden="true">◎</span> {% trans "Metadata fallback" %}</span>
+    </div>
+
+    {% if request.user.is_authenticated %}
+      <div class="search-library-tool" data-library-tool>
+        {% if search_libraries %}
+          <label for="quick-library-select">{% trans "Quick-save destination" %}</label>
+          <select id="quick-library-select" data-library-select>{% for library in search_libraries %}<option value="{{ library.pk }}">{{ library.name }} ({{ library.article_count }})</option>{% endfor %}</select>
+          <span role="status" aria-live="polite" data-save-global-status></span>
+        {% else %}
+          <span>{% trans "Create a library to save papers directly from search." %}</span><a href="{% url 'library' %}">{% trans "Create library" %} →</a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="search-layout" data-server-layout>
+      <aside class="search-note" aria-label="{% trans 'How ranking works' %}">
+        <span class="eyebrow">{% trans "Ranking evidence" %}</span>
+        <h2>{% trans "Why these results?" %}</h2>
+        <p>{% trans "PaperMetrix keeps independent signals separate before combining their ranks. Open any live result's explanation to inspect component positions." %}</p>
+        <ol class="ranking-legend">
+          <li><span>BM</span><div><strong>BM25</strong><small>{% trans "Terms and phrases" %}</small></div></li>
+          <li><span>S2</span><div><strong>SPECTER2</strong><small>{% trans "Scholarly semantics" %}</small></div></li>
+          <li><span>RF</span><div><strong>RRF</strong><small>{% trans "Rank-level fusion" %}</small></div></li>
+        </ol>
+        <a href="{% url 'about' %}#how-it-works">{% trans "Explore the methodology" %} →</a>
+      </aside>
+
+      <div class="search-results" data-server-results>
+        {% for article in article_list %}
+          <article class="result-card">
+            <div class="result-card__rank" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</div>
+            <div class="result-card__content">
+              <div class="result-card__badges"><span>{{ article.type|default:"Paper" }}</span>{% if article.is_open_access %}<span class="result-card__oa">● {% trans "Open access" %}</span>{% endif %}{% if article.is_retracted %}<span class="result-card__retracted">{% trans "Retracted" %}</span>{% endif %}</div>
+              <h2><a href="{% url 'article' article.pk %}">{{ article.title }}</a></h2>
+              <p class="result-card__authors">{% for author in article.authors.all|slice:":3" %}{{ author.name }}{% if not forloop.last %}, {% endif %}{% empty %}{% trans "Authors unavailable" %}{% endfor %}</p>
+              <div class="result-card__meta">{% if article.year %}<span>{{ article.year }}</span>{% endif %}{% if article.venue or article.source %}<span>{{ article.venue|default:article.source|truncatechars:64 }}</span>{% endif %}<span>{% blocktrans count counter=article.citation_count %}{{ counter }} citation{% plural %}{{ counter }} citations{% endblocktrans %}</span></div>
+              <p class="result-card__abstract">{{ article.abstract|default:missing_abstract|truncatechars:420 }}</p>
+              <div class="result-evidence result-evidence--fallback"><strong>{% trans "Metadata match" %}</strong><span>{% trans "Matched title, abstract, author, or source fields. The live hybrid ranking replaces this fallback when available." %}</span></div>
+            </div>
+            <div class="result-card__actions"><a class="button button--secondary button--small" href="{% url 'article' article.pk %}">{% trans "Inspect paper" %}</a>{% if request.user.is_authenticated and search_libraries %}<button class="button button--ghost button--small" type="button" data-quick-save data-article-id="{{ article.pk }}">{% trans "Save" %}</button>{% endif %}{% if article.doi %}<a class="result-card__doi" href="https://doi.org/{{ article.doi }}" rel="noopener noreferrer" target="_blank">DOI ↗</a>{% endif %}<span class="quick-save-status" role="status" aria-live="polite"></span></div>
+          </article>
+        {% empty %}
+          <div class="empty-state search-empty"><strong>{% trans "No matching papers found." %}</strong><p>{% trans "Try a broader concept, remove a constraint, or search with an author's full name." %}</p></div>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <section class="search-welcome" data-search-start aria-labelledby="search-welcome-title">
+      <div class="search-welcome__intro"><span class="eyebrow">{% trans "Built for research questions" %}</span><h2 id="search-welcome-title">{% trans "One search surface, three kinds of evidence." %}</h2><p>{% trans "Start broad, inspect why each paper ranked, then save useful evidence as a seed for future recommendations." %}</p></div>
+      <div class="search-start">
+        <div><span aria-hidden="true">⌕</span><strong>{% trans "Describe the information need" %}</strong><p>{% trans "Natural-language questions, exact titles, authors, venues, and identifiers are supported." %}</p></div>
+        <div><span aria-hidden="true">◇</span><strong>{% trans "Inspect ranking evidence" %}</strong><p>{% trans "See matched terms and the component rank contributed by each retrieval channel." %}</p></div>
+        <div><span aria-hidden="true">＋</span><strong>{% trans "Turn results into a trail" %}</strong><p>{% trans "Save papers, revisit them, and use explicit feedback to study recommendation behavior." %}</p></div>
+      </div>
+    </section>
+  {% endif %}
+</section>
+{% endblock %}
+
+{% block extra_scripts %}<script src="{% static 'js/semantic-search.js' %}?v=20260810-search-v3-filters" defer></script>{% endblock %}

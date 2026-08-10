@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}{% trans "Research profile" %} · PaperMetrix{% endblock %}
+{% block main_class %}onboarding-main{% endblock %}
+{% block content %}
+<section
+  class="onboarding"
+  data-onboarding
+  data-topic-url="{% url 'add_remove_topic' %}"
+  data-keyword-url="{% url 'add_or_remove_kw' %}"
+  data-author-url="{% url 'add_or_remove_author' %}"
+  data-finish-url="{% url 'reccomend' %}"
+  data-csrf-token="{{ csrf_token }}"
+>
+  <header class="onboarding__header">
+    <div>
+      <span class="eyebrow">{% trans "Personalize retrieval" %}</span>
+      <h1>{% trans "Shape your research profile." %}</h1>
+      <p>{% trans "A few precise signals are more useful than a long generic profile. Every choice remains editable." %}</p>
+    </div>
+    <div class="profile-strength" aria-live="polite">
+      <div class="profile-strength__top">
+        <span>{% trans "Profile signal" %}</span>
+        <span data-strength-label>0%</span>
+      </div>
+      <div class="profile-strength__bar"><span data-strength-bar style="width: 0%"></span></div>
+    </div>
+  </header>
+
+  <div class="onboarding-card">
+    <div class="onboarding-tabs" role="tablist" aria-label="{% trans 'Profile steps' %}">
+      <button class="onboarding-tab" id="tab-topics" type="button" role="tab" aria-selected="true" aria-controls="panel-topics" data-step="0">1 · {% trans "Topics" %}</button>
+      <button class="onboarding-tab" id="tab-keywords" type="button" role="tab" aria-selected="false" aria-controls="panel-keywords" data-step="1">2 · {% trans "Keywords" %}</button>
+      <button class="onboarding-tab" id="tab-authors" type="button" role="tab" aria-selected="false" aria-controls="panel-authors" data-step="2">3 · {% trans "Authors" %}</button>
+    </div>
+
+    <section class="onboarding-panel onboarding-panel--active" id="panel-topics" role="tabpanel" aria-labelledby="tab-topics" data-panel="0">
+      <h2>{% trans "What fields do you work in?" %}</h2>
+      <p>{% trans "Choose focused subfields. These signals guide candidate generation and recommendations." %}</p>
+      <div class="discipline-grid">
+        {% for discipline, subdisciplines in disciplines.items %}
+          <article class="discipline-card">
+            <h3>{% trans discipline %}</h3>
+            <div class="chip-list">
+              {% for subdiscipline in subdisciplines %}
+                <button
+                  class="preference-chip"
+                  type="button"
+                  data-preference-type="topic"
+                  data-value="{{ subdiscipline }}"
+                  aria-pressed="{% if subdiscipline in request.user.tags %}true{% else %}false{% endif %}"
+                >{% trans subdiscipline %}</button>
+              {% endfor %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="onboarding-panel" id="panel-keywords" role="tabpanel" aria-labelledby="tab-keywords" data-panel="1" hidden>
+      <h2>{% trans "Which concepts define your work?" %}</h2>
+      <p>{% trans "Add specific methods, datasets, problems, or theoretical concepts—one at a time." %}</p>
+      <form class="tag-composer" data-tag-form="keyword">
+        <label class="sr-only" for="keyword-input">{% trans "Research keyword" %}</label>
+        <input id="keyword-input" type="text" maxlength="100" autocomplete="off" placeholder="{% trans 'e.g. neural information retrieval' %}">
+        <button type="submit">{% trans "Add keyword" %}</button>
+      </form>
+      <div class="selected-list" data-selected-list="keyword">
+        {% for keyword in request.user.keywords %}
+          <span class="selected-tag" data-selected-value="{{ keyword }}">
+            {{ keyword }}
+            <button type="button" data-remove-type="keyword" data-value="{{ keyword }}" aria-label="{% blocktrans %}Remove {{ keyword }}{% endblocktrans %}">×</button>
+          </span>
+        {% empty %}
+          <span class="selected-empty" data-empty>{% trans "No keywords added yet." %}</span>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="onboarding-panel" id="panel-authors" role="tabpanel" aria-labelledby="tab-authors" data-panel="2" hidden>
+      <h2>{% trans "Whose work do you follow?" %}</h2>
+      <p>{% trans "Add full author names to strengthen recommendations around your scholarly neighborhood." %}</p>
+      <form class="tag-composer" data-tag-form="author">
+        <label class="sr-only" for="author-input">{% trans "Author full name" %}</label>
+        <input id="author-input" type="text" maxlength="150" autocomplete="off" placeholder="{% trans 'e.g. Karen Spärck Jones' %}">
+        <button type="submit">{% trans "Add author" %}</button>
+      </form>
+      <div class="selected-list" data-selected-list="author">
+        {% for author in request.user.authors %}
+          <span class="selected-tag" data-selected-value="{{ author }}">
+            {{ author }}
+            <button type="button" data-remove-type="author" data-value="{{ author }}" aria-label="{% blocktrans %}Remove {{ author }}{% endblocktrans %}">×</button>
+          </span>
+        {% empty %}
+          <span class="selected-empty" data-empty>{% trans "No authors added yet." %}</span>
+        {% endfor %}
+      </div>
+    </section>
+
+    <div class="onboarding-actions">
+      <span class="onboarding-progress" data-step-label>{% trans "Step 1 of 3" %}</span>
+      <div class="onboarding-actions__group">
+        <button class="button button--secondary" type="button" data-previous disabled>{% trans "Previous" %}</button>
+        <button class="button button--primary" type="button" data-next>{% trans "Next step" %}</button>
+      </div>
+    </div>
+  </div>
+  <p class="onboarding-status" data-status aria-live="polite"></p>
+</section>
+{% endblock %}
+{% block extra_scripts %}
+<script src="{% static 'js/onboarding.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Log in" %} · PaperMetrix{% endblock %}
+{% block body_class %}auth-page{% endblock %}
+{% block main_class %}auth-main{% endblock %}
+{% block footer %}{% endblock %}
+{% block content %}
+<section class="auth-shell" aria-labelledby="login-title">
+  <aside class="auth-story">
+    <div class="auth-story__content">
+      <span class="eyebrow">{% trans "Evidence, not noise" %}</span>
+      <h1>{% trans "Return to the research that matters." %}</h1>
+      <p>{% trans "Search a curated corpus, revisit saved papers, and understand why every recommendation appears." %}</p>
+    </div>
+    <div class="auth-story__proof">
+      <div class="auth-story__dots" aria-hidden="true">
+        <span>BM</span><span>S2</span><span>RRF</span>
+      </div>
+      <small>{% trans "Transparent retrieval baselines behind every result." %}</small>
+    </div>
+  </aside>
+
+  <div class="auth-panel">
+    <header class="auth-panel__header">
+      <h2 id="login-title">{% trans "Welcome back" %}</h2>
+      <p>{% trans "New to PaperMetrix?" %} <a href="{% url 'signup' %}">{% trans "Create an account" %}</a></p>
+    </header>
+
+    {% if error or form.non_field_errors %}
+      <div class="form-errors" role="alert">
+        {{ error|default:form.non_field_errors }}
+      </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {% if request.GET.next %}
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
+      {% endif %}
+
+      <div class="field">
+        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+        {{ form.email }}
+        {% for error_message in form.email.errors %}
+          <p class="field__error" id="{{ form.email.id_for_label }}-error">{{ error_message }}</p>
+        {% endfor %}
+      </div>
+
+      <div class="field">
+        <div class="field__top">
+          <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+          <a href="{% url 'password_reset' %}">{% trans "Forgot password?" %}</a>
+        </div>
+        <div class="password-field">
+          {{ form.password }}
+          <button
+            class="password-toggle"
+            type="button"
+            data-password-toggle="{{ form.password.id_for_label }}"
+            data-show-label="{% trans 'Show' %}"
+            data-hide-label="{% trans 'Hide' %}"
+            aria-pressed="false"
+          >{% trans "Show" %}</button>
+        </div>
+        {% for error_message in form.password.errors %}
+          <p class="field__error" id="{{ form.password.id_for_label }}-error">{{ error_message }}</p>
+        {% endfor %}
+      </div>
+
+      <label class="form-checkline" for="{{ form.remember_me.id_for_label }}">
+        {{ form.remember_me }}
+        <span>{{ form.remember_me.label }}</span>
+      </label>
+
+      <button class="button button--primary button--full" type="submit">{% trans "Log in securely" %}</button>
+      <p class="auth-security-note"><span aria-hidden="true">●</span> {% trans "Protected by rate limiting and secure sessions." %}</p>
+    </form>
+  </div>
+</section>
+{% endblock %}

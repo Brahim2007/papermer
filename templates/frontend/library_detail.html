@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ object.name }} · PaperMetrix{% endblock %}
+{% block body_class %}page-library-detail{% endblock %}
+
+{% block content %}
+<div class="page-shell narrow-shell">
+  <nav class="breadcrumbs" aria-label="{% trans 'Breadcrumb' %}"><a href="{% url 'library' %}">{% trans "Your libraries" %}</a><span aria-hidden="true">/</span><span aria-current="page">{{ object.name }}</span></nav>
+  <header class="page-header">
+    <span class="eyebrow">{% trans "Research collection" %}</span>
+    <h1>{{ object.name }}</h1>
+    <p>{% blocktrans count counter=object.articles.count %}1 saved paper{% plural %}{{ counter }} saved papers{% endblocktrans %}</p>
+  </header>
+
+  <section class="content-panel" aria-labelledby="saved-heading">
+    <div class="section-heading"><div><span class="eyebrow">{% trans "Saved evidence" %}</span><h2 id="saved-heading">{% trans "Papers in this library" %}</h2></div></div>
+    <ol class="paper-list">
+      {% for article in object.articles.all %}
+        <li class="paper-list__item">
+          <div class="paper-list__rank" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</div>
+          <div class="paper-list__content">
+            <h3><a href="{% url 'article' article.pk %}">{{ article.title }}</a></h3>
+            <p>{% if article.year %}{{ article.year }}{% endif %}{% if article.venue or article.source %}{% if article.year %} · {% endif %}{{ article.venue|default:article.source }}{% endif %}</p>
+            {% if article.abstract %}<p class="paper-list__summary">{{ article.abstract|truncatewords:28 }}</p>{% endif %}
+          </div>
+          <form method="post" class="paper-list__action">
+            {% csrf_token %}<input type="hidden" name="id" value="{{ article.pk }}">
+            <button class="icon-button icon-button--danger" type="submit" aria-label="{% blocktrans with title=article.title %}Remove {{ title }} from library{% endblocktrans %}">×</button>
+          </form>
+        </li>
+      {% empty %}
+        <li class="empty-state"><h3>{% trans "This library is empty" %}</h3><p>{% trans "Open a paper and save it here to start a focused collection." %}</p><a class="button button--secondary" href="{% url 'search' %}">{% trans "Search papers" %}</a></li>
+      {% endfor %}
+    </ol>
+  </section>
+
+  <section class="content-panel recommendation-section" aria-labelledby="library-recs-heading" data-library-recommendations data-endpoint="{% url 'get_library_reccomendation' object.pk %}">
+    <div class="section-heading">
+      <div><span class="eyebrow">{% trans "Collection discovery" %}</span><h2 id="library-recs-heading">{% trans "Related to this library" %}</h2></div>
+    </div>
+    <p class="method-note">{% trans "Generated from the titles saved in this collection. Results may change as the corpus grows." %}</p>
+    <div class="loading-state" data-loading role="status">{% trans "Finding related papers…" %}</div>
+    <ol class="paper-list" data-results aria-live="polite"></ol>
+    <div class="empty-inline" data-empty hidden>{% trans "Add papers to this library to generate recommendations." %}</div>
+    <div class="empty-inline empty-inline--error" data-error hidden>{% trans "Recommendations could not be loaded. Try again later." %}</div>
+  </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}<script src="{% static 'js/library-detail.js' %}" defer></script>{% endblock %}
