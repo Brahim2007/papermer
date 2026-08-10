@@ -13,4 +13,4 @@ django-celery-beat==2.8.1
 
 numpy==2.2.6
 scikit-learn==1.5.2
-requests==2.32.3
+requests==2.34.2
