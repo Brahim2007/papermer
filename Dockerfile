@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM python:3.13-slim-bookworm AS builder
+FROM python:3.14-slim-bookworm AS builder
 
 ARG REQUIREMENTS_FILE=requirements/production.txt
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
@@ -13,7 +13,7 @@ RUN python -m pip wheel \
     --requirement "${REQUIREMENTS_FILE}"
 
 
-FROM python:3.13-slim-bookworm AS runtime
+FROM python:3.14-slim-bookworm AS runtime
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
