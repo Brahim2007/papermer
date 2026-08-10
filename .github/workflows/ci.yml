@@ -41,7 +41,7 @@ jobs:
 
     env:
       DJANGO_SETTINGS_MODULE: PaperMetrics.settings
-      DJANGO_SECRET_KEY: ci-only-not-a-production-secret
+      DJANGO_SECRET_KEY: ci-only-not-production-${{ github.run_id }}-${{ github.sha }}
       DJANGO_DEBUG: "false"
       DJANGO_ALLOWED_HOSTS: example.test
       DJANGO_CSRF_TRUSTED_ORIGINS: https://example.test
