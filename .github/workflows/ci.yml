@@ -83,6 +83,8 @@ jobs:
           python manage.py check --deploy --fail-level WARNING
 
       - name: Run tests
+        env:
+          DJANGO_SECURE_SSL_REDIRECT: "false"
         run: pytest -q
 
       - name: Set up Node.js
