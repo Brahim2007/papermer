@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Research topics" %} · PaperMetrix{% endblock %}
+{% block body_class %}page-topics{% endblock %}
+
+{% block content %}
+<div class="page-shell preferences-layout" data-topic-preferences data-endpoint="{% url 'add_remove_topic' %}">
+  <header class="page-header preferences-header">
+    <div>
+      <span class="eyebrow">{% trans "Recommendation profile" %}</span>
+      <h1>{% trans "Shape your research feed" %}</h1>
+      <p>{% trans "Select focused topics to improve personalized retrieval. You can change these choices at any time." %}</p>
+    </div>
+    <a class="button button--secondary" href="{% url 'reccomend' %}">{% trans "View recommendations" %}</a>
+  </header>
+  {% csrf_token %}
+  <div class="preferences-grid">
+    <section class="content-panel" aria-labelledby="browse-topics-heading">
+      <div class="section-heading"><div><span class="eyebrow">{% trans "Browse" %}</span><h2 id="browse-topics-heading">{% trans "Topics by discipline" %}</h2></div></div>
+      <div class="discipline-list">
+        {% for discipline, subdisciplines in disciplines.items %}
+          <details class="discipline-group"{% if forloop.first %} open{% endif %}>
+            <summary><span>{% trans discipline %}</span><span class="discipline-count">{{ subdisciplines|length }}</span></summary>
+            <div class="topic-choice-grid">
+              {% for topic in subdisciplines %}
+                <button class="topic-choice{% if topic in request.user.tags %} is-selected{% endif %}" type="button" data-topic="{{ topic }}" aria-pressed="{% if topic in request.user.tags %}true{% else %}false{% endif %}">
+                  <span>{% trans topic %}</span><span aria-hidden="true" data-choice-icon>{% if topic in request.user.tags %}✓{% else %}+{% endif %}</span>
+                </button>
+              {% endfor %}
+            </div>
+          </details>
+        {% endfor %}
+      </div>
+    </section>
+
+    <aside class="content-panel selected-topics" aria-labelledby="selected-topics-heading">
+      <span class="eyebrow">{% trans "Your profile" %}</span>
+      <h2 id="selected-topics-heading">{% trans "Selected topics" %}</h2>
+      <p>{% trans "These signals guide your personalized ranking." %}</p>
+      <div class="selected-topic-list" data-selected-list>
+        {% for topic in request.user.tags %}
+          <button class="selected-topic" type="button" data-selected-topic="{{ topic }}"><span>{% trans topic %}</span><span aria-hidden="true">×</span><span class="sr-only">{% trans "Remove topic" %}</span></button>
+        {% empty %}
+          <div class="empty-inline" data-no-topics>{% trans "No topics selected yet." %}</div>
+        {% endfor %}
+      </div>
+      <p class="form-status" role="status" aria-live="polite" data-topic-status></p>
+    </aside>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}<script src="{% static 'js/topics.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,217 @@
+name: ${COMPOSE_PROJECT_NAME:-papermetrix}
+
+x-app: &app
+  image: papermetrix-web:${APP_VERSION:-local}
+  build:
+    context: .
+    dockerfile: Dockerfile
+    args:
+      REQUIREMENTS_FILE: requirements/production.txt
+  env_file:
+    - ${ENV_FILE:-.env.production}
+  restart: unless-stopped
+  init: true
+  security_opt:
+    - no-new-privileges:true
+  networks:
+    - edge
+    - backend
+  depends_on:
+    redis:
+      condition: service_healthy
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "5"
+
+services:
+  web:
+    <<: *app
+    image: papermetrix-web-semantic:${APP_VERSION:-local}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REQUIREMENTS_FILE: requirements/semantic-production.txt
+    environment:
+      RUN_MIGRATIONS: "1"
+      COLLECT_STATIC: "1"
+      GUNICORN_WORKERS: "1"
+      GUNICORN_THREADS: "4"
+      GUNICORN_TIMEOUT: "180"
+      HF_HOME: /app/.cache/huggingface
+      SEMANTIC_SEARCH_WARMUP_QUERY: scientific paper recommendation
+      SEMANTIC_SEARCH_REQUIRE_WARM_READY: "true"
+    expose:
+      - "8000"
+    volumes:
+      - static_data:/app/staticfiles
+      - media_data:/app/media
+      - ./artifacts:/app/artifacts:ro
+      - model_cache:/app/.cache/huggingface
+    read_only: true
+    tmpfs:
+      - /tmp:size=256m,mode=1777
+    shm_size: 256m
+    cpus: "1.25"
+    mem_limit: 3g
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/healthz/', timeout=3)",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
+  worker:
+    <<: *app
+    command: ["/app/deploy/worker.sh"]
+    read_only: true
+    tmpfs:
+      - /tmp:size=256m,mode=1777
+    cpus: "0.75"
+    mem_limit: 2g
+    depends_on:
+      redis:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+
+  beat:
+    <<: *app
+    command: ["/app/deploy/beat.sh"]
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cpus: "0.20"
+    mem_limit: 512m
+    depends_on:
+      redis:
+        condition: service_healthy
+      web:
+        condition: service_healthy
+
+  redis:
+    image: redis:7.4-alpine
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD:?set REDIS_PASSWORD in .env.production}
+    command:
+      - sh
+      - -ec
+      - >-
+        exec redis-server
+        --appendonly yes
+        --appendfsync everysec
+        --requirepass "$${REDIS_PASSWORD}"
+        --maxmemory 384mb
+        --maxmemory-policy allkeys-lru
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - redis_data:/data
+    tmpfs:
+      - /tmp:size=32m,mode=1777
+    networks:
+      - backend
+    cpus: "0.25"
+    mem_limit: 512m
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'REDISCLI_AUTH="$${REDIS_PASSWORD}" redis-cli ping | grep -q PONG',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"
+
+  caddy:
+    image: caddy:2.11.4-alpine
+    environment:
+      APP_DOMAIN: ${APP_DOMAIN:?set APP_DOMAIN in .env.production}
+      ACME_EMAIL: ${ACME_EMAIL:?set ACME_EMAIL in .env.production}
+    restart: unless-stopped
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+      - static_data:/srv/static:ro
+      - media_data:/srv/media:ro
+    networks:
+      - edge
+    cpus: "0.25"
+    mem_limit: 256m
+    depends_on:
+      web:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "caddy", "validate", "--config", "/etc/caddy/Caddyfile"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "5"
+
+  research:
+    profiles: ["research"]
+    image: papermetrix-research:${APP_VERSION:-local}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        REQUIREMENTS_FILE: requirements/research.txt
+    env_file:
+      - ${ENV_FILE:-.env.production}
+    command: ["python", "manage.py", "check"]
+    init: true
+    security_opt:
+      - no-new-privileges:true
+    volumes:
+      - ./artifacts:/app/artifacts
+      - ./results:/app/results
+    networks:
+      - edge
+      - backend
+    depends_on:
+      redis:
+        condition: service_healthy
+    tmpfs:
+      - /tmp:size=512m,mode=1777
+    cpus: "1.80"
+    mem_limit: 6g
+
+networks:
+  edge:
+  backend:
+    internal: true
+
+volumes:
+  caddy_data:
+  caddy_config:
+  static_data:
+  media_data:
+  redis_data:
+  model_cache:

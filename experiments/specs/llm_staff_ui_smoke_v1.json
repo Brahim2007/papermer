@@ -1,0 +1,50 @@
+{
+  "protocol": "papermetrix_llm_staff_ui_smoke",
+  "version": 1,
+  "status": "frozen",
+  "frozen_on": "2026-08-08",
+  "parent_protocol": {
+    "name": "papermetrix_llm_query_expansion_ab",
+    "version": 2,
+    "sha256": "409caff72102783fe2e2d0a3baedc0dd1bf495b8b82e68545ecd403da00ae60a"
+  },
+  "purpose": "Authenticated staff-only HTTP smoke test of the already frozen development-only query-expansion channel.",
+  "claim_scope": "operational readiness only; no relevance or effectiveness claim",
+  "population": {
+    "partition": "development",
+    "query_count": 20,
+    "query_input": "the same seed-title proxies used by engineering canary v2",
+    "test_split_access": "forbidden"
+  },
+  "llm": {
+    "provider": "OpenAI",
+    "model": "gpt-5.6-luna",
+    "prompt_version": "scholarly-query-expansion-v1",
+    "prompt_sha256": "766503cf57b2f8dc640964211975944d7ef458b2a5e8c763102def428807baa4"
+  },
+  "guardrails": {
+    "staff_account_required": true,
+    "live_traffic_percent": 0,
+    "maximum_http_requests": 20,
+    "maximum_provider_calls": 20,
+    "daily_budget_usd": 1.0,
+    "stop_after_consecutive_failures": 3
+  },
+  "artifacts": {
+    "split_sha256": "313c5ad51d23e5f71e4aa074f880847b438cf729704766244905eaf429aa399b",
+    "query_draft_sha256": "7d2574b1458715a819ca3aee0c8db06ae7069e693f5f470ce54915ec50dfef33"
+  },
+  "recorded_fields": [
+    "request_id",
+    "http_status",
+    "expansion_status",
+    "cache_hit",
+    "provider_latency_ms",
+    "request_latency_ms",
+    "tokens",
+    "estimated_cost_usd",
+    "semantic_enabled",
+    "degraded_reason",
+    "result_count"
+  ]
+}

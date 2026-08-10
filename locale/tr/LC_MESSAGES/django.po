@@ -1,0 +1,196 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-06 00:59+0530\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: .\authorization\managers.py:6
+msgid "The Email must be set"
+msgstr "e-posta ayarlanmalıdır"
+
+msgid "Our articles"
+msgstr "Makalelerimiz"
+
+msgid "Articles"
+msgstr "Makaleler"
+
+msgid "Top"
+msgstr "En yüksek"
+
+msgid "Hot"
+msgstr "Sıcak"
+
+msgid "Top rated"
+msgstr "En Çok Oy Alan"
+
+msgid "Hot articles"
+msgstr "Sıcak makaleler"
+
+msgid "Home"
+msgstr "Ana sayfa"
+
+msgid "Topics"
+msgstr "Konular"
+
+msgid "Library"
+msgstr "Kütüphane"
+
+msgid "Log out"
+msgstr "Oturum Kapat"
+
+msgid "Sign up"
+msgstr "Kayıt Olun"
+
+msgid "Log in"
+msgstr "Oturum Açın"
+
+msgid "Full name"
+msgstr "Ad Soyad"
+
+msgid "Search"
+msgstr "Arama"
+
+msgid "Your recommendations"
+msgstr "Önerileriniz"
+
+msgid "Your topics"
+msgstr "Konularınız"
+
+msgid "Change Password"
+msgstr "Parola değiştir"
+
+msgid "Password"
+msgstr "Parola"
+
+msgid "Email"
+msgstr "Eposta"
+
+msgid "Mail this paper"
+msgstr "Bu makaleyi postala"
+
+msgid "Tweet this paper"
+msgstr "Bu makaleyi tweetleyin"
+
+msgid "Add to library"
+msgstr "Kütüphaneye ekle"
+
+msgid "View pdf"
+msgstr "PDF Görüntüle"
+
+msgid "No pdf attached"
+msgstr "PDF eklenmemiş"
+
+msgid "View on Mendeley"
+msgstr "Mendeley üzerinde görüntüle"
+
+msgid "Specify tags"
+msgstr "Etiketleri belirtin"
+
+msgid "Keywords"
+msgstr "Anahtar kelimeler"
+
+msgid "Abstract"
+msgstr "Öz"
+
+msgid "Review this article"
+msgstr "Bu makaleyi inceleyin"
+
+msgid "Leave a comment"
+msgstr "yorum Yap"
+
+msgid "Submit"
+msgstr "yorum gönder"
+
+msgid "Save"
+msgstr "kaydet"
+
+msgid "Commented by"
+msgstr "Yorum yapan"
+
+msgid "Comment"
+msgstr "yorum Yap"
+
+msgid "Similar articles"
+msgstr "Benzer makaleler"
+
+
+# AREAS
+msgid "Agricultural and Biological Sciences"
+msgstr "Tarım ve Biyolojik Bilimler"
+
+msgid "Arts and Humanities"
+msgstr "Sanat ve Beşeri Bilimler"
+
+msgid "Business, Management and Accounting"
+msgstr "İşletme, Yönetim ve Muhasebe"
+
+msgid "Chemistry"
+msgstr "Kimya"
+
+msgid "Engineering"
+msgstr "mühendislik"
+
+msgid "Computer Science"
+msgstr "Bilgisayar Bilimi"
+
+msgid "Earth and Planetary Sciences"
+msgstr "yeryüzü ve Gezegen Bilimleri"
+
+msgid "Economics, Econometrics and Finance"
+msgstr "Ekonomi, Ekonometri ve Finans"
+
+msgid "Linguistics"
+msgstr "Dilbilim"
+
+msgid "Mathematics"
+msgstr "Matematik"
+
+msgid "Medicine and Dentistry"
+msgstr "Tıp ve Diş Hekimliği"
+
+msgid "Philosophy"
+msgstr "Felsefe"
+
+msgid "Psychology"
+msgstr "Psikoloji"
+
+msgid "Physics and Astronomy"
+msgstr "Fizik ve Astronomi"
+
+msgid "Social Sciences"
+msgstr "Sosyal Bilimler"
+
+msgid "Sports and Recreations"
+msgstr "Spor ve Rekreasyonlar"
+
+msgid "Cited on twitter"
+msgstr "Twitter'da alıntı yapıldı"
+
+msgid "Cited on facebook"
+msgstr "Facebook'ta alıntı yapıldı"
+
+msgid "Cited on reddit"
+msgstr "Reddit'te alıntı yapıldı"
+
+msgid "Altmetric score"
+msgstr "Altmetrik puanı"
+
+msgid "Agrology"
+msgstr "Agroloji"
+
+msgid "Analysis"
+msgstr "Analiz"

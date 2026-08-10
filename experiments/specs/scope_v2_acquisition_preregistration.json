@@ -1,0 +1,46 @@
+{
+  "format_version": 1,
+  "name": "papermatrix-scope-v2-arxiv-acquisition-preregistration",
+  "registered_at": "2026-08-06T07:00:00Z",
+  "status": "frozen_before_acquisition",
+  "scope_spec": "experiments/specs/paper_recommendation_scope_v2.json",
+  "scope_spec_sha256": "bc9710568eb34e0628d477b8315cb1b8cbb2c6d6394b59a77d8583a2609aadaf",
+  "parent_scope": {
+    "spec": "experiments/specs/paper_recommendation_scope_v1.json",
+    "spec_sha256": "3b20c88ade630169ababe5a368907c997023aa327938e6bc49cdd72fd9343fdb",
+    "corpus": "artifacts/paper_recommendation_scope_v1.csv",
+    "corpus_sha256": "e857ba08538d2585ff233e22e9ecf8dc595dde21afc82e868cd2d80622ccbe27",
+    "citation_graph_sha256": "8eec3dfcd27715421caab8c6c2e3cbec34a918429d8ce175073323a1daa85688",
+    "specter2_cache_sha256": "fd6cd6b47c2485887db98f9adafe7d46041373a00166d2a6440e8bbd52cff561"
+  },
+  "controlled_change": "Add arXiv; retain the five queries, 2015-01-01 through 2026-08-04 dates, and per-query limit of 50",
+  "planned_outputs": {
+    "acquisition_report": "artifacts/paper_recommendation_scope_v2_acquisition.json",
+    "corpus": "artifacts/paper_recommendation_scope_v2.csv",
+    "citation_graph": "artifacts/paper_recommendation_scope_v2.citations.tsv",
+    "specter2_cache": "artifacts/paper_recommendation_scope_v2.specter2.npz",
+    "completion_manifest": "artifacts/paper_recommendation_scope_v2_manifest.json"
+  },
+  "identity_policy": [
+    "Merge arXiv and publisher records when a normalized DOI agrees",
+    "Preserve the versioned arXiv source identifier in WorkVersion",
+    "Use the arXiv identifier without vN as the canonical work identifier",
+    "Fail and audit conflicts when stable identifiers resolve to multiple works"
+  ],
+  "acceptance_gates": {
+    "frozen_v1_hashes_unchanged": true,
+    "all_provider_query_units_audited": true,
+    "identity_conflicts_manually_resolved_or_excluded": true,
+    "abstract_coverage_minimum": 0.9,
+    "publication_date_coverage_minimum": 1.0,
+    "duplicate_canonical_identifier_count": 0,
+    "new_graph_and_embedding_cache_required": true
+  },
+  "evaluation_policy": {
+    "do_not_reuse_v1_result_tables_as_v2_results": true,
+    "new_arxiv_candidates_require_new_pooling_and_human_judgments": true,
+    "development_test_partition_policy_remains_frozen": true,
+    "retrieval_runs_begin_only_after_v2_corpus_and_qrels_are_frozen": true
+  },
+  "immutability_policy": "Do not edit this registration after acquisition starts; write outcomes and hashes to the completion manifest"
+}

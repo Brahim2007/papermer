@@ -1,0 +1,87 @@
+{
+  "protocol": "papermetrix_llm_query_expansion_ab",
+  "version": 2,
+  "status": "ready_to_freeze",
+  "supersedes_for_future_runs_only": 1,
+  "preserves_frozen_v1": true,
+  "research_question": "Can the fixed LLM query-expansion implementation complete a development-only engineering canary and produce auditable retrieval diagnostics before any live traffic?",
+  "design": "paired offline engineering canary; not a confirmatory effectiveness evaluation",
+  "arms": {
+    "baseline": {
+      "allocation": 0.5,
+      "ranking": "Hybrid-RRF over BM25, TF-IDF, and SPECTER2 using the seed-title proxy"
+    },
+    "llm_expansion": {
+      "allocation": 0.5,
+      "ranking": "Baseline and expanded-query Hybrid-RRF rankings fused by channel-level RRF",
+      "intent_to_treat": true
+    }
+  },
+  "llm": {
+    "provider": "OpenAI",
+    "endpoint": "https://api.openai.com/v1/chat/completions",
+    "model": "gpt-5.6-luna",
+    "reasoning_effort": "none",
+    "prompt_version": "scholarly-query-expansion-v1",
+    "prompt_sha256": "766503cf57b2f8dc640964211975944d7ef458b2a5e8c763102def428807baa4",
+    "max_completion_tokens": 120,
+    "temperature": 0
+  },
+  "pricing_snapshot": {
+    "source": "https://developers.openai.com/api/docs/pricing",
+    "retrieved_on": "2026-08-08",
+    "service_tier": "standard",
+    "context_class": "short",
+    "currency": "USD",
+    "per_million_tokens": {
+      "input": 0.20,
+      "cached_input": 0.02,
+      "output": 1.20
+    }
+  },
+  "canary_population": {
+    "split": "development",
+    "query_count": 20,
+    "query_input": "seed_title proxy because all frozen human-query fields are blank",
+    "test_split_access": "forbidden",
+    "effectiveness_claims": "forbidden until human queries and independent judgments exist"
+  },
+  "artifacts": {
+    "split_sha256": "313c5ad51d23e5f71e4aa074f880847b438cf729704766244905eaf429aa399b",
+    "query_draft_sha256": "7d2574b1458715a819ca3aee0c8db06ae7069e693f5f470ce54915ec50dfef33",
+    "corpus_sha256": "d491d2eab5986e8480804cee677a87eb8e73d0f7bec8c90c3dc41d355bca50e2",
+    "specter2_cache_sha256": "5734bb22c8755038b9cab412a5e912639156794bae8ec47982d618fadbdf9e5c"
+  },
+  "primary_outcome": {
+    "name": "canary_completion_rate",
+    "definition": "Fraction of the 20 development proxy queries with a valid provider expansion and completed paired retrieval run.",
+    "claim_scope": "engineering readiness only"
+  },
+  "secondary_outcomes": [
+    "provider latency p50 and p95",
+    "input, cached-input, and output tokens",
+    "estimated standard-tier token cost",
+    "baseline versus treatment result overlap at 10 and 20",
+    "new documents introduced at 10 and 20",
+    "semantic component availability and degraded reason"
+  ],
+  "sample_size": {
+    "analyzable_requests_per_arm": 10,
+    "total_paired_queries": 20,
+    "rationale": "all and only the frozen development assignment; no inferential power claim"
+  },
+  "analysis_plan": {
+    "primary_model": "descriptive paired engineering diagnostics",
+    "relevance_metrics": "not computed without human qrels",
+    "missing_expansion": "retain in the LLM arm as provider failure",
+    "test_split": "must not be read or evaluated"
+  },
+  "guardrails": {
+    "traffic_before_freeze": 0,
+    "live_traffic_percent": 0,
+    "maximum_provider_calls": 20,
+    "provider_failure_rate_max": 0.05,
+    "p95_latency_ms_max": 8000,
+    "raw_query_storage": "offline artifact only; proxy titles are already public corpus metadata"
+  }
+}

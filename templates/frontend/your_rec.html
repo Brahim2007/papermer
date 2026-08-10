@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{% trans "Your recommendations" %} · PaperMetrix{% endblock %}
+{% block body_class %}page-recommendations{% endblock %}
+
+{% block content %}
+<div class="page-shell narrow-shell recommendations-page" data-recommendations data-endpoint="{% url 'user_recommendations' %}">
+  <header class="page-header page-header--split">
+    <div>
+      <span class="eyebrow">{% trans "Personalized discovery" %}</span>
+      <h1>{% trans "Your recommendations" %}</h1>
+      <p>{% trans "A ranked research feed built from your selected topics, keywords, and authors." %}</p>
+    </div>
+    <a class="button button--secondary" href="{% url 'questions' %}">{% trans "Edit research profile" %}</a>
+  </header>
+
+  <section class="method-banner" aria-labelledby="method-heading">
+    <div class="method-banner__icon" aria-hidden="true">RRF</div>
+    <div><h2 id="method-heading">{% trans "How this ranking works" %}</h2><p>{% trans "PaperMetrix retrieves candidates for each profile signal, removes duplicates, then combines their ranks with reciprocal rank fusion. Scores express ranking evidence, not paper quality." %}</p></div>
+  </section>
+
+  <section class="content-panel" aria-labelledby="recommendation-list-heading">
+    <div class="section-heading"><div><span class="eyebrow">{% trans "Ranked feed" %}</span><h2 id="recommendation-list-heading">{% trans "Papers selected for you" %}</h2></div><span class="result-count" data-result-count></span></div>
+    <div class="loading-state" data-loading role="status">{% trans "Building your recommendations…" %}</div>
+    <ol class="paper-list recommendation-list" data-results aria-live="polite"></ol>
+    <div class="empty-state" data-empty hidden><span class="empty-state__icon" aria-hidden="true">◎</span><h3>{% trans "Tell us what you study" %}</h3><p>{% trans "Add topics, keywords, or authors to create your personalized feed." %}</p><a class="button button--primary" href="{% url 'questions' %}">{% trans "Set research interests" %}</a></div>
+    <div class="empty-state empty-state--error" data-error hidden><h3>{% trans "Recommendations are temporarily unavailable" %}</h3><p>{% trans "Please try again in a moment." %}</p><button class="button button--secondary" type="button" data-retry>{% trans "Try again" %}</button></div>
+    <div class="load-more-wrap" data-pagination hidden><button class="button button--secondary" type="button" data-load-more>{% trans "Show more papers" %}</button></div>
+  </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}<script src="{% static 'js/recommendations.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ object.name }} · PaperMetrix{% endblock %}
+{% block body_class %}page-author{% endblock %}
+
+{% block content %}
+<div class="page-shell narrow-shell">
+  <nav class="breadcrumbs" aria-label="{% trans 'Breadcrumb' %}">
+    <a href="{% url 'home' %}">{% trans "Home" %}</a><span aria-hidden="true">/</span><span aria-current="page">{% trans "Author" %}</span>
+  </nav>
+  <header class="profile-hero">
+    <div class="profile-avatar" aria-hidden="true">{{ object.name|first|upper }}</div>
+    <div>
+      <span class="eyebrow">{% trans "Researcher profile" %}</span>
+      <h1>{{ object.name }}</h1>
+      <p>{% blocktrans count counter=object.article_set.count %}1 paper in the PaperMetrix corpus{% plural %}{{ counter }} papers in the PaperMetrix corpus{% endblocktrans %}</p>
+    </div>
+  </header>
+
+  <section class="content-panel" aria-labelledby="author-papers-heading">
+    <div class="section-heading">
+      <div><span class="eyebrow">{% trans "Publications" %}</span><h2 id="author-papers-heading">{% trans "Papers by this author" %}</h2></div>
+    </div>
+    <ol class="paper-list">
+      {% for article in object.article_set.all %}
+        <li class="paper-list__item">
+          <div class="paper-list__rank" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</div>
+          <div>
+            <h3><a href="{% url 'article_detail' article.pk %}">{{ article.title }}</a></h3>
+            <p>{% if article.year %}{{ article.year }}{% endif %}{% if article.venue or article.source %}{% if article.year %} · {% endif %}{{ article.venue|default:article.source }}{% endif %}</p>
+            {% if article.abstract %}<p class="paper-list__summary">{{ article.abstract|truncatewords:35 }}</p>{% endif %}
+          </div>
+        </li>
+      {% empty %}
+        <li class="empty-state"><h3>{% trans "No papers found" %}</h3><p>{% trans "This author does not have papers in the current corpus." %}</p></li>
+      {% endfor %}
+    </ol>
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,5 @@
+# Full local research environment. Production uses requirements/production.txt.
+-r requirements/research.txt
+
+pytest==8.3.3
+pytest-django==4.10.0

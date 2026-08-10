@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Scientific paper discovery" %} · PaperMetrix{% endblock %}
+{% block meta_description %}{% trans "Search scientific papers and receive transparent, evidence-aware recommendations." %}{% endblock %}
+{% block content %}
+{% trans "Abstract not available for this record." as missing_abstract %}
+<section class="hero">
+  <div class="hero__inner">
+    <span class="eyebrow">{% trans "Scientific discovery, made traceable" %}</span>
+    <h1>{% trans "Find the papers that move your" %} <span>{% trans "research forward." %}</span></h1>
+    <p class="hero__lede">{% trans "Search scholarly metadata, explore related work, and receive recommendations whose retrieval method is visible—not hidden behind a black box." %}</p>
+
+    <form class="research-composer" method="get" action="{% url 'search' %}" role="search">
+      <div class="research-composer__row">
+        <span class="research-composer__icon" aria-hidden="true">⌕</span>
+        <label class="sr-only" for="hero-query">{% trans "Search scientific papers" %}</label>
+        <input id="hero-query" name="query" type="search" required autocomplete="off" placeholder="{% trans 'Search by question, topic, title, author, or DOI…' %}">
+        <button class="research-composer__submit" type="submit" aria-label="{% trans 'Search' %}">→</button>
+      </div>
+    </form>
+
+    <div class="quick-actions" aria-label="{% trans 'Research shortcuts' %}">
+      <a class="quick-action" href="{% url 'search' %}"><span aria-hidden="true">⌕</span>{% trans "Search papers" %}</a>
+      {% if request.user.is_authenticated %}
+        <a class="quick-action" href="{% url 'reccomend' %}"><span aria-hidden="true">✦</span>{% trans "My recommendations" %}</a>
+        <a class="quick-action" href="{% url 'library' %}"><span aria-hidden="true">▤</span>{% trans "Reading library" %}</a>
+      {% else %}
+        <a class="quick-action" href="{% url 'signup' %}"><span aria-hidden="true">✦</span>{% trans "Personalize recommendations" %}</a>
+      {% endif %}
+      <a class="quick-action" href="{% url 'topics' %}"><span aria-hidden="true">◎</span>{% trans "Explore topics" %}</a>
+    </div>
+  </div>
+</section>
+
+<section class="trust-strip" aria-label="{% trans 'How PaperMetrix works' %}">
+  <div class="trust-strip__items">
+    <div class="trust-item">
+      <span class="trust-item__icon" aria-hidden="true">◇</span>
+      <div><strong>{% trans "Multiple scholarly sources" %}</strong><span>{% trans "OpenAlex, Semantic Scholar, Crossref, and arXiv." %}</span></div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-item__icon" aria-hidden="true">≋</span>
+      <div><strong>{% trans "Explainable retrieval" %}</strong><span>{% trans "BM25, SPECTER2, graph signals, and hybrid fusion." %}</span></div>
+    </div>
+    <div class="trust-item">
+      <span class="trust-item__icon" aria-hidden="true">◷</span>
+      <div><strong>{% trans "Temporal integrity" %}</strong><span>{% trans "Evaluation that prevents future-paper leakage." %}</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="content-section" aria-labelledby="latest-papers-title">
+  <header class="section-heading">
+    <div>
+      <span class="eyebrow">{% trans "Fresh in the corpus" %}</span>
+      <h2 id="latest-papers-title">{% trans "Recently indexed papers" %}</h2>
+      <p>{% trans "A live view of the newest records available to search and recommend." %}</p>
+    </div>
+    <a class="section-link" href="{% url 'search' %}">{% trans "Browse all papers" %} →</a>
+  </header>
+
+  <div class="paper-grid">
+    {% for article in latest_articles %}
+      <article class="paper-card">
+        <div class="paper-card__top">
+          <span class="paper-card__type">{{ article.type|default:"Paper" }}</span>
+          {% if article.is_open_access %}<span class="paper-card__oa">● {% trans "Open access" %}</span>{% endif %}
+        </div>
+        <h3><a href="{% url 'article' article.pk %}">{{ article.title }}</a></h3>
+        <div class="paper-card__meta">
+          {% if article.year %}<span>{{ article.year }}</span>{% endif %}
+          {% if article.venue or article.source %}<span>{{ article.venue|default:article.source|truncatechars:38 }}</span>{% endif %}
+        </div>
+        <p class="paper-card__abstract">{{ article.abstract|default:missing_abstract }}</p>
+        <footer class="paper-card__footer">
+          <span>{% blocktrans count counter=article.citation_count %}{{ counter }} citation{% plural %}{{ counter }} citations{% endblocktrans %}</span>
+          <span>{% trans "View paper" %} →</span>
+        </footer>
+      </article>
+    {% empty %}
+      <div class="empty-state">
+        <strong>{% trans "The corpus is ready for its first records." %}</strong>
+        <p>{% trans "Run a registered ingestion scope to populate this section." %}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

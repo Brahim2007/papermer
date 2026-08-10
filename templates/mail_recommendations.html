@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static i18n %}
+
+{% block content %}
+<div class="container">
+  <h3>{% trans "Hello" %} {{ user.first_name|default:user.username }}, {% trans "your recommendations for this week are listed below:" %}</h3>
+  <div class="row">
+    {% for item in recommendations %}
+      <div class="col-12 my-3 p-3 border rounded">
+        <h4><a href="{% url 'article_detail' item.id %}" target="_blank">{{ item.title }}</a></h4>
+        <p>{% trans "Score:" %} {{ item.score }}</p>
+        <p>{{ item.summary|truncatewords:30 }}</p>
+      </div>
+    {% empty %}
+      <div class="col-12 my-3 p-3 border rounded">
+        <p>{% trans "No recommendations available at the moment. Check back later!" %}</p>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+{
+  "protocol": "title_leakage_diagnostic_only",
+  "warning": "not human queries; never use in publication tables",
+  "partition": "development",
+  "query_count": 20,
+  "draft_sha256": "7d2574b1458715a819ca3aee0c8db06ae7069e693f5f470ce54915ec50dfef33",
+  "split_sha256": "313c5ad51d23e5f71e4aa074f880847b438cf729704766244905eaf429aa399b",
+  "queries_sha256": "0e9a9b8e5e8149b63eda759bab80decacf6f09a57f58ffab6e93fc95da10f334",
+  "qrels_sha256": "2d419d498fe0f23ce428148ef503e7ed9779ba14c5aa87d9cd92777d7ac437d5"
+}

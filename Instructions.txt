@@ -1,0 +1,5 @@
+PaperMetrix setup and experiment instructions are maintained in README.md.
+
+Important: credentials that existed in the historical source must be revoked.
+Never place credentials in this file; use environment variables described in
+.env.example.

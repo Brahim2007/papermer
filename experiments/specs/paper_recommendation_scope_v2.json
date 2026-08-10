@@ -1,0 +1,58 @@
+{
+  "format_version": 2,
+  "name": "scientific-paper-recommendation-2015-2026-v2-arxiv",
+  "research_scope": "Methods and evaluations for recommending related scientific literature",
+  "scope_change_from_v1": "Add arXiv as a pre-registered provider while holding queries and temporal boundaries fixed",
+  "queries": [
+    "scientific paper recommendation",
+    "scholarly recommendation system",
+    "academic literature recommendation",
+    "citation based paper recommendation",
+    "related paper recommendation"
+  ],
+  "providers": [
+    "openalex",
+    "semantic_scholar",
+    "arxiv"
+  ],
+  "from_date": "2015-01-01",
+  "to_date": "2026-08-04",
+  "per_query_limit": 50,
+  "require_abstract": true,
+  "languages": [
+    "en"
+  ],
+  "openalex_work_types": [
+    "article",
+    "review"
+  ],
+  "openalex_sort": "cited_by_count:desc",
+  "semantic_scholar_publication_types": [
+    "JournalArticle",
+    "Conference",
+    "Review"
+  ],
+  "semantic_scholar_fields_of_study": [
+    "Computer Science",
+    "Engineering"
+  ],
+  "arxiv_categories": [
+    "cs.IR",
+    "cs.DL",
+    "cs.CL",
+    "cs.LG",
+    "cs.AI"
+  ],
+  "arxiv_sort": "relevance",
+  "arxiv_date_field": "submittedDate",
+  "arxiv_language_policy": "No language metadata is supplied by the Atom API; English frozen queries and manual audit are used",
+  "arxiv_version_policy": "Preserve versioned source IDs, normalize work IDs without vN, and merge with a DOI work when arXiv supplies a DOI",
+  "sampling_policy_by_provider": {
+    "openalex": "top cited within each frozen query",
+    "semantic_scholar": "provider relevance/citation behavior used by the scoped connector",
+    "arxiv": "provider relevance within frozen date and category filters"
+  },
+  "deduplication": "canonical DOI/arXiv/OpenAlex/S2 identifiers, then normalized title and year",
+  "frozen_before_acquisition": true,
+  "v1_artifacts_are_immutable": true
+}

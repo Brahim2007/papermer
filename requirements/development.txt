@@ -1,0 +1,7 @@
+-r production.txt
+
+pandas==2.2.3
+pytest==8.3.3
+pytest-django==4.10.0
+ir-measures==0.4.3
+modal==1.5.3

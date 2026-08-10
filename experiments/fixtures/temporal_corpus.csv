@@ -1,0 +1,5 @@
+id,title,abstract,retrieval_text,year,publication_date,is_retracted
+old-graph,Graph-based paper recommendation,Citation graphs support related-paper discovery,Graph-based paper recommendation Citation graphs support related-paper discovery,2022,2022-06-01,false
+old-neural,Neural scientific document retrieval,Dense encoders retrieve papers using semantic similarity,Neural scientific document retrieval Dense encoders retrieve papers using semantic similarity,2023,2023-03-15,false
+new-hybrid,Hybrid retrieval for scientific literature,Hybrid sparse and dense ranking improves scientific search,Hybrid retrieval for scientific literature Hybrid sparse and dense ranking improves scientific search,2024,2024-02-10,false
+future-llm,LLM agents for literature discovery,Language-model agents retrieve and synthesize research papers,LLM agents for literature discovery Language-model agents retrieve and synthesize research papers,2025,2025-01-20,false

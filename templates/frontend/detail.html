@@ -1,0 +1,180 @@
+{% extends "base.html" %}
+{% load static i18n %}
+
+{% block title %}{{ object.title }} · PaperMetrix{% endblock %}
+{% block body_class %}page-paper-detail{% endblock %}
+
+{% block content %}
+<div class="page-shell detail-layout">
+  <article class="paper-detail">
+    <section class="paper-hero" aria-labelledby="paper-title">
+      <nav class="breadcrumbs" aria-label="{% trans 'Breadcrumb' %}">
+        <a href="{% url 'home' %}">{% trans "Home" %}</a>
+        <span aria-hidden="true">/</span>
+        <span aria-current="page">{% trans "Paper details" %}</span>
+      </nav>
+
+      <header class="paper-detail__header">
+        <div class="paper-badges" aria-label="{% trans 'Paper status' %}">
+          {% if object.type %}<span class="status-badge">{{ object.type }}</span>{% endif %}
+          {% if object.is_open_access %}<span class="status-badge status-badge--positive">{% trans "Open access" %}</span>{% endif %}
+          {% if object.is_retracted %}<span class="status-badge status-badge--danger">{% trans "Retracted" %}</span>{% endif %}
+        </div>
+
+        <h1 id="paper-title">{{ object.title }}</h1>
+
+        {% with authors=object.authors.all %}
+          {% if authors %}
+            <div class="paper-authors-wrap">
+              <p class="paper-authors" id="paper-authors">
+                {% for author in authors|slice:":6" %}<a href="{% url 'get_author' author.pk %}">{{ author.name }}</a>{% if not forloop.last %}<span aria-hidden="true">, </span>{% endif %}{% endfor %}{% if authors|length > 6 %}<span data-authors-extra hidden><span aria-hidden="true">, </span>{% for author in authors|slice:"6:" %}<a href="{% url 'get_author' author.pk %}">{{ author.name }}</a>{% if not forloop.last %}<span aria-hidden="true">, </span>{% endif %}{% endfor %}</span>{% endif %}
+              </p>
+              {% if authors|length > 6 %}
+                <button
+                  class="authors-toggle"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls="paper-authors"
+                  data-authors-toggle
+                  data-show-label="{% trans 'Show all authors' %}"
+                  data-hide-label="{% trans 'Show fewer authors' %}"
+                ><span aria-hidden="true">+{{ authors|length|add:"-6" }}</span> {% trans "more authors" %}</button>
+              {% endif %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <ul class="paper-meta-line" aria-label="{% trans 'Publication information' %}">
+          {% if object.venue or object.source %}<li>{{ object.venue|default:object.source }}</li>{% endif %}
+          {% if object.publication_date %}<li><time datetime="{{ object.publication_date|date:'Y-m-d' }}">{{ object.publication_date|date:"M j, Y" }}</time></li>{% elif object.year %}<li>{{ object.year }}</li>{% endif %}
+          {% if object.publisher %}<li>{{ object.publisher }}</li>{% endif %}
+        </ul>
+
+        <div class="paper-primary-actions" aria-label="{% trans 'Primary paper actions' %}">
+          {% if object.pdf %}
+            <a class="button button--primary" href="{{ object.pdf }}" rel="noopener noreferrer" target="_blank">{% trans "Read PDF" %}<span aria-hidden="true"> ↗</span><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
+          {% endif %}
+          {% if object.doi %}
+            <a class="button button--secondary" href="https://doi.org/{{ object.doi }}" rel="noopener noreferrer" target="_blank">{% trans "View publisher" %}<span aria-hidden="true"> ↗</span><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
+            <button class="button button--ghost paper-copy-button" type="button" data-copy-value="{{ object.doi }}">{% trans "Copy DOI" %}</button>
+          {% elif object.link %}
+            <a class="button button--secondary" href="{{ object.link }}" rel="noopener noreferrer" target="_blank">{% trans "View publisher" %}<span aria-hidden="true"> ↗</span><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
+          {% endif %}
+          <span class="copy-status" role="status" aria-live="polite" data-copy-status></span>
+        </div>
+      </header>
+    </section>
+
+    <section class="paper-footprint" aria-labelledby="footprint-heading">
+      <div class="section-heading section-heading--compact">
+        <div>
+          <span class="eyebrow">{% trans "Research footprint" %}</span>
+          <h2 id="footprint-heading">{% trans "At a glance" %}</h2>
+        </div>
+      </div>
+      <dl class="metric-row" aria-label="{% trans 'Paper metrics' %}">
+        <div><dt>{% trans "Citations" %}</dt><dd>{{ object.citation_count }}</dd></div>
+        <div><dt>{% trans "References" %}</dt><dd>{{ object.reference_count }}</dd></div>
+        <div><dt>{% trans "Comments" %}</dt><dd>{{ object.get_total_comments }}</dd></div>
+      </dl>
+    </section>
+
+    <section class="content-panel abstract-panel" id="abstract" aria-labelledby="abstract-heading">
+      <div class="section-heading section-heading--compact">
+        <div><span class="eyebrow">{% trans "Paper overview" %}</span><h2 id="abstract-heading">{% trans "Abstract" %}</h2></div>
+      </div>
+      {% if object.abstract %}
+        <p class="abstract-text">{{ object.abstract }}</p>
+      {% else %}
+        <div class="empty-inline">{% trans "No abstract is available for this record." %}</div>
+      {% endif %}
+    </section>
+
+    <section class="content-panel" id="identifiers" aria-labelledby="identifiers-heading">
+      <div class="section-heading section-heading--compact">
+        <div><span class="eyebrow">{% trans "Record transparency" %}</span><h2 id="identifiers-heading">{% trans "Publication details" %}</h2></div>
+      </div>
+      <dl class="record-grid">
+        {% if object.doi %}<div><dt>DOI</dt><dd class="identifier-value">{{ object.doi }}</dd></div>{% endif %}
+        {% if object.arxiv_id %}<div><dt>arXiv</dt><dd class="identifier-value">{{ object.arxiv_id }}</dd></div>{% endif %}
+        {% if object.openalex_id %}<div><dt>OpenAlex</dt><dd class="identifier-value">{{ object.openalex_id }}</dd></div>{% endif %}
+        {% if object.semantic_scholar_id %}<div><dt>Semantic Scholar</dt><dd class="identifier-value">{{ object.semantic_scholar_id }}</dd></div>{% endif %}
+        {% if object.type %}<div><dt>{% trans "Document type" %}</dt><dd>{{ object.type }}</dd></div>{% endif %}
+        {% if object.language %}<div><dt>{% trans "Language" %}</dt><dd>{{ object.language|upper }}</dd></div>{% endif %}
+        {% if object.source %}<div><dt>{% trans "Source" %}</dt><dd>{{ object.source }}</dd></div>{% endif %}
+        <div><dt>{% trans "Last metadata update" %}</dt><dd><time datetime="{{ object.updated_on|date:'c' }}">{{ object.updated_on|date:"M j, Y" }}</time></dd></div>
+      </dl>
+    </section>
+
+    <section class="content-panel comments-section" id="comments" aria-labelledby="comments-heading">
+      <div class="section-heading section-heading--compact">
+        <div><span class="eyebrow">{% trans "Community" %}</span><h2 id="comments-heading">{% trans "Comments" %}</h2></div>
+      </div>
+      {% if request.user.is_authenticated %}
+        <form method="post" class="comment-form">
+          {% csrf_token %}
+          <label for="comment-body">{% trans "Add a comment" %}</label>
+          <textarea id="comment-body" name="comment" rows="4" maxlength="2000" required></textarea>
+          <button class="button button--primary" type="submit">{% trans "Publish comment" %}</button>
+        </form>
+      {% else %}
+        <p class="notice"><a href="{% url 'login' %}?next={{ request.path|urlencode }}">{% trans "Log in" %}</a> {% trans "to join the discussion." %}</p>
+      {% endif %}
+      <ol class="comment-list">
+        {% for comment in object.comment_set.all %}
+          <li><div class="comment-meta"><strong>{{ comment.user }}</strong><time datetime="{{ comment.created_on|date:'c' }}">{{ comment.created_on|date:"M j, Y" }}</time></div><p>{{ comment.body|linebreaksbr }}</p></li>
+        {% empty %}
+          <li class="empty-inline">{% trans "No comments yet. Start the discussion." %}</li>
+        {% endfor %}
+      </ol>
+    </section>
+  </article>
+
+  <aside class="detail-sidebar" aria-label="{% trans 'Paper actions' %}">
+    {% if request.user.is_authenticated and libraries %}
+      <section class="side-panel save-panel">
+        <span class="eyebrow">{% trans "Your workspace" %}</span>
+        <h2>{% trans "Save this paper" %}</h2>
+        <form class="save-paper-form" data-endpoint="{% url 'add_to_library' %}" data-article-id="{{ object.pk }}">
+          {% csrf_token %}
+          <label for="library-select">{% trans "Choose a library" %}</label>
+          <select id="library-select" name="library_id" required>
+            {% for library in libraries %}<option value="{{ library.pk }}">{{ library.name }} ({{ library.article_count }})</option>{% endfor %}
+          </select>
+          <button class="button button--primary button--full" type="submit">{% trans "Save to library" %}</button>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+    {% elif request.user.is_authenticated %}
+      <section class="side-panel save-panel"><span class="eyebrow">{% trans "Your workspace" %}</span><h2>{% trans "Save this paper" %}</h2><p>{% trans "Organize papers into reusable research collections." %}</p><a class="button button--secondary button--full" href="{% url 'library' %}">{% trans "Create your first library" %}</a></section>
+    {% else %}
+      <section class="side-panel save-panel"><span class="eyebrow">{% trans "Your workspace" %}</span><h2>{% trans "Keep this paper" %}</h2><p>{% trans "Log in to save papers and build recommendation seeds." %}</p><a class="button button--primary button--full" href="{% url 'login' %}?next={{ request.path|urlencode }}">{% trans "Log in to save" %}</a></section>
+    {% endif %}
+
+    <nav class="side-panel paper-toc" aria-label="{% trans 'On this page' %}">
+      <h2>{% trans "On this page" %}</h2>
+      <a href="#abstract">{% trans "Abstract" %}</a>
+      <a href="#identifiers">{% trans "Publication details" %}</a>
+      <a href="#comments">{% trans "Comments" %}</a>
+    </nav>
+
+    <section class="side-panel related-panel" aria-labelledby="similar-heading">
+      <span class="eyebrow">{% trans "Discovery" %}</span>
+      <h2 id="similar-heading">{% trans "Similar papers" %}</h2>
+      <p class="method-note">{% trans "Ranked from this record's scholarly metadata. Similarity is not a quality judgment." %}</p>
+      <ol class="related-list">
+        {% for article in similar_items %}
+          <li>
+            <span class="related-list__rank" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
+            <div><a href="{% url 'article' article.pk %}">{{ article.title }}</a><span>{% if article.year %}{{ article.year }}{% endif %}{% if article.source %}{% if article.year %} · {% endif %}{{ article.source|truncatechars:36 }}{% endif %}</span></div>
+          </li>
+        {% empty %}
+          <li class="empty-inline">{% trans "No similar papers are available yet." %}</li>
+        {% endfor %}
+      </ol>
+    </section>
+  </aside>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}<script src="{% static 'js/paper-detail.js' %}?v=20260808-paper-detail-v2" defer></script>{% endblock %}

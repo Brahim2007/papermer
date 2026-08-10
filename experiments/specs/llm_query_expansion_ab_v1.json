@@ -1,0 +1,78 @@
+{
+  "protocol": "papermetrix_llm_query_expansion_ab",
+  "version": 1,
+  "status": "ready_to_freeze",
+  "research_question": "Does independent LLM query expansion improve successful scientific-paper discovery over the registered hybrid baseline without unacceptable latency or provider failure?",
+  "unit_of_randomization": "keyed actor-and-normalized-query assignment",
+  "arms": {
+    "baseline": {
+      "allocation": 0.5,
+      "ranking": "registered live hybrid retrieval"
+    },
+    "llm_expansion": {
+      "allocation": 0.5,
+      "ranking": "baseline and expanded-query candidate rankings fused with channel-level RRF",
+      "intent_to_treat": true
+    }
+  },
+  "population": {
+    "include": [
+      "accepted live-search requests with at least one returned result",
+      "human users passing production rate limits"
+    ],
+    "exclude": [
+      "staff and QA accounts",
+      "identified automated traffic",
+      "requests outside the preregistered corpus and deployment version",
+      "duplicate actor-query requests after the first request in a UTC day"
+    ]
+  },
+  "display_depth": 10,
+  "primary_outcome": {
+    "name": "successful_search_at_10",
+    "definition": "A request with at least one click, save, or positive explicit relevance judgment among the top 10 exposed results within 24 hours.",
+    "analysis": "two-sided intention-to-treat difference in proportions"
+  },
+  "secondary_outcomes": [
+    "CTR@10 using unique document clicks divided by impressions",
+    "save@10 using unique saves divided by impressions",
+    "positive explicit relevance rate among judged impressions",
+    "request latency p50 and p95",
+    "LLM provider failure rate",
+    "semantic component availability rate"
+  ],
+  "sample_size": {
+    "baseline_success_assumption": 0.2,
+    "minimum_detectable_absolute_difference": 0.04,
+    "two_sided_alpha": 0.05,
+    "power": 0.8,
+    "analyzable_requests_per_arm": 1700,
+    "total_analyzable_requests": 3400,
+    "stopping_rule": "Stop only when both arms reach 1700 eligible requests; no unregistered interim efficacy stopping."
+  },
+  "analysis_plan": {
+    "primary_model": "difference in successful-search proportions with 95% Wilson confidence interval",
+    "robustness": [
+      "cluster-robust logistic regression by keyed actor digest",
+      "authenticated-user-only subset",
+      "queries with successful provider expansion",
+      "cold-cache and warm-cache latency strata"
+    ],
+    "missing_feedback": "Missing explicit judgments are not treated as non-relevant; judgment rate is reported by arm.",
+    "multiple_testing": "Primary outcome is unadjusted; secondary outcomes are descriptive with Benjamini-Hochberg adjusted q-values."
+  },
+  "guardrails": {
+    "provider_failure_rate_max": 0.05,
+    "p95_latency_ms_max": 8000,
+    "raw_query_storage": false,
+    "traffic_before_freeze": 0
+  },
+  "required_artifacts": [
+    "deployment commit identifier",
+    "corpus checksum",
+    "SPECTER2 cache checksum",
+    "LLM provider, model, and immutable revision when available",
+    "frozen protocol checksum",
+    "daily arm counts and exclusion counts"
+  ]
+}

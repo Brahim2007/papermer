@@ -1,0 +1,263 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block content %}
+<style media="screen">
+  .dropright{
+    width:320px;
+  }
+  .dropright .dropdown-toggle{
+    width:100%
+  }
+  .dropright:hover > .dropdown-menu {
+    display: block;
+  }
+
+  .dropright > .dropdown-toggle:active {
+      pointer-events: none;
+  }
+  .add_tag{
+    transform: rotate(0deg)
+  }
+  .remove_tag{
+     transform: rotate(30deg)
+  }
+  .user_tag{
+    width: 50%
+  }
+  .btn-group{
+    width: 70%
+  }
+  @media only screen and (max-width: 600px) {
+    .container{
+      margin-top: 10px
+    }
+    .user_tag{
+      width: 60%
+    }
+  }
+</style>
+<body>
+  {% csrf_token %}
+  {% include 'nav.html' %}
+  <div class="container-fluid mt-2">
+    <div class="row">
+      <div class="col-12 col-lg-6">
+        {% for i,j in disciplines.items %}
+          <div class="dropright mx-xl-4 mx-auto">
+              <button class="btn btn btn-secondary my-1 dropdown-toggle text-left" type="button" id="{{i}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% trans i %}
+              </button>
+              <div class="dropdown-menu m-0" aria-labelledby="{{i}}">
+                {% for sub in j %}
+                  <a class="dropdown-item d-flex">
+                    {% trans sub %}
+                    <button class="btn btn-white ml-auto add_tag" disc="{{i}}" subd="{{sub}}" onclick="addTag(this)"><i class="fas fa-thumbtack"></i></button>
+                  </a>
+
+                {% endfor %}
+              </div>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="col-12 col-lg-6 user_tags">
+        <div class="d-flex mb-3" style="font-size:1.3em">{% trans "Your topics" %}:</div>
+        {% for sub in request.user.tags %}
+          <a class="d-flex user_tag" role="button" class="btn btn-outline-info" subd="{{sub}}">{% trans sub %}<button class="btn btn-white ml-auto remove_tag" disc="{{i}}" subd="{{sub}}" onclick="removeYourTopic(this)"><i class="fas fa-thumbtack"></i></button></a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    function addTag(ele) {
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'add_remove_topic' %}",
+        data: {add: 1,tag: $(ele).attr("subd"),csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()},
+        success: (res)=>{
+          // $(ele).removeClass("add_tag")
+          // $(ele).addClass("remove_tag")
+          // $(ele).attr("onclick","removeTag(this)")
+          // console.log($(".user_tags").find(`a`));
+          if($(".user_tags").find(`a[subd='${$(ele).attr("subd")}']`).length == 0){
+            $(".user_tags").append(`
+            <a class="d-flex user_tag" role="button" class="btn btn-outline-info" subd=${$(ele).attr("subd")}>
+              ${$(ele).attr("subd")}
+              <button class="btn btn-white ml-auto remove_tag" disc='${$(ele).attr("disc")}' subd='${$(ele).attr("subd")}' onclick="removeYourTopic(this)">
+                <i class="fas fa-thumbtack"></i>
+              </button>
+            </a>`
+            )
+          }
+        },
+        error: function(error,text,xhr){
+          console.log(error,text,xhr)
+        }
+      })
+    }
+    function removeTag(ele) {
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'add_remove_topic' %}",
+        data: {add: 0,tag: $(ele).attr("subd"),csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()},
+        success: (res)=>{
+          $(ele).removeClass("remove_tag")
+          $(ele).addClass("add_tag")
+          $(ele).attr("onclick","addTag(this)")
+
+          console.log($(".user_tags").find(`.user_tag[subd='${$(ele).attr("subd")}']`))
+        },
+        error: function(error,text,xhr){
+          console.log(error,text,xhr)
+        }
+      })
+    }
+    function removeYourTopic(ele) {
+      $.ajax({
+        type: 'POST',
+        url: "{% url 'add_remove_topic' %}",
+        data: {add: 0,tag: $(ele).attr("subd"),csrfmiddlewaretoken: $("input[name='csrfmiddlewaretoken']").val()},
+        success: (res)=>{
+          $(ele).parent().remove()
+        },
+        error: function(error,text,xhr){
+          console.log(error,text,xhr)
+        }
+      })
+    }
+  </script>
+<div class="well well-sm vertical-align">
+	<div class="row">
+		<div class="col-md-6">
+			<p class="md">
+
+<!-- Button trigger modal-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalScrollable">
+    About | Hakkında
+</button>
+
+<!-- Modal-->
+<div class="modal fade" id="exampleModalScrollable" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> About | Hakkında</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body" style="height: 900px;">
+
+			<!-- tjribi-->
+
+            <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">English</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Türkçe</a>
+  </li>
+</ul>
+<div class="tab-content" id="pills-tabContent">
+  <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
+  <style>
+div {
+  text-align: justify;
+  text-justify: inter-word;
+}
+</style>
+<b><font color="#9c0000">PaperMetrix - a personalized recommender for scientific literature</font></b>
+<div>
+<p>With the recent explosion in scientific publishing, how do you find the essential science that you need to read?</p>
+<p><b><font color="#dc3545">PaperMetrix is here to help you.</font></b></p>
+<p>PaperMetrix is a personalized recommender system that specifically aims to help researchers and practitioners in the scientific community parse through the large volume of literature and filter publications that may be relevant and of interest to them.</p>
+
+<p>PaperMetrix automatically sorts all new scientific papers into related topics and allows you to view the recent papers that are most likely to become influential in each topic. It is a cloud based service that uses novel algorithms to classify and cluster published using Topic Modeling.</p>
+<p>Researchers (our typical users) provide basic information like topics/keywords of interest and journal papers. Users can create multiple ‘libraries’ (for different projects) and upload papers to it directly from Mendeley.</p>
+
+<p>PaperMetrix provides a seamless interface to search the Mendeley database as well. Personalized recommendations based on relevancy, recency, up or down vote, comment and sentiment analysis are created daily and weekly email digests of relevant publications in your field of research are sent directly to your inbox.</span></p>
+
+<p>PaperMetrix also monitors the Twitter feed and tweets relevant to your field of interest are available in real time. When you "Like", "Vote” and "comment" papers this will help us to make better recommendations for you and for other users in future.</p>
+
+<p>The project of PaperMetrix is developed as the practical part of a PhD thesis in the Department of Libraries & Information Science at Istanbul University-Turkey- on the topic of Altmetric for scientific research.</p>
+
+<p><b>Disclaimer:</b></p> While PaperMetrix is powered by the Mendeley API, the two services are in no way affiliated to one another.</p>
+<p><b><font color="#9c0000">PaperMetrix Team</font></b></p>
+<b><a href="mailto:brahim.kertiou@ogr.iu.edu.tr">brahim.kertiou@ogr.iu.edu.tr</a></b></div>
+</div>
+  <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
+  <b><font color="#9c0000">PaperMetrix - bilimsel literatür için kişiselleştirilmiş bir tavsiye</font></b>
+<div>
+<p>Bilimsel yayıncılıkta son dönemde yaşanan patlama ile birlikte okumanız gereken makaleleri nasıl bulabilirsiniz?</p>
+<p><b><font color="#dc3545">PaperMetrix size yardımcı olmak için vardır.</font></b></p>
+<p>PaperMetrix, özellikle bilimsel topluluktaki araştırmacıların büyük hacimli literatürü incelemesine, ilgisini çekebilecek ve önemli olabilecek çok sayıda yayını analiz etmelerine ve filtrelemelerine yardım etmeyi amaçlayan kişiselleştirilmiş bir tavsiye sistemidir.</p>
+
+<p>PaperMetrix, tüm yeni bilimsel makaleleri otomatik olarak ilgili konulara göre ayırır ve her konuda etkili olma olasılığı en yüksek olan son makaleleri görüntülemenizi sağlar. PaperMetrix, yayınları sınıflandırmak ve kümlemek için konu modelleme yöntemi ile yeni algoritmalar kullanan bulut tabanlı bir hizmettir.</p>
+<p>Araştırmacılar (tipik kullanıcılarımız), ilgi konuları ve anahtar kelimeleri ve dergi makaleleri gibi temel bilgileri sağlar. Kullanıcılar birden fazla "kütüphane" (farklı projeler için) oluşturabilir  ve Mendeley'den makaleleri doğrudan  yükleyebilir.</p>
+
+<p>PaperMetrix, Mendeley veri tabanında da arama yapmak için kusursuz bir arayüz sağlar. Kişiselleştirilmiş öneriler, İlgi, yenilik, yukarı ve aşağı oylama, yorumlar ve duygu analizine göre oluşturulduktan sonra  her hafta araştırma alanınızla ilgili yayınların özetleri e-posta adresinize gönderilir. </span></p>
+
+<p>Ayrıca PaperMetrix, Twitter’deki tweetleri izler ve alanınızla ilgili o anki tweet'leri sunar. Makaleler  "Beğenmeniz", "Oy vermeniz" ve "yorum yapmanız", size ve gelecekte diğer kullanıcılar için daha iyi önerilerde bulunmamıza yardımcı olacaktır.</p>
+
+<p>PaperMetrix projesi, İstanbul Üniversitesi Edebiyat Fakültesi Bilgi ve Belge Yönetimi bölümünde bilimsel araştırmalar için Altmetrik konusu üzerinde hazırlanan doktora tezinin pratik bölümü olarak geliştirilmiştir.</p>
+
+<p><b>Feragatname:</b></p> PaperMetrix, Mendeley API'sı tarafından desteklenirken, iki hizmet hiçbir şekilde birbirine bağlı değildir.</p>
+<p><b><font color="#9c0000">PaperMetrix Ekibi</font></b></p>
+<b><a href="mailto:brahim.kertiou@ogr.iu.edu.tr">brahim.kertiou@ogr.iu.edu.tr</a></b></div>
+</div>
+
+</div>
+             <!-- tjribi-->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close | Kapat</button>
+             </div>
+        </div>
+    </div>
+</div>
+			</p>
+		</div>
+		<div class="col-md-6">
+			<p class="md">
+				<p><b>PaperMetrix Support:
+			<a href="mailto:brahim.kertiou@ogr.iu.edu.tr">brahim.kertiou@ogr.iu.edu.tr</a><br>© Copyright PaperMetrix 2021, all rights reserved.
+</p></b></p>
+		</div>
+	</div>
+  <style>
+.well {
+position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #f8f9fa!important;
+    background-clip: border-box;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+.well-sm {
+    padding: 9px;
+    border-radius: 3px;
+}
+@media (min-width: 992px)
+.col-md-1, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-10, .col-md-11, .col-md-12 {
+    float: left;
+}
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    position: relative;
+    min-height: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.col-md-6 {
+    width: 50%;
+}
+.md {
+    text-align: center;
+}
+  </style>
+  </div>
+</body>
+{% endblock %}

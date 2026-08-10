@@ -1,0 +1,1413 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PaperMetrix\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+msgid "Evidence-aware scientific paper discovery and recommendations."
+msgstr "اكتشاف الأوراق العلمية وتوصيتها بصورة واعية بالأدلة."
+
+msgid "Skip to content"
+msgstr "انتقل إلى المحتوى"
+
+msgid "PaperMetrix home"
+msgstr "الصفحة الرئيسية لـ PaperMetrix"
+
+msgid "Research"
+msgstr "بحث علمي"
+
+msgid "Toggle navigation"
+msgstr "فتح أو إغلاق قائمة التنقل"
+
+msgid "Primary navigation"
+msgstr "التنقل الرئيسي"
+
+msgid "Search papers"
+msgstr "البحث عن أوراق"
+
+msgid "Topics"
+msgstr "الموضوعات"
+
+msgid "For you"
+msgstr "لك"
+
+msgid "Library"
+msgstr "المكتبة"
+
+msgid "Change language"
+msgstr "تغيير اللغة"
+
+msgid "Research profile"
+msgstr "الملف البحثي"
+
+msgid "Saved papers"
+msgstr "الأوراق المحفوظة"
+
+msgid "Log out"
+msgstr "تسجيل الخروج"
+
+msgid "Log in"
+msgstr "تسجيل الدخول"
+
+msgid "Create account"
+msgstr "إنشاء حساب"
+
+msgid "Transparent scientific discovery, built for reproducible research."
+msgstr "اكتشاف علمي شفاف، مصمم للبحث القابل لإعادة الإنتاج."
+
+msgid "Search"
+msgstr "البحث"
+
+msgid "About"
+msgstr "عن المنصة"
+
+msgid "System status"
+msgstr "حالة النظام"
+
+msgid "Research prototype"
+msgstr "نموذج بحثي"
+
+msgid "Scientific paper discovery"
+msgstr "اكتشاف الأوراق العلمية"
+
+msgid "Search scientific papers and receive transparent, evidence-aware recommendations."
+msgstr "ابحث في الأوراق العلمية واحصل على توصيات شفافة وواعية بالأدلة."
+
+msgid "Abstract not available for this record."
+msgstr "الملخص غير متاح لهذا السجل."
+
+msgid "Scientific discovery, made traceable"
+msgstr "اكتشاف علمي يمكن تتبع أسبابه"
+
+msgid "Find the papers that move your"
+msgstr "اعثر على الأوراق التي تدفع"
+
+msgid "research forward."
+msgstr "بحثك إلى الأمام."
+
+msgid "Search scholarly metadata, explore related work, and receive recommendations whose retrieval method is visible—not hidden behind a black box."
+msgstr "ابحث في البيانات الوصفية العلمية، واستكشف الأعمال المرتبطة، واحصل على توصيات تُظهر طريقة الاسترجاع بدل إخفائها داخل صندوق أسود."
+
+msgid "Search scientific papers"
+msgstr "البحث في الأوراق العلمية"
+
+msgid "Search by question, topic, title, author, or DOI…"
+msgstr "ابحث بسؤال أو موضوع أو عنوان أو مؤلف أو DOI…"
+
+msgid "Research shortcuts"
+msgstr "اختصارات البحث"
+
+msgid "My recommendations"
+msgstr "توصياتي"
+
+msgid "Reading library"
+msgstr "مكتبة القراءة"
+
+msgid "Personalize recommendations"
+msgstr "تخصيص التوصيات"
+
+msgid "Explore topics"
+msgstr "استكشاف الموضوعات"
+
+msgid "How PaperMetrix works"
+msgstr "كيف تعمل PaperMetrix"
+
+msgid "Multiple scholarly sources"
+msgstr "مصادر علمية متعددة"
+
+msgid "OpenAlex, Semantic Scholar, Crossref, and arXiv."
+msgstr "OpenAlex وSemantic Scholar وCrossref وarXiv."
+
+msgid "Explainable retrieval"
+msgstr "استرجاع قابل للتفسير"
+
+msgid "BM25, SPECTER2, graph signals, and hybrid fusion."
+msgstr "BM25 وSPECTER2 وإشارات الرسم البياني والدمج الهجين."
+
+msgid "Temporal integrity"
+msgstr "سلامة زمنية"
+
+msgid "Evaluation that prevents future-paper leakage."
+msgstr "تقييم يمنع تسرب الأوراق المستقبلية."
+
+msgid "Fresh in the corpus"
+msgstr "الجديد في المجموعة"
+
+msgid "Recently indexed papers"
+msgstr "أوراق مفهرسة حديثًا"
+
+msgid "A live view of the newest records available to search and recommend."
+msgstr "عرض مباشر لأحدث السجلات المتاحة للبحث والتوصية."
+
+msgid "Browse all papers"
+msgstr "تصفح جميع الأوراق"
+
+msgid "Open access"
+msgstr "وصول مفتوح"
+
+msgid "View paper"
+msgstr "عرض الورقة"
+
+msgid "The corpus is ready for its first records."
+msgstr "المجموعة جاهزة لاستقبال سجلاتها الأولى."
+
+msgid "Run a registered ingestion scope to populate this section."
+msgstr "شغّل نطاق اقتناء مسجلًا لملء هذا القسم."
+
+msgid "Welcome back"
+msgstr "مرحبًا بعودتك"
+
+msgid "New to PaperMetrix?"
+msgstr "جديد في PaperMetrix؟"
+
+msgid "Create an account"
+msgstr "أنشئ حسابًا"
+
+msgid "Evidence, not noise"
+msgstr "أدلة، لا ضوضاء"
+
+msgid "Return to the research that matters."
+msgstr "عُد إلى البحث الذي يهمك."
+
+msgid "Search a curated corpus, revisit saved papers, and understand why every recommendation appears."
+msgstr "ابحث في مجموعة منسقة، وراجع أوراقك المحفوظة، وافهم سبب ظهور كل توصية."
+
+msgid "Transparent retrieval baselines behind every result."
+msgstr "خطوط استرجاع أساسية شفافة وراء كل نتيجة."
+
+msgid "Email address"
+msgstr "البريد الإلكتروني"
+
+msgid "Password"
+msgstr "كلمة المرور"
+
+msgid "Forgot password?"
+msgstr "نسيت كلمة المرور؟"
+
+msgid "Show"
+msgstr "إظهار"
+
+msgid "Hide"
+msgstr "إخفاء"
+
+msgid "Keep me signed in on this device"
+msgstr "إبقائي مسجلًا على هذا الجهاز"
+
+msgid "Log in securely"
+msgstr "تسجيل دخول آمن"
+
+msgid "Protected by rate limiting and secure sessions."
+msgstr "محمي بتقييد المحاولات وجلسات آمنة."
+
+msgid "The email address or password is incorrect."
+msgstr "البريد الإلكتروني أو كلمة المرور غير صحيحة."
+
+msgid "Your research compass"
+msgstr "بوصلتك البحثية"
+
+msgid "Build a reading stream around your questions."
+msgstr "ابنِ مسار قراءة حول أسئلتك."
+
+msgid "Tell us what you study, then refine recommendations using explicit feedback and reproducible retrieval methods."
+msgstr "أخبرنا بما تدرسه، ثم حسّن التوصيات بالتغذية الراجعة الصريحة وطرق الاسترجاع القابلة لإعادة الإنتاج."
+
+msgid "Open metadata from scholarly sources, kept provenance-aware."
+msgstr "بيانات وصفية مفتوحة من مصادر علمية مع حفظ مصدرها."
+
+msgid "Create your account"
+msgstr "أنشئ حسابك"
+
+msgid "Already registered?"
+msgstr "لديك حساب؟"
+
+msgid "Full name"
+msgstr "الاسم الكامل"
+
+msgid "Research role"
+msgstr "الدور البحثي"
+
+msgid "Confirm password"
+msgstr "تأكيد كلمة المرور"
+
+msgid "Use at least eight characters and avoid common passwords."
+msgstr "استخدم ثمانية أحرف على الأقل وتجنب كلمات المرور الشائعة."
+
+msgid "Create account and personalize"
+msgstr "إنشاء الحساب وتخصيصه"
+
+msgid "Next: choose topics, keywords, and authors. You can change them later."
+msgstr "التالي: اختر الموضوعات والكلمات المفتاحية والمؤلفين. يمكنك تعديلها لاحقًا."
+
+msgid "Your account is ready. Add a few interests to improve your recommendations."
+msgstr "حسابك جاهز. أضف بعض الاهتمامات لتحسين توصياتك."
+
+msgid "You have been signed out safely."
+msgstr "تم تسجيل خروجك بأمان."
+
+msgid "Personalize retrieval"
+msgstr "تخصيص الاسترجاع"
+
+msgid "Shape your research profile."
+msgstr "شكّل ملفك البحثي."
+
+msgid "A few precise signals are more useful than a long generic profile. Every choice remains editable."
+msgstr "إشارات قليلة ودقيقة أفضل من ملف طويل وعام. ويمكن تعديل كل اختيار."
+
+msgid "Profile signal"
+msgstr "قوة الملف"
+
+msgid "Profile steps"
+msgstr "خطوات الملف"
+
+msgid "Keywords"
+msgstr "الكلمات المفتاحية"
+
+msgid "Authors"
+msgstr "المؤلفون"
+
+msgid "What fields do you work in?"
+msgstr "في أي مجالات تعمل؟"
+
+msgid "Choose focused subfields. These signals guide candidate generation and recommendations."
+msgstr "اختر تخصصات فرعية مركزة. توجه هذه الإشارات توليد المرشحين والتوصيات."
+
+msgid "Which concepts define your work?"
+msgstr "ما المفاهيم التي تحدد عملك؟"
+
+msgid "Add specific methods, datasets, problems, or theoretical concepts—one at a time."
+msgstr "أضف طرقًا أو مجموعات بيانات أو مشكلات أو مفاهيم نظرية محددة، عنصرًا واحدًا كل مرة."
+
+msgid "Research keyword"
+msgstr "كلمة مفتاحية بحثية"
+
+msgid "e.g. neural information retrieval"
+msgstr "مثال: استرجاع المعلومات العصبي"
+
+msgid "Add keyword"
+msgstr "إضافة كلمة"
+
+msgid "No keywords added yet."
+msgstr "لم تُضف كلمات مفتاحية بعد."
+
+msgid "Whose work do you follow?"
+msgstr "أعمال من تتابع؟"
+
+msgid "Add full author names to strengthen recommendations around your scholarly neighborhood."
+msgstr "أضف أسماء المؤلفين كاملة لتقوية التوصيات داخل محيطك العلمي."
+
+msgid "Author full name"
+msgstr "الاسم الكامل للمؤلف"
+
+msgid "e.g. Karen Spärck Jones"
+msgstr "مثال: Karen Spärck Jones"
+
+msgid "Add author"
+msgstr "إضافة مؤلف"
+
+msgid "No authors added yet."
+msgstr "لم تُضف مؤلفين بعد."
+
+msgid "Step 1 of 3"
+msgstr "الخطوة 1 من 3"
+
+msgid "Previous"
+msgstr "السابق"
+
+msgid "Next step"
+msgstr "الخطوة التالية"
+
+msgid "Reset password"
+msgstr "إعادة تعيين كلمة المرور"
+
+msgid "Account recovery"
+msgstr "استعادة الحساب"
+
+msgid "Get back to your reading stream."
+msgstr "عُد إلى مسار قراءتك."
+
+msgid "We will send a time-limited recovery link if an active account matches the address."
+msgstr "سنرسل رابط استعادة محدود المدة إذا طابق العنوان حسابًا نشطًا."
+
+msgid "Reset your password"
+msgstr "أعد تعيين كلمة مرورك"
+
+msgid "Enter the email address used for your account."
+msgstr "أدخل البريد الإلكتروني المستخدم في حسابك."
+
+msgid "Send recovery link"
+msgstr "إرسال رابط الاستعادة"
+
+msgid "Back to login"
+msgstr "العودة إلى تسجيل الدخول"
+
+msgid "Check your email"
+msgstr "تحقق من بريدك"
+
+msgid "Recovery email requested"
+msgstr "تم طلب بريد الاستعادة"
+
+msgid "If an active account matches that address, a reset link is on its way. Also check your spam folder."
+msgstr "إذا طابق العنوان حسابًا نشطًا فسيصل رابط الاستعادة. تحقق أيضًا من مجلد الرسائل غير المرغوبة."
+
+msgid "Return to login"
+msgstr "العودة إلى تسجيل الدخول"
+
+msgid "Choose a new password"
+msgstr "اختر كلمة مرور جديدة"
+
+msgid "Set new password"
+msgstr "تعيين كلمة مرور جديدة"
+
+msgid "Use a password you do not reuse on another service."
+msgstr "استخدم كلمة مرور لا تعيد استخدامها في خدمة أخرى."
+
+msgid "Update password"
+msgstr "تحديث كلمة المرور"
+
+msgid "This link is no longer valid"
+msgstr "لم يعد هذا الرابط صالحًا"
+
+msgid "Request another link"
+msgstr "طلب رابط آخر"
+
+msgid "Password updated"
+msgstr "تم تحديث كلمة المرور"
+
+msgid "You can now sign in with your new password."
+msgstr "يمكنك الآن تسجيل الدخول بكلمة مرورك الجديدة."
+
+msgid "Scholarly search"
+msgstr "بحث علمي"
+
+msgid "Search the PaperMetrix corpus"
+msgstr "ابحث في مجموعة PaperMetrix"
+
+msgid "Find papers by title, abstract, venue, or author. Results currently use transparent metadata matching."
+msgstr "اعثر على الأوراق بالعنوان أو الملخص أو جهة النشر أو المؤلف. تستخدم النتائج حاليًا مطابقة شفافة للبيانات الوصفية."
+
+msgid "Enter a research question, title, author, or DOI…"
+msgstr "أدخل سؤالًا بحثيًا أو عنوانًا أو مؤلفًا أو DOI…"
+
+msgid "Metadata search"
+msgstr "بحث في البيانات الوصفية"
+
+msgid "About this ranking"
+msgstr "حول هذا الترتيب"
+
+msgid "This public search matches indexed metadata. Experimental BM25, SPECTER2, graph, and hybrid runs remain versioned separately for reproducible evaluation."
+msgstr "يطابق البحث العام البيانات الوصفية المفهرسة. وتبقى تجارب BM25 وSPECTER2 والرسم البياني والدمج الهجين منفصلة بإصداراتها لضمان تقييم قابل لإعادة الإنتاج."
+
+msgid "Retracted"
+msgstr "مسحوبة"
+
+msgid "Authors unavailable"
+msgstr "المؤلفون غير متاحين"
+
+msgid "View details"
+msgstr "عرض التفاصيل"
+
+msgid "No matching papers found."
+msgstr "لم نعثر على أوراق مطابقة."
+
+msgid "Try a broader concept, a shorter title, or an author’s full name."
+msgstr "جرّب مفهومًا أوسع أو عنوانًا أقصر أو الاسم الكامل للمؤلف."
+
+msgid "Start with a research question"
+msgstr "ابدأ بسؤال بحثي"
+
+msgid "Use a topic, paper title, author name, venue, or DOI."
+msgstr "استخدم موضوعًا أو عنوان ورقة أو اسم مؤلف أو جهة نشر أو DOI."
+
+msgid "Inspect the evidence"
+msgstr "افحص الأدلة"
+
+msgid "Open a result to review metadata, provenance, and related papers."
+msgstr "افتح نتيجة لمراجعة البيانات الوصفية والمصدر والأوراق المرتبطة."
+
+msgid "Build your library"
+msgstr "ابنِ مكتبتك"
+
+msgid "Save useful papers and use them as seeds for future recommendations."
+msgstr "احفظ الأوراق المفيدة واستخدمها كبذور للتوصيات المستقبلية."
+
+msgid "%(counter)s citation"
+msgid_plural "%(counter)s citations"
+msgstr[0] "لا استشهادات"
+msgstr[1] "استشهاد واحد"
+msgstr[2] "استشهادان"
+msgstr[3] "%(counter)s استشهادات"
+msgstr[4] "%(counter)s استشهادًا"
+msgstr[5] "%(counter)s استشهاد"
+
+msgid "%(counter)s result"
+msgid_plural "%(counter)s results"
+msgstr[0] "لا نتائج"
+msgstr[1] "نتيجة واحدة"
+msgstr[2] "نتيجتان"
+msgstr[3] "%(counter)s نتائج"
+msgstr[4] "%(counter)s نتيجة"
+msgstr[5] "%(counter)s نتيجة"
+
+msgid "for “%(query)s”"
+msgstr "عن «%(query)s»"
+
+# Phase 2 research workspace
+msgid "Breadcrumb"
+msgstr "مسار التنقل"
+
+msgid "Paper details"
+msgstr "تفاصيل الورقة"
+
+msgid "Paper status"
+msgstr "حالة الورقة"
+
+msgid "Open access"
+msgstr "وصول مفتوح"
+
+msgid "Paper metrics"
+msgstr "مقاييس الورقة"
+
+msgid "Citations"
+msgstr "الاستشهادات"
+
+msgid "References"
+msgstr "المراجع"
+
+msgid "No abstract is available for this record."
+msgstr "لا يتوفر ملخص لهذا السجل."
+
+msgid "Access and identifiers"
+msgstr "الوصول والمعرّفات"
+
+msgid "Open PDF"
+msgstr "فتح PDF"
+
+msgid "opens in a new tab"
+msgstr "يفتح في علامة تبويب جديدة"
+
+msgid "Publisher page"
+msgstr "صفحة الناشر"
+
+msgid "Community"
+msgstr "المجتمع"
+
+msgid "Publish comment"
+msgstr "نشر التعليق"
+
+msgid "to join the discussion."
+msgstr "للانضمام إلى النقاش."
+
+msgid "No comments yet. Start the discussion."
+msgstr "لا توجد تعليقات بعد. ابدأ النقاش."
+
+msgid "Paper actions"
+msgstr "إجراءات الورقة"
+
+msgid "Save to library"
+msgstr "حفظ في المكتبة"
+
+msgid "Choose a library"
+msgstr "اختر مكتبة"
+
+msgid "Save paper"
+msgstr "حفظ الورقة"
+
+msgid "Create your first library"
+msgstr "أنشئ مكتبتك الأولى"
+
+msgid "Discovery"
+msgstr "الاكتشاف"
+
+msgid "Ranked from this paper's title, abstract, keywords, and source. This is a similarity signal, not a quality judgment."
+msgstr "مرتبة انطلاقًا من عنوان الورقة وملخصها وكلماتها المفتاحية ومصدرها. هذا مؤشر تشابه وليس حكمًا على الجودة."
+
+msgid "No similar papers are available yet."
+msgstr "لا تتوفر أوراق مشابهة بعد."
+
+msgid "Author"
+msgstr "المؤلف"
+
+msgid "Researcher profile"
+msgstr "ملف الباحث"
+
+msgid "Publications"
+msgstr "المنشورات"
+
+msgid "Papers by this author"
+msgstr "أوراق هذا المؤلف"
+
+msgid "No papers found"
+msgstr "لم نعثر على أوراق"
+
+msgid "This author does not have papers in the current corpus."
+msgstr "لا توجد لهذا المؤلف أوراق في المجموعة الحالية."
+
+msgid "Your library"
+msgstr "مكتبتك"
+
+msgid "Workspace"
+msgstr "مساحة العمل"
+
+msgid "Your libraries"
+msgstr "مكتباتك"
+
+msgid "Organize papers into focused collections and discover related work from each collection."
+msgstr "نظّم الأوراق في مجموعات مركزة واكتشف الأعمال المرتبطة بكل مجموعة."
+
+msgid "New library"
+msgstr "مكتبة جديدة"
+
+msgid "Open collection"
+msgstr "فتح المجموعة"
+
+msgid "Build your first research collection"
+msgstr "أنشئ مجموعتك البحثية الأولى"
+
+msgid "Create a library, then save papers to keep related evidence together."
+msgstr "أنشئ مكتبة ثم احفظ الأوراق لتجميع الأدلة المرتبطة."
+
+msgid "Create a library"
+msgstr "إنشاء مكتبة"
+
+msgid "New collection"
+msgstr "مجموعة جديدة"
+
+msgid "Library name"
+msgstr "اسم المكتبة"
+
+msgid "Close dialog"
+msgstr "إغلاق النافذة"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Create library"
+msgstr "إنشاء المكتبة"
+
+msgid "Delete library?"
+msgstr "حذف المكتبة؟"
+
+msgid "Delete library"
+msgstr "حذف المكتبة"
+
+msgid "Research collection"
+msgstr "مجموعة بحثية"
+
+msgid "Saved evidence"
+msgstr "الأدلة المحفوظة"
+
+msgid "Papers in this library"
+msgstr "أوراق هذه المكتبة"
+
+msgid "This library is empty"
+msgstr "هذه المكتبة فارغة"
+
+msgid "Open a paper and save it here to start a focused collection."
+msgstr "افتح ورقة واحفظها هنا لبدء مجموعة مركزة."
+
+msgid "Search papers"
+msgstr "البحث عن أوراق"
+
+msgid "Collection discovery"
+msgstr "اكتشاف المجموعة"
+
+msgid "Related to this library"
+msgstr "مرتبط بهذه المكتبة"
+
+msgid "Generated from the titles saved in this collection. Results may change as the corpus grows."
+msgstr "مولّدة من العناوين المحفوظة في هذه المجموعة. قد تتغير النتائج مع نمو مجموعة البيانات."
+
+msgid "Finding related papers…"
+msgstr "جارٍ العثور على أوراق مرتبطة…"
+
+msgid "Add papers to this library to generate recommendations."
+msgstr "أضف أوراقًا إلى هذه المكتبة لتوليد التوصيات."
+
+msgid "Recommendations could not be loaded. Try again later."
+msgstr "تعذر تحميل التوصيات. حاول لاحقًا."
+
+msgid "Research topics"
+msgstr "الموضوعات البحثية"
+
+msgid "Recommendation profile"
+msgstr "ملف التوصيات"
+
+msgid "Shape your research feed"
+msgstr "شكّل موجزك البحثي"
+
+msgid "Select focused topics to improve personalized retrieval. You can change these choices at any time."
+msgstr "اختر موضوعات مركزة لتحسين الاسترجاع المخصص. يمكنك تغييرها في أي وقت."
+
+msgid "View recommendations"
+msgstr "عرض التوصيات"
+
+msgid "Browse"
+msgstr "استعراض"
+
+msgid "Topics by discipline"
+msgstr "الموضوعات حسب التخصص"
+
+msgid "Your profile"
+msgstr "ملفك"
+
+msgid "Selected topics"
+msgstr "الموضوعات المختارة"
+
+msgid "These signals guide your personalized ranking."
+msgstr "توجّه هذه الإشارات ترتيبك المخصص."
+
+msgid "Remove topic"
+msgstr "إزالة الموضوع"
+
+msgid "No topics selected yet."
+msgstr "لم تختر موضوعات بعد."
+
+msgid "Your recommendations"
+msgstr "توصياتك"
+
+msgid "Personalized discovery"
+msgstr "اكتشاف مخصص"
+
+msgid "A ranked research feed built from your selected topics, keywords, and authors."
+msgstr "موجز بحثي مرتب مبني على موضوعاتك وكلماتك المفتاحية ومؤلفيك المختارين."
+
+msgid "Edit research profile"
+msgstr "تعديل الملف البحثي"
+
+msgid "How this ranking works"
+msgstr "كيف يعمل هذا الترتيب"
+
+msgid "PaperMetrix retrieves candidates for each profile signal, removes duplicates, then combines their ranks with reciprocal rank fusion. Scores express ranking evidence, not paper quality."
+msgstr "يسترجع PaperMetrix مرشحين لكل إشارة في الملف، ويزيل التكرار، ثم يدمج الرتب بطريقة الدمج العكسي للرتب. تعبّر الدرجات عن دليل الترتيب لا عن جودة الورقة."
+
+msgid "Ranked feed"
+msgstr "الموجز المرتب"
+
+msgid "Papers selected for you"
+msgstr "أوراق مختارة لك"
+
+msgid "Building your recommendations…"
+msgstr "جارٍ بناء توصياتك…"
+
+msgid "Tell us what you study"
+msgstr "أخبرنا بما تدرسه"
+
+msgid "Add topics, keywords, or authors to create your personalized feed."
+msgstr "أضف موضوعات أو كلمات مفتاحية أو مؤلفين لإنشاء موجزك المخصص."
+
+msgid "Set research interests"
+msgstr "تحديد الاهتمامات البحثية"
+
+msgid "Recommendations are temporarily unavailable"
+msgstr "التوصيات غير متاحة مؤقتًا"
+
+msgid "Please try again in a moment."
+msgstr "يرجى المحاولة بعد قليل."
+
+msgid "Try again"
+msgstr "حاول مرة أخرى"
+
+msgid "Show more papers"
+msgstr "عرض مزيد من الأوراق"
+
+msgid "1 saved paper"
+msgid_plural "%(counter)s saved papers"
+msgstr[0] "لا أوراق محفوظة"
+msgstr[1] "ورقة محفوظة واحدة"
+msgstr[2] "ورقتان محفوظتان"
+msgstr[3] "%(counter)s أوراق محفوظة"
+msgstr[4] "%(counter)s ورقة محفوظة"
+msgstr[5] "%(counter)s ورقة محفوظة"
+
+msgid "1 paper in the PaperMetrix corpus"
+msgid_plural "%(counter)s papers in the PaperMetrix corpus"
+msgstr[0] "لا أوراق في مجموعة PaperMetrix"
+msgstr[1] "ورقة واحدة في مجموعة PaperMetrix"
+msgstr[2] "ورقتان في مجموعة PaperMetrix"
+msgstr[3] "%(counter)s أوراق في مجموعة PaperMetrix"
+msgstr[4] "%(counter)s ورقة في مجموعة PaperMetrix"
+msgstr[5] "%(counter)s ورقة في مجموعة PaperMetrix"
+
+msgid "Search by research question, title, venue, or author with a transparent hybrid retrieval pipeline."
+msgstr "ابحث بالسؤال البحثي أو العنوان أو جهة النشر أو المؤلف عبر مسار استرجاع هجين وشفاف."
+
+msgid "Metadata fallback"
+msgstr "بحث احتياطي في البيانات الوصفية"
+
+msgid "Live results combine BM25 and TF-IDF with reciprocal rank fusion. When the registered SPECTER2 cache is available, dense semantic ranking joins the fusion and is identified explicitly."
+msgstr "تجمع النتائج الحية بين BM25 وTF-IDF بدمج الرتب العكسي. وعند توفر ذاكرة SPECTER2 المسجلة، ينضم الترتيب الدلالي الكثيف إلى الدمج ويُعرّف بوضوح."
+
+msgid "Search scholarly literature with transparent lexical, semantic, and hybrid retrieval."
+msgstr "ابحث في الأدبيات العلمية باسترجاع لفظي ودلالي وهجين شفاف."
+
+msgid "Transparent scholarly retrieval"
+msgstr "استرجاع علمي شفاف"
+
+msgid "Search by the idea—not only the exact words."
+msgstr "ابحث بالفكرة، لا بالكلمات المطابقة فقط."
+
+msgid "Ask a research question or enter a title, author, venue, or DOI. PaperMetrix combines lexical precision with semantic similarity and shows the evidence behind the ranking."
+msgstr "اطرح سؤالًا بحثيًا أو أدخل عنوانًا أو مؤلفًا أو جهة نشر أو DOI. يجمع PaperMetrix بين الدقة اللفظية والتشابه الدلالي ويعرض الأدلة التي يستند إليها الترتيب."
+
+msgid "Try"
+msgstr "جرّب"
+
+msgid "hybrid paper recommendation"
+msgstr "توصية هجينة بالأوراق البحثية"
+
+msgid "explainable AI in healthcare"
+msgstr "الذكاء الاصطناعي القابل للتفسير في الرعاية الصحية"
+
+msgid "systematic review guidelines"
+msgstr "إرشادات المراجعات المنهجية"
+
+msgid "Refine results"
+msgstr "تصفية النتائج"
+
+msgid "From year"
+msgstr "من سنة"
+
+msgid "To year"
+msgstr "إلى سنة"
+
+msgid "Paper type"
+msgstr "نوع الورقة"
+
+msgid "All types"
+msgstr "كل الأنواع"
+
+msgid "Source or venue"
+msgstr "المصدر أو جهة النشر"
+
+msgid "All sources"
+msgstr "كل المصادر"
+
+msgid "Minimum citations"
+msgstr "الحد الأدنى للاستشهادات"
+
+msgid "Open access only"
+msgstr "الوصول المفتوح فقط"
+
+msgid "Clear filters"
+msgstr "مسح المرشحات"
+
+msgid "Exact concepts"
+msgstr "المفاهيم الدقيقة"
+
+msgid "Semantic meaning"
+msgstr "المعنى الدلالي"
+
+msgid "Evidence fusion"
+msgstr "دمج الأدلة"
+
+msgid "Use LLM query expansion for this internal search"
+msgstr "استخدام توسيع الاستعلام بـLLM لهذا البحث الداخلي"
+
+msgid "Staff-only test. The public allocation remains 0%; cost and provider latency are recorded."
+msgstr "اختبار مخصص للموظفين. تظل النسبة العامة 0%، مع تسجيل التكلفة وزمن استجابة المزود."
+
+msgid "Quick-save destination"
+msgstr "وجهة الحفظ السريع"
+
+msgid "Create a library to save papers directly from search."
+msgstr "أنشئ مكتبة لحفظ الأوراق مباشرة من البحث."
+
+msgid "Ranking evidence"
+msgstr "أدلة الترتيب"
+
+msgid "Why these results?"
+msgstr "لماذا ظهرت هذه النتائج؟"
+
+msgid "PaperMetrix keeps independent signals separate before combining their ranks. Open any live result's explanation to inspect component positions."
+msgstr "يبقي PaperMetrix إشارات الاسترجاع مستقلة قبل دمج رتبها. افحص تفسير أي نتيجة حية لمعرفة رتبة كل مكوّن."
+
+msgid "Terms and phrases"
+msgstr "المصطلحات والعبارات"
+
+msgid "Scholarly semantics"
+msgstr "الدلالة العلمية"
+
+msgid "Rank-level fusion"
+msgstr "دمج على مستوى الرتب"
+
+msgid "Explore the methodology"
+msgstr "استكشف المنهجية"
+
+msgid "Metadata match"
+msgstr "مطابقة البيانات الوصفية"
+
+msgid "Matched title, abstract, author, or source fields. The live hybrid ranking replaces this fallback when available."
+msgstr "مطابقة في حقول العنوان أو الملخص أو المؤلف أو المصدر. يستبدل الترتيب الهجين الحي هذه النتيجة الاحتياطية عند توفره."
+
+msgid "Inspect paper"
+msgstr "فحص الورقة"
+
+msgid "Save"
+msgstr "حفظ"
+
+msgid "Try a broader concept, remove a constraint, or search with an author's full name."
+msgstr "جرّب مفهومًا أوسع أو أزل أحد القيود أو ابحث بالاسم الكامل للمؤلف."
+
+msgid "Built for research questions"
+msgstr "مصمم للأسئلة البحثية"
+
+msgid "One search surface, three kinds of evidence."
+msgstr "واجهة بحث واحدة وثلاثة أنواع من الأدلة."
+
+msgid "Start broad, inspect why each paper ranked, then save useful evidence as a seed for future recommendations."
+msgstr "ابدأ بنطاق واسع، وافحص سبب ترتيب كل ورقة، ثم احفظ الأدلة المفيدة كبذرة لتوصيات لاحقة."
+
+msgid "Describe the information need"
+msgstr "صف الحاجة المعلوماتية"
+
+msgid "Natural-language questions, exact titles, authors, venues, and identifiers are supported."
+msgstr "يدعم النظام أسئلة اللغة الطبيعية والعناوين الدقيقة والمؤلفين وجهات النشر والمعرّفات."
+
+msgid "Inspect ranking evidence"
+msgstr "افحص أدلة الترتيب"
+
+msgid "See matched terms and the component rank contributed by each retrieval channel."
+msgstr "اطّلع على المصطلحات المطابقة والرتبة التي ساهمت بها كل قناة استرجاع."
+
+msgid "Turn results into a trail"
+msgstr "حوّل النتائج إلى مسار بحثي"
+
+msgid "Save papers, revisit them, and use explicit feedback to study recommendation behavior."
+msgstr "احفظ الأوراق وارجع إليها واستخدم التغذية الراجعة الصريحة لدراسة سلوك التوصية."
+
+msgid "Describe the paper, method, problem, or evidence you need…"
+msgstr "صف الورقة أو المنهج أو المشكلة أو الدليل الذي تحتاجه…"
+
+msgid "Example searches"
+msgstr "أمثلة للبحث"
+
+msgid "Retrieval pipeline"
+msgstr "مسار الاسترجاع"
+
+msgid "Internal LLM experiment"
+msgstr "تجربة LLM داخلية"
+
+msgid "How ranking works"
+msgstr "كيف يعمل الترتيب"
+
+msgid "About PaperMetrix"
+msgstr "حول PaperMetrix"
+
+msgid "Learn how PaperMetrix makes scientific paper retrieval transparent, reproducible, and evaluation-ready."
+msgstr "تعرّف إلى كيفية جعل PaperMetrix استرجاع الأوراق العلمية شفافًا وقابلًا لإعادة الإنتاج وجاهزًا للتقييم."
+
+msgid "A research system, not a black box"
+msgstr "نظام بحثي، لا صندوق أسود"
+
+msgid "Scientific discovery should be explainable, testable, and honest about uncertainty."
+msgstr "ينبغي أن يكون الاكتشاف العلمي قابلًا للتفسير والاختبار وصريحًا بشأن عدم اليقين."
+
+msgid "PaperMetrix is a research platform for retrieving and recommending scientific papers. It combines established information-retrieval methods with modern scholarly embeddings, while preserving the evidence needed to understand and evaluate every ranking."
+msgstr "PaperMetrix منصة بحثية لاسترجاع الأوراق العلمية والتوصية بها. تجمع بين أساليب استرجاع المعلومات الراسخة والتمثيلات العلمية الحديثة، مع حفظ الأدلة اللازمة لفهم كل ترتيب وتقييمه."
+
+msgid "Search the corpus"
+msgstr "ابحث في المجموعة"
+
+msgid "See how it works"
+msgstr "شاهد كيف يعمل"
+
+msgid "Transparent fusion"
+msgstr "دمج شفاف"
+
+msgid "Lexical"
+msgstr "لفظي"
+
+msgid "Semantic"
+msgstr "دلالي"
+
+msgid "Citation"
+msgstr "استشهادات"
+
+msgid "Papers"
+msgstr "الأوراق"
+
+msgid "Scholarly sources"
+msgstr "المصادر العلمية"
+
+msgid "Open-access records"
+msgstr "سجلات الوصول المفتوح"
+
+msgid "Our philosophy"
+msgstr "فلسفتنا"
+
+msgid "Useful recommendations require visible evidence."
+msgstr "التوصيات المفيدة تحتاج إلى أدلة ظاهرة."
+
+msgid "A ranking can be helpful without pretending to be an objective measure of scientific quality."
+msgstr "يمكن للترتيب أن يكون مفيدًا دون الادعاء بأنه مقياس موضوعي للجودة العلمية."
+
+msgid "Traceable by design"
+msgstr "قابل للتتبع بحكم التصميم"
+
+msgid "Component ranks, matched terms, retrieval methods, latency, and experiment identifiers are recorded instead of hidden."
+msgstr "تُسجل رتب المكونات والمصطلحات المطابقة وطرق الاسترجاع وزمن الاستجابة ومعرّفات التجارب بدلًا من إخفائها."
+
+msgid "Time-aware evaluation"
+msgstr "تقييم واعٍ بالزمن"
+
+msgid "Temporal benchmarks prevent a system from recommending papers that did not exist at the simulated query date."
+msgstr "تمنع المعايير الزمنية النظام من التوصية بأوراق لم تكن موجودة في تاريخ الاستعلام المحاكى."
+
+msgid "Humans remain the judge"
+msgstr "يبقى الإنسان هو الحَكم"
+
+msgid "Offline metrics and interaction logs support analysis, but independent relevance judgments remain essential for publishable claims."
+msgstr "تدعم المقاييس غير المتصلة وسجلات التفاعل التحليل، لكن أحكام الصلة المستقلة تظل ضرورية لادعاءات قابلة للنشر."
+
+msgid "How it works"
+msgstr "كيف يعمل"
+
+msgid "From fragmented metadata to an inspectable ranking."
+msgstr "من بيانات وصفية مجزأة إلى ترتيب قابل للفحص."
+
+msgid "Acquire"
+msgstr "الاكتساب"
+
+msgid "OpenAlex, Semantic Scholar, Crossref, arXiv, and Unpaywall contribute complementary metadata and access signals."
+msgstr "توفر OpenAlex وSemantic Scholar وCrossref وarXiv وUnpaywall بيانات وصفية وإشارات وصول متكاملة."
+
+msgid "Normalize"
+msgstr "التوحيد"
+
+msgid "DOIs and source identifiers are reconciled into a canonical scholarly record with provenance and missing-data reasons."
+msgstr "تُطابق معرّفات DOI ومعرّفات المصادر في سجل علمي موحد يحفظ المصدر وأسباب فقدان البيانات."
+
+msgid "Retrieve"
+msgstr "الاسترجاع"
+
+msgid "BM25 captures exact terminology; SPECTER2 captures scholarly meaning; graph signals can contribute citation structure."
+msgstr "يلتقط BM25 المصطلحات الدقيقة، ويلتقط SPECTER2 المعنى العلمي، ويمكن لإشارات الرسم البياني أن تضيف بنية الاستشهادات."
+
+msgid "Fuse and explain"
+msgstr "الدمج والتفسير"
+
+msgid "Reciprocal Rank Fusion combines positions without pretending that unrelated score scales are directly comparable."
+msgstr "يدمج RRF مواضع النتائج دون افتراض إمكان مقارنة مقاييس درجات مختلفة مباشرة."
+
+msgid "Evaluate"
+msgstr "التقييم"
+
+msgid "Frozen splits, request-level telemetry, independent judgments, and reproducible artifacts connect results to defensible claims."
+msgstr "تربط التقسيمات المجمدة وقياسات كل طلب والأحكام المستقلة والآثار القابلة لإعادة الإنتاج النتائج بادعاءات يمكن الدفاع عنها."
+
+msgid "What is new here"
+msgstr "ما الجديد هنا"
+
+msgid "LLMs are an auditable channel—not the foundation of truth."
+msgstr "نماذج LLM قناة قابلة للتدقيق، وليست أساس الحقيقة."
+
+msgid "PaperMetrix introduces generative models only where they can be isolated, disabled, priced, and compared against a fixed baseline."
+msgstr "يُدخل PaperMetrix النماذج التوليدية فقط حيث يمكن عزلها وتعطيلها وحساب تكلفتها ومقارنتها بخط أساس ثابت."
+
+msgid "Independent LLM expansion"
+msgstr "توسيع مستقل عبر LLM"
+
+msgid "Query expansion is versioned by model and prompt, protected by budgets and circuit breakers, and currently restricted to staff experiments."
+msgstr "يُصدر توسيع الاستعلام حسب النموذج والموجه، وتحميه حدود الميزانية وقواطع الأعطال، وهو حاليًا مقصور على تجارب الموظفين."
+
+msgid "Hybrid retrieval with provenance"
+msgstr "استرجاع هجين مع حفظ المصدر"
+
+msgid "Lexical, semantic, and graph channels remain independently observable before fusion."
+msgstr "تظل القنوات اللفظية والدلالية والبيانية قابلة للرصد بصورة مستقلة قبل الدمج."
+
+msgid "Publication-ready evaluation"
+msgstr "تقييم جاهز للنشر"
+
+msgid "Temporal integrity, frozen development/test partitions, pooling, agreement, and cost/latency reporting are first-class parts of the platform."
+msgstr "السلامة الزمنية وتقسيمات التطوير والاختبار المجمدة والتجميع والاتفاق وتقارير التكلفة وزمن الاستجابة أجزاء أساسية من المنصة."
+
+msgid "Online and offline connection"
+msgstr "ربط التقييم المتصل وغير المتصل"
+
+msgid "Impressions, clicks, saves, and relevance feedback can be linked to the exact retrieval request without turning behavior into automatic truth."
+msgstr "يمكن ربط مرات الظهور والنقر والحفظ وتغذية الصلة بالطلب الدقيق دون تحويل السلوك إلى حقيقة آلية."
+
+msgid "A clear boundary"
+msgstr "حدود واضحة"
+
+msgid "What PaperMetrix does—and does not do."
+msgstr "ما الذي يفعله PaperMetrix، وما الذي لا يفعله."
+
+msgid "It helps you"
+msgstr "يساعدك على"
+
+msgid "find related and topically relevant literature"
+msgstr "العثور على أدبيات مترابطة وذات صلة موضوعية"
+
+msgid "inspect why a result was retrieved"
+msgstr "فحص سبب استرجاع النتيجة"
+
+msgid "organize papers into reusable research collections"
+msgstr "تنظيم الأوراق في مجموعات بحثية قابلة لإعادة الاستخدام"
+
+msgid "run reproducible retrieval experiments"
+msgstr "تشغيل تجارب استرجاع قابلة لإعادة الإنتاج"
+
+msgid "It does not claim to"
+msgstr "لا يدّعي أنه"
+
+msgid "measure scientific quality from rank alone"
+msgstr "يقيس الجودة العلمية اعتمادًا على الرتبة وحدها"
+
+msgid "replace systematic-review screening"
+msgstr "يستبدل فحص المراجعات المنهجية"
+
+msgid "treat citations or clicks as unbiased relevance"
+msgstr "يعامل الاستشهادات أو النقرات كصلة غير متحيزة"
+
+msgid "let an LLM silently rewrite the benchmark"
+msgstr "يسمح لنموذج LLM بإعادة كتابة المعيار بصمت"
+
+msgid "Start with a question"
+msgstr "ابدأ بسؤال"
+
+msgid "Follow the evidence trail from query to paper."
+msgstr "تتبّع مسار الأدلة من الاستعلام إلى الورقة."
+
+msgid "Search the current corpus and inspect the retrieval signals behind every live result."
+msgstr "ابحث في المجموعة الحالية وافحص إشارات الاسترجاع وراء كل نتيجة حية."
+
+msgid "Open scholarly search"
+msgstr "فتح البحث العلمي"
+
+msgid "PaperMetrix retrieval architecture"
+msgstr "بنية الاسترجاع في PaperMetrix"
+
+msgid "Current corpus"
+msgstr "المجموعة الحالية"
+
+msgid "Retrieval evaluation"
+msgstr "تقييم الاسترجاع"
+
+msgid "Research operations"
+msgstr "عمليات البحث العلمي"
+
+msgid "A comparable view of privacy-safe online behavior and checksum-locked offline experiments."
+msgstr "عرض قابل للمقارنة للسلوك المتصل الآمن للخصوصية والتجارب غير المتصلة المثبتة ببصمة تحقق."
+
+msgid "Export JSON"
+msgstr "تصدير JSON"
+
+msgid "LLM query expansion"
+msgstr "توسيع الاستعلام عبر LLM"
+
+msgid "Independent intent-to-treat arm; provider failures remain attributed to the selected arm."
+msgstr "مسار مستقل وفق مبدأ نية المعالجة؛ تظل أعطال المزود محسوبة على المسار المختار."
+
+msgid "Staff only"
+msgstr "للموظفين فقط"
+
+msgid "public traffic"
+msgstr "من الحركة العامة"
+
+msgid "traffic"
+msgstr "من الحركة"
+
+msgid "Off"
+msgstr "متوقف"
+
+msgid "Protocol frozen"
+msgstr "البروتوكول مجمد"
+
+msgid "Paired canary"
+msgstr "اختبار تمهيدي مقترن"
+
+msgid "Baseline vs LLM-expanded by query"
+msgstr "خط الأساس مقابل التوسيع بـLLM لكل استعلام"
+
+msgid "Interpret effectiveness carefully"
+msgstr "فسّر الفعالية بحذر"
+
+msgid "A pair is matched by staff user, query digest, frozen protocol, and search filters. Clicks and saves are behavioral signals; an effectiveness delta appears only when both requests have explicit relevance judgments."
+msgstr "يُطابق الزوج بحسب المستخدم الداخلي وبصمة الاستعلام والبروتوكول المجمد ومرشحات البحث. النقر والحفظ إشارات سلوكية؛ ولا يظهر فرق الفعالية إلا عندما يتضمن الطلبان أحكام صلة صريحة."
+
+msgid "Comparable pairs"
+msgstr "الأزواج القابلة للمقارنة"
+
+msgid "Pairs with judgments"
+msgstr "الأزواج ذات الأحكام"
+
+msgid "Mean overlap@10"
+msgstr "متوسط التداخل@10"
+
+msgid "Mean latency delta"
+msgstr "متوسط فرق زمن الاستجابة"
+
+msgid "LLM provider errors"
+msgstr "أخطاء مزود LLM"
+
+msgid "Paired LLM cost"
+msgstr "تكلفة LLM للأزواج"
+
+msgid "Unpriced"
+msgstr "غير مسعّر"
+
+msgid "pair gap"
+msgstr "الفاصل بين الزوج"
+
+msgid "Common@10"
+msgstr "المشترك@10"
+
+msgid "LLM-only"
+msgstr "خاص بـLLM"
+
+msgid "Positive / judged"
+msgstr "إيجابي / محكوم"
+
+msgid "Clicks / saves"
+msgstr "نقرات / حفظ"
+
+msgid "Cost"
+msgstr "التكلفة"
+
+msgid "Latency delta"
+msgstr "فرق زمن الاستجابة"
+
+msgid "Relevant delta"
+msgstr "فرق النتائج ذات الصلة"
+
+msgid "Awaiting paired judgments"
+msgstr "بانتظار الأحكام المقترنة"
+
+msgid "Filtered"
+msgstr "مُرشّح"
+
+msgid "Protocol"
+msgstr "البروتوكول"
+
+msgid "Compare top-10 result lists"
+msgstr "مقارنة قائمتي أفضل 10 نتائج"
+
+msgid "No results"
+msgstr "لا توجد نتائج"
+
+msgid "No paired staff queries yet."
+msgstr "لا توجد استعلامات داخلية مقترنة بعد."
+
+msgid "Run the same development query once with LLM expansion off and once with it on, using identical filters."
+msgstr "شغّل استعلام التطوير نفسه مرة مع تعطيل توسيع LLM ومرة مع تفعيله، مستخدمًا المرشحات نفسها."
+
+msgid "Online"
+msgstr "متصل"
+
+msgid "Live retrieval health"
+msgstr "سلامة الاسترجاع الحي"
+
+msgid "Requests"
+msgstr "الطلبات"
+
+msgid "Latency p50"
+msgstr "زمن الاستجابة p50"
+
+msgid "Latency p95"
+msgstr "زمن الاستجابة p95"
+
+msgid "Cache hit rate"
+msgstr "نسبة إصابة الذاكرة المؤقتة"
+
+msgid "Semantic availability"
+msgstr "توفر البحث الدلالي"
+
+msgid "LLM input tokens"
+msgstr "رموز إدخال LLM"
+
+msgid "LLM output tokens"
+msgstr "رموز إخراج LLM"
+
+msgid "LLM cache hit rate"
+msgstr "نسبة إصابة ذاكرة LLM"
+
+msgid "Estimated LLM cost"
+msgstr "تكلفة LLM المقدرة"
+
+msgid "Pricing not configured"
+msgstr "التسعير غير مضبوط"
+
+msgid "Impressions"
+msgstr "مرات الظهور"
+
+msgid "Clicks"
+msgstr "النقرات"
+
+msgid "Saves"
+msgstr "عمليات الحفظ"
+
+msgid "Positive judgments"
+msgstr "الأحكام الإيجابية"
+
+msgid "Experiment arms"
+msgstr "مسارات التجربة"
+
+msgid "Arm"
+msgstr "المسار"
+
+msgid "Save rate"
+msgstr "معدل الحفظ"
+
+msgid "Positive relevance"
+msgstr "الصلة الإيجابية"
+
+msgid "Search success"
+msgstr "نجاح البحث"
+
+msgid "Provider failure"
+msgstr "عطل المزود"
+
+msgid "No online events yet."
+msgstr "لا توجد أحداث متصلة بعد."
+
+msgid "Ranking methods"
+msgstr "طرق الترتيب"
+
+msgid "No methods recorded yet."
+msgstr "لا توجد طرق مسجلة بعد."
+
+msgid "Offline"
+msgstr "غير متصل"
+
+msgid "Frozen benchmark runs"
+msgstr "تشغيلات المعيار المجمدة"
+
+msgid "Run"
+msgstr "التشغيل"
+
+msgid "Split"
+msgstr "التقسيم"
+
+msgid "Queries"
+msgstr "الاستعلامات"
+
+msgid "Metrics"
+msgstr "المقاييس"
+
+msgid "Integrity"
+msgstr "السلامة"
+
+msgid "Frozen"
+msgstr "مجمد"
+
+msgid "Development"
+msgstr "تطوير"
+
+msgid "Import benchmark JSON artifacts to populate this table."
+msgstr "استورد آثار المعيار بصيغة JSON لملء هذا الجدول."
+
+msgid "Audit trail"
+msgstr "مسار التدقيق"
+
+msgid "Recent query traces"
+msgstr "آثار الاستعلامات الأخيرة"
+
+msgid "Time"
+msgstr "الوقت"
+
+msgid "Query digest"
+msgstr "بصمة الاستعلام"
+
+msgid "Latency"
+msgstr "زمن الاستجابة"
+
+msgid "Components"
+msgstr "المكونات"
+
+msgid "search cache hit"
+msgstr "إصابة ذاكرة البحث"
+
+msgid "expansion cache hit"
+msgstr "إصابة ذاكرة التوسيع"
+
+msgid "No privacy-safe traces recorded yet."
+msgstr "لا توجد آثار آمنة للخصوصية مسجلة بعد."
+
+msgid "Experiment status"
+msgstr "حالة التجربة"
+
+msgid "Difference"
+msgstr "الفرق"
+
+msgid "Experiment arm comparison"
+msgstr "مقارنة مسارات التجربة"
+
+msgid "Offline benchmark results"
+msgstr "نتائج المعيار غير المتصل"
+
+msgid "Recent retrieval traces"
+msgstr "آثار الاسترجاع الأخيرة"
+
+msgid "%(count)s comparable query pairs"
+msgstr "%(count)s من أزواج الاستعلامات القابلة للمقارنة"
+
+msgid "Latest %(count)s requests"
+msgstr "أحدث %(count)s طلبات"
+
+msgid "Evidence-aware discovery"
+msgstr "اكتشاف قائم على الأدلة"
+
+msgid "Navigate the platform"
+msgstr "التنقل في المنصة"
+
+msgid "Hybrid scholarly retrieval"
+msgstr "استرجاع علمي هجين"
+
+msgid "Personalized recommendations"
+msgstr "توصيات مخصصة"
+
+msgid "Research interests"
+msgstr "الاهتمامات البحثية"
+
+msgid "Evaluation"
+msgstr "التقييم"
+
+msgid "Method and philosophy"
+msgstr "المنهج والفلسفة"
+
+msgid "Interface language"
+msgstr "لغة الواجهة"
+
+msgid "Research staff"
+msgstr "فريق البحث"
+
+msgid "Find, explain, and organize scientific literature through transparent retrieval designed for reproducible research."
+msgstr "اعثر على الأدبيات العلمية وافهمها ونظّمها عبر استرجاع شفاف مصمم للبحث القابل لإعادة الإنتاج."
+
+msgid "Discover"
+msgstr "اكتشف"
+
+msgid "How retrieval works"
+msgstr "كيف يعمل الاسترجاع"
+
+msgid "What is new"
+msgstr "ما الجديد"
+
+msgid "Evaluation dashboard"
+msgstr "لوحة التقييم"
+
+msgid "Platform"
+msgstr "المنصة"
+
+msgid "Research prototype—not a measure of scientific quality."
+msgstr "نموذج بحثي أولي، وليس مقياسًا للجودة العلمية."
+
+msgid "Back to top"
+msgstr "العودة إلى الأعلى"
+
+msgid "Retrieval methods"
+msgstr "طرق الاسترجاع"
+
+msgid "Discovery links"
+msgstr "روابط الاكتشاف"
+
+msgid "Research links"
+msgstr "روابط البحث"
+
+msgid "Platform links"
+msgstr "روابط المنصة"

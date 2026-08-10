@@ -1,0 +1,51 @@
+from django.urls import path
+
+from . import get_articles, views
+
+
+urlpatterns = [
+    path("", views.home, name="home"),
+    path("about/", views.about, name="about"),
+    path("profile/", views.profile, name="profile"),
+    path("api/articles/", views.api_get_articles, name="api_get_articles"),
+    path("api/search/live/", views.api_live_search, name="api_live_search"),
+    path("api/search/interactions/", views.api_retrieval_interaction, name="api_retrieval_interaction"),
+    path("evaluation/", views.evaluation_dashboard, name="evaluation_dashboard"),
+    path("evaluation/export.json", views.evaluation_export, name="evaluation_export"),
+    path("api/articles/new/", views.api_new_articles, name="api_new_articles"),
+    path("api/articles/top/", views.api_top_articles, name="api_top_articles"),
+    path("api/articles/hot/", views.api_hot_articles, name="api_hot_articles"),
+    path("library/", views.library_list, name="library"),
+    path("library/add/", views.add_library, name="add_library"),
+    path("library/<int:pk>/", views.library_detail, name="library_detail"),
+    path("recommendations/", views.recommendations_page, name="reccomend"),
+    path("topics/", views.topics, name="topics"),
+    path("add_remove_topic/", views.add_remove_topic, name="add_remove_topic"),
+    path("add_or_remove_kw/", views.add_or_remove_kw, name="add_or_remove_kw"),
+    path("add_or_remove_author/", views.add_or_remove_author, name="add_or_remove_author"),
+    path("author/<int:pk>/", views.GetAuthor.as_view(), name="get_author"),
+    path("author/<int:pk>/load/", views.load_articles_author, name="load_articles_author"),
+    path("search/", views.search, name="search"),
+    path("add_to_library/", views.add_to_library, name="add_to_library"),
+    path("delete_library/", views.delete_library, name="delete_library"),
+    path("article/<str:pk>/", views.DetailArticle.as_view(), name="article"),
+    path("articles/<str:pk>/", views.DetailArticle.as_view(), name="article_detail"),
+    path("article-api/<str:pk>/", views.article_api, name="article_api"),
+    path("get_readers/<str:id>/", views.get_readers, name="get_readers"),
+    path("update_review/", views.update_review, name="update_review"),
+    path("get_recommendation/", views.get_recommendation, name="get_recommendation"),
+    path(
+        "get_articles/get_article_from_data/",
+        get_articles.get_article_from_data,
+        name="get_article_from_data",
+    ),
+    path(
+        "library/<int:pk>/recommendations/",
+        views.get_library_recommendation,
+        name="get_library_reccomendation",
+    ),
+    path("add_tag/<str:pk>/", get_articles.add_tag, name="add_tag"),
+    path("remove_tag/<int:pk>/", get_articles.remove_tag, name="remove_tag"),
+    path("get_tweets/<str:pk>/", get_articles.get_tweets, name="get_tweets"),
+    path("lan/<str:lan>/", views.change_lan, name="change_language"),
+]

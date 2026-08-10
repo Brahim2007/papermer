@@ -1,0 +1,39 @@
+{
+  "format_version": 1,
+  "name": "scientific-paper-recommendation-2015-2026-v1",
+  "research_scope": "Methods and evaluations for recommending related scientific literature",
+  "queries": [
+    "scientific paper recommendation",
+    "scholarly recommendation system",
+    "academic literature recommendation",
+    "citation based paper recommendation",
+    "related paper recommendation"
+  ],
+  "providers": [
+    "openalex",
+    "semantic_scholar"
+  ],
+  "from_date": "2015-01-01",
+  "to_date": "2026-08-04",
+  "per_query_limit": 50,
+  "require_abstract": true,
+  "languages": [
+    "en"
+  ],
+  "openalex_work_types": [
+    "article",
+    "review"
+  ],
+  "openalex_sort": "cited_by_count:desc",
+  "semantic_scholar_publication_types": [
+    "JournalArticle",
+    "Conference",
+    "Review"
+  ],
+  "semantic_scholar_fields_of_study": [
+    "Computer Science",
+    "Engineering"
+  ],
+  "sampling_policy": "top cited within each frozen query and provider",
+  "deduplication": "canonical identifiers, then normalized title and year"
+}
