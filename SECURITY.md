@@ -24,3 +24,9 @@ fixes.
 - Use repository secrets only for CI values that are actually required.
 - Backups and research corpora must have separate access controls from the
   public application source.
+
+TruffleHog's history scan excludes only `scholarly/tests/test_snapshot.py`.
+An old pytest function name in that file matched Lob's `test_...` credential
+shape and Lob's verifier accepted it, despite the line containing only a Python
+identifier. Gitleaks still scans that file and the complete repository history;
+TruffleHog continues to scan every production path.

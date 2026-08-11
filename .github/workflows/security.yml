@@ -33,7 +33,7 @@ jobs:
           path: .
           base: ""
           head: ${{ github.ref_name }}
-          extra_args: --results=verified,unknown
+          extra_args: --results=verified,unknown --exclude-paths=.trufflehog-exclude-paths.txt
 
   codeql:
     runs-on: ubuntu-latest

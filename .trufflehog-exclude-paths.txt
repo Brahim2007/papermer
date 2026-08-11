@@ -1,0 +1,1 @@
+^scholarly/tests/test_snapshot\.py$
