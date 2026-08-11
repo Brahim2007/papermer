@@ -26,8 +26,19 @@ Expand from a frozen topical/temporal contract:
 `python manage.py expand_scholarly_corpus --spec experiments/specs/paper_recommendation_scope_v1.json --output results/corpus_expansion_scope_v1.json`
 
 Long runs checkpoint after every provider/query unit and can continue with
-the same spec hash. Scope v3 deliberately uses a preselected bulk snapshot
-instead of live search results. Validate it without changing PostgreSQL first:
+the same spec hash. Scope v3 uses five preregistered, disjoint OpenAlex strata
+with fixed seeds and page-level response checksums. Verify availability first:
+
+`python -m experiments.acquire_openalex_scope --spec experiments/specs/paper_recommendation_scope_v3_50k.json --output data/openalex/scope_v3_50k.jsonl.gz --report artifacts/scope_v3_50k.preflight.json --preflight`
+
+Then acquire the immutable 50k artifact. Completed pages are reused safely if
+the process is interrupted, while a changed spec or request signature is
+rejected:
+
+`python -m experiments.acquire_openalex_scope --spec experiments/specs/paper_recommendation_scope_v3_50k.json --output data/openalex/scope_v3_50k.jsonl.gz --report artifacts/scope_v3_50k.acquisition.json`
+
+Both commands require `OPENALEX_API_KEY` in the process environment. The key is
+never written to page checkpoints, reports, or the corpus artifact.
 
 `python -m experiments.select_openalex_snapshot --input data/openalex/works-part-000.jsonl.gz --input data/openalex/works-part-001.jsonl.gz --spec experiments/specs/paper_recommendation_scope_v3_50k.json --output data/openalex/scope_v3_50k.jsonl.gz --manifest artifacts/scope_v3_50k.selection.json`
 
@@ -44,6 +55,28 @@ idempotent through canonical ingestion. The upstream selection artifact must
 apply the preregistered SHA-256 bottom-k sample; the importer never substitutes
 provider order or citation popularity for that selection.
 `--resume` when the scope-spec hash is unchanged.
+
+The first completed Scope v3 production import (2026-08-11) processed all
+50,000 eligible records: 49,885 were created, 115 matched canonical records
+and were updated, and no identity conflicts were reported. The import report
+must be retained with the corpus and spec checksums; it is an operational
+provenance artifact, not an evaluation result.
+
+For the temporal experiment snapshot, use the frozen-scope exporter so works
+without a complete publication date are excluded and counted in the manifest:
+
+`python -m experiments.export_corpus --scope experiments/specs/paper_recommendation_scope_v3_50k.json --output artifacts/corpus_v3_20260811/corpus_temporal.csv --manifest artifacts/corpus_v3_20260811/corpus_temporal.manifest.json`
+
+The 2026-08-11 quality gate passed on 50,120 documents. Five platform records
+with year-only metadata were retained for live search but excluded from the
+temporal snapshot. Corpus SHA-256:
+`bf09328e83ec00b80c000b6589c5a00c951c38d99e4476d356957f18195dc11b`.
+
+Scope v3.1.1 adds a bounded shared-reference citation closure. Its failed 10k
+feasibility target and the preregistered 2.5k amendment are both retained; see
+`docs/CITATION_CLOSURE_V3_1_1.md`. Never compare retrieval effectiveness across
+v3 and v3.1.1 as a graph-only ablation. Build graph-off and graph-on conditions
+from the same v3.1.1 corpus and caches.
 
 2. Prepare JSONL relevance judgments:
 
@@ -97,6 +130,19 @@ Then pass `--specter-cache artifacts/corpus.specter2.npz` to temporal
 evaluation. The cache metadata records exact base-model and adapter commits,
 the corpus SHA-256, dimensions, runtime versions, and device. Temporal folds
 select eligible rows from this frozen matrix; they do not re-encode papers.
+
+The Scope v3.1.1 cache was built as Kaggle kernel
+`kertioubrahim/papermetrix-scope-v3-1-1-specter2` on a Tesla T4. The private
+input dataset and kernel contain no API credentials. Downloaded outputs live
+under `artifacts/corpus_v3_1_1_20260811/kaggle_specter2/`; the NPZ SHA-256 is
+`66cf1b364ee7af2d2af8ad715997d28d7a2f42aa32d3787ca5307b8313a33447`.
+The first P100 attempt failed before encoding because the hosted PyTorch build
+did not include `sm_60`; changing only the accelerator to T4 produced the
+accepted artifact.
+
+Temporal evaluation reuses one SPECTER2 query encoder across query-date
+indexes. This avoids repeatedly loading the same model while each index still
+uses only documents published on or before its query date.
 
 Hybrid ablations can set `--rrf-k`, `--candidate-k`, `--bm25-weight`, and
 `--specter2-weight`. BM25 ablations can set `--bm25-k1` and `--bm25-b`. Every
@@ -196,3 +242,21 @@ diagnostic `--only` runs.
 Compute query-paired bootstrap intervals against a declared baseline:
 
 `python -m experiments.compare_runs_paired --baseline results/bm25.json --candidate results/hybrid.json --candidate results/hybrid_rerank.json --samples 10000 --output results/paired_comparisons.json`
+
+### Scope v3.1.1 graph-weight addendum
+
+The frozen v1 registration remains unchanged. The independent addendum
+`experiments/specs/retrieval_graph_ablation_scope_v3_1_1_v2.json` registers
+graph weights 0, 0.1, 0.25, 0.5, and 1.0 against the Scope v3.1.1 corpus,
+graph, and Kaggle-built SPECTER2 cache. Weight zero is the real graph-off
+`hybrid` condition, so it does not pay graph construction or query latency.
+
+Do not run the addendum until the 20 human development queries have compiled
+successfully and the pooled judgments have been independently assessed and
+adjudicated. The runner enforces exactly 20 development query IDs and at least
+20 finalized qrels per query:
+
+`python -m experiments.run_registered_matrix --spec experiments/specs/retrieval_graph_ablation_scope_v3_1_1_v2.json --stage development --queries artifacts/development_human_queries_v1.jsonl --qrels artifacts/development_graph_qrels_v2.tsv --output-dir results/graph_ablation_scope_v3_1_1_v2`
+
+Select at most one weight using the registered nDCG@10 rule. Do not inspect or
+evaluate the frozen test assignment during weight selection.

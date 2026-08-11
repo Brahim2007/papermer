@@ -2,7 +2,7 @@
   "format_version": 3,
   "name": "paper-recommendation-openalex-50k-v3",
   "research_scope": "English scholarly works in information retrieval, recommender systems, machine learning, natural language processing, and artificial intelligence",
-  "scope_change_from_v2": "Replace query-result acquisition with a preregistered bulk OpenAlex snapshot and popularity-neutral deterministic sampling",
+  "scope_change_from_v2": "Replace ad-hoc query acquisition with a preregistered, seeded and type-balanced OpenAlex sample",
   "source_format": "openalex_jsonl",
   "from_date": "2015-01-01",
   "to_date": "2026-08-04",
@@ -14,26 +14,73 @@
   ],
   "openalex_work_types": [
     "article",
+    "conference-paper",
     "review",
     "preprint"
   ],
   "include_topics": [
-    "Information retrieval",
-    "Recommender systems",
-    "Machine learning",
-    "Natural language processing",
-    "Artificial intelligence"
+    "Information Retrieval and Search Behavior",
+    "Recommender Systems and Techniques",
+    "Natural Language Processing Techniques",
+    "Artificial Intelligence"
+  ],
+  "include_topic_ids": [
+    "1702",
+    "1710"
   ],
   "sampling": {
-    "method": "deterministic_sha256_bottom_k",
-    "key": "normalized_openalex_id",
-    "seed": "papermetrix-scope-v3-50k-2026-08-04",
+    "method": "openalex_seeded_stratified_sample_v1",
+    "seed": 20260804,
+    "page_size": 100,
+    "strata": [
+      {
+        "name": "ai_articles",
+        "quota": 10000,
+        "seed": 202608041,
+        "reserve_seeds": [202608141, 202608241, 202608341],
+        "primary_topic_subfield_id": "1702",
+        "work_types": ["article"]
+      },
+      {
+        "name": "ai_conference",
+        "quota": 10000,
+        "seed": 202608042,
+        "reserve_seeds": [202608142, 202608242, 202608342],
+        "primary_topic_subfield_id": "1702",
+        "work_types": ["conference-paper"]
+      },
+      {
+        "name": "ai_review_preprint",
+        "quota": 10000,
+        "seed": 202608043,
+        "reserve_seeds": [202608143, 202608243, 202608343],
+        "primary_topic_subfield_id": "1702",
+        "work_types": ["review", "preprint"]
+      },
+      {
+        "name": "information_systems_articles",
+        "quota": 10000,
+        "seed": 202608044,
+        "reserve_seeds": [202608144, 202608244, 202608344],
+        "primary_topic_subfield_id": "1710",
+        "work_types": ["article"]
+      },
+      {
+        "name": "information_systems_conference_review_preprint",
+        "quota": 10000,
+        "seed": 202608045,
+        "reserve_seeds": [202608145, 202608245, 202608345],
+        "primary_topic_subfield_id": "1710",
+        "work_types": ["conference-paper", "review", "preprint"]
+      }
+    ],
     "popularity_features_excluded": [
       "cited_by_count",
       "works_count",
       "provider_rank"
     ],
-    "selection_must_precede_database_import": true
+    "selection_must_precede_database_import": true,
+    "provider_responses_must_be_checksum_pinned": true
   },
   "deduplication": "canonical DOI and OpenAlex identifiers, then normalized title and year",
   "frozen_before_acquisition": true,

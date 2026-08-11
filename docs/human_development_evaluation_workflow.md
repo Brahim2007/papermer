@@ -85,3 +85,25 @@ python -m experiments.finalize_qrels `
 
 Only after this final checksum-locked qrels artifact exists should nDCG, Recall, MRR,
 paired significance, or publication-facing effectiveness claims be computed.
+
+## Scope v3.1.1 graph-weight ablation
+
+The graph-weight experiment is registered separately in
+`experiments/specs/retrieval_graph_ablation_scope_v3_1_1_v2.json`; it does not
+modify the frozen v1 protocol. After Gate 1 and Gate 2 are complete for the
+graph union pool, run only the development split:
+
+```powershell
+python -m experiments.run_registered_matrix `
+  --spec experiments/specs/retrieval_graph_ablation_scope_v3_1_1_v2.json `
+  --stage development `
+  --queries artifacts/development_human_queries_v1.jsonl `
+  --qrels artifacts/development_graph_qrels_v2.tsv `
+  --output-dir results/graph_ablation_scope_v3_1_1_v2
+```
+
+The runner rejects fewer than 20 queries, a query-ID mismatch, fewer than 20
+final judgments for any query, and any changed corpus/graph/cache/split hash.
+Weights are 0, 0.1, 0.25, 0.5, and 1.0; all other retrieval parameters are
+fixed. Select one weight on development by nDCG@10, with p95 latency and then
+the lower weight as the registered tie breakers.

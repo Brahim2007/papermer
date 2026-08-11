@@ -1,0 +1,50 @@
+{
+  "format_version": 1,
+  "name": "paper-recommendation-scope-v3.1-citation-closure",
+  "protocol": "openalex_shared_reference_closure_v1",
+  "parent_scope": "paper-recommendation-openalex-50k-v3",
+  "parent_corpus_sha256": "bf09328e83ec00b80c000b6589c5a00c951c38d99e4476d356957f18195dc11b",
+  "parent_document_count": 50120,
+  "from_date": "2015-01-01",
+  "to_date": "2026-08-04",
+  "target_addition_count": 10000,
+  "candidate_pool_cap": 50000,
+  "min_distinct_parent_citers": 2,
+  "ranking": [
+    "distinct_parent_citers:desc",
+    "openalex_id:asc"
+  ],
+  "source_format": "openalex_jsonl",
+  "require_abstract": true,
+  "exclude_retracted": true,
+  "languages": [
+    "en"
+  ],
+  "openalex_work_types": [
+    "article",
+    "conference-paper",
+    "review",
+    "preprint"
+  ],
+  "include_topics": [
+    "Information Retrieval and Search Behavior",
+    "Recommender Systems and Techniques",
+    "Natural Language Processing Techniques",
+    "Artificial Intelligence"
+  ],
+  "include_topic_ids": [
+    "1702",
+    "1710"
+  ],
+  "selection": {
+    "reference_scheme": "openalex",
+    "parent_membership": "exact IDs from the SHA-256-pinned temporal corpus",
+    "exclude_parent_works": true,
+    "global_citation_count_used": false,
+    "provider_rank_used": false,
+    "batch_size": 50,
+    "checkpoint_every_batch": true
+  },
+  "artifacts_are_independent_from_v3": true,
+  "frozen_before_acquisition": true
+}

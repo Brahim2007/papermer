@@ -31,6 +31,7 @@ from retrieval import (
     load_citation_graph,
     load_specter2_cache,
     mean_age_days_at_k,
+    Specter2Encoder,
     topic_diversity_at_k,
 )
 from retrieval.metrics import METRIC_DEFINITION_VERSION
@@ -188,6 +189,17 @@ def main() -> int:
     for query in split.evaluation_queries:
         grouped[query.query_date].append(query)
 
+    dense_methods = {
+        "specter2",
+        "hybrid",
+        "hybrid_graph",
+        "hybrid_rerank",
+        "hybrid_graph_rerank",
+    }
+    shared_specter2_encoder = (
+        Specter2Encoder() if args.method in dense_methods else None
+    )
+
     started = time.perf_counter()
     per_query = []
     ranked_lists = []
@@ -201,6 +213,7 @@ def main() -> int:
             eligible,
             batch_size=args.batch_size,
             specter_cache=specter_cache,
+            specter2_encoder=shared_specter2_encoder,
             bm25_k1=args.bm25_k1,
             bm25_b=args.bm25_b,
             rrf_k=args.rrf_k,

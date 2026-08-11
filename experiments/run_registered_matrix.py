@@ -17,6 +17,20 @@ def _argument(name: str) -> str:
     return f"--{name}"
 
 
+def read_qrel_counts(path: Path) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    with path.open(encoding="utf-8", newline="") as handle:
+        for line_number, row in enumerate(
+            csv.DictReader(handle, delimiter="\t"), start=2
+        ):
+            query_id = str(row.get("query_id", "")).strip()
+            document_id = str(row.get("document_id", "")).strip()
+            if not query_id or not document_id:
+                raise ValueError(f"invalid qrels row {line_number}")
+            counts[query_id] = counts.get(query_id, 0) + 1
+    return counts
+
+
 def build_command(
     spec: dict,
     run: dict,
@@ -111,13 +125,33 @@ def main() -> int:
         raise ValueError(
             f"{args.stage} query IDs do not match the frozen split"
         )
-    with args.qrels.open(encoding="utf-8", newline="") as handle:
-        qrel_query_ids = {
-            str(row.get("query_id", "")).strip()
-            for row in csv.DictReader(handle, delimiter="\t")
-        }
+    required_query_count = spec.get("required_query_count")
+    if required_query_count is not None and len(observed_query_ids) != int(
+        required_query_count
+    ):
+        raise ValueError(
+            f"expected {required_query_count} {args.stage} queries, "
+            f"found {len(observed_query_ids)}"
+        )
+    qrel_counts = read_qrel_counts(args.qrels)
+    qrel_query_ids = set(qrel_counts)
     if qrel_query_ids != expected_query_ids:
         raise ValueError(f"{args.stage} qrels do not match the frozen split")
+    minimum_qrels = int(spec.get("minimum_qrels_per_query", 1))
+    under_judged = {
+        query_id: count
+        for query_id, count in qrel_counts.items()
+        if count < minimum_qrels
+    }
+    if under_judged:
+        preview = ", ".join(
+            f"{query_id}={count}"
+            for query_id, count in sorted(under_judged.items())[:5]
+        )
+        raise ValueError(
+            f"qrels require at least {minimum_qrels} judgments per query; "
+            f"under-judged: {preview}"
+        )
     run_ids = [run["run_id"] for run in spec["development_runs"]]
     if len(run_ids) != len(set(run_ids)):
         raise ValueError("registered run_ids must be unique")
