@@ -40,6 +40,11 @@ docker compose --env-file .env.production -f compose.production.yaml config --qu
 
 ## 3. الإطلاق الأول
 
+صورة الويب الدلالية تثبّت حزمة PyTorch الرسمية المخصصة للـCPU عبر
+`TORCH_INDEX_URL`. لا تحذف build arguments هذه على VPS بلا GPU؛ حزمة Linux
+الافتراضية من PyPI تسحب مكتبات CUDA غير المستخدمة وتستهلك عدة غيغابايت من
+مساحة الصورة وذاكرة البناء المؤقتة.
+
 انسخ ملفي cache المسجلين إلى مجلد `artifacts/` على الخادم قبل البناء، مع
 التحقق من checksum الموجود في manifest البحثي. الحد الأدنى للبحث الدلالي هو:
 

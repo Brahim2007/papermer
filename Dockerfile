@@ -3,18 +3,29 @@
 FROM python:3.13-slim-bookworm AS builder
 
 ARG REQUIREMENTS_FILE=requirements/production.txt
+ARG TORCH_INDEX_URL=
+ARG TORCH_VERSION=
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1
 
 WORKDIR /build
 COPY requirements/ requirements/
-RUN python -m pip wheel \
-    --wheel-dir /wheels \
-    --requirement "${REQUIREMENTS_FILE}"
+RUN if [ -n "${TORCH_INDEX_URL}" ]; then \
+        test -n "${TORCH_VERSION}"; \
+        python -m pip wheel \
+            --wheel-dir /wheels \
+            --index-url "${TORCH_INDEX_URL}" \
+            "torch==${TORCH_VERSION}"; \
+    fi \
+    && python -m pip wheel \
+        --wheel-dir /wheels \
+        --find-links /wheels \
+        --requirement "${REQUIREMENTS_FILE}"
 
 
 FROM python:3.13-slim-bookworm AS runtime
 
+ARG REQUIREMENTS_FILE=requirements/production.txt
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
@@ -31,9 +42,12 @@ RUN apt-get update \
     && useradd --system --uid 10001 --gid app --home-dir /app app
 
 WORKDIR /app
-COPY --from=builder /wheels /wheels
-RUN python -m pip install /wheels/* \
-    && rm -rf /wheels
+RUN --mount=type=bind,from=builder,source=/wheels,target=/wheels,ro \
+    --mount=type=bind,source=requirements,target=/requirements,ro \
+    python -m pip install \
+        --no-index \
+        --find-links /wheels \
+        --requirement "/${REQUIREMENTS_FILE}"
 
 COPY --chown=app:app . /app
 RUN chmod 0555 /app/deploy/entrypoint.sh \
