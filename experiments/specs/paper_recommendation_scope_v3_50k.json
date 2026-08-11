@@ -1,0 +1,41 @@
+{
+  "format_version": 3,
+  "name": "paper-recommendation-openalex-50k-v3",
+  "research_scope": "English scholarly works in information retrieval, recommender systems, machine learning, natural language processing, and artificial intelligence",
+  "scope_change_from_v2": "Replace query-result acquisition with a preregistered bulk OpenAlex snapshot and popularity-neutral deterministic sampling",
+  "source_format": "openalex_jsonl",
+  "from_date": "2015-01-01",
+  "to_date": "2026-08-04",
+  "target_document_count": 50000,
+  "require_abstract": true,
+  "exclude_retracted": true,
+  "languages": [
+    "en"
+  ],
+  "openalex_work_types": [
+    "article",
+    "review",
+    "preprint"
+  ],
+  "include_topics": [
+    "Information retrieval",
+    "Recommender systems",
+    "Machine learning",
+    "Natural language processing",
+    "Artificial intelligence"
+  ],
+  "sampling": {
+    "method": "deterministic_sha256_bottom_k",
+    "key": "normalized_openalex_id",
+    "seed": "papermetrix-scope-v3-50k-2026-08-04",
+    "popularity_features_excluded": [
+      "cited_by_count",
+      "works_count",
+      "provider_rank"
+    ],
+    "selection_must_precede_database_import": true
+  },
+  "deduplication": "canonical DOI and OpenAlex identifiers, then normalized title and year",
+  "frozen_before_acquisition": true,
+  "v1_and_v2_artifacts_are_immutable": true
+}

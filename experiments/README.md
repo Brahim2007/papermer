@@ -26,6 +26,23 @@ Expand from a frozen topical/temporal contract:
 `python manage.py expand_scholarly_corpus --spec experiments/specs/paper_recommendation_scope_v1.json --output results/corpus_expansion_scope_v1.json`
 
 Long runs checkpoint after every provider/query unit and can continue with
+the same spec hash. Scope v3 deliberately uses a preselected bulk snapshot
+instead of live search results. Validate it without changing PostgreSQL first:
+
+`python -m experiments.select_openalex_snapshot --input data/openalex/works-part-000.jsonl.gz --input data/openalex/works-part-001.jsonl.gz --spec experiments/specs/paper_recommendation_scope_v3_50k.json --output data/openalex/scope_v3_50k.jsonl.gz --manifest artifacts/scope_v3_50k.selection.json`
+
+`python manage.py import_scholarly_snapshot --input data/openalex/scope_v3_50k.jsonl.gz --spec experiments/specs/paper_recommendation_scope_v3_50k.json --output results/scope_v3_50k_dry_run.json --batch-size 500 --dry-run`
+
+After the dry run reports exactly 50,000 eligible records, import the identical
+SHA-256-pinned file with a separate report:
+
+`python manage.py import_scholarly_snapshot --input data/openalex/scope_v3_50k.jsonl.gz --spec experiments/specs/paper_recommendation_scope_v3_50k.json --output results/scope_v3_50k_import.json --batch-size 500`
+
+The importer accepts plain JSONL or JSONL.GZ, checkpoints after each batch,
+rejects resume when either the spec or input checksum changes, and remains
+idempotent through canonical ingestion. The upstream selection artifact must
+apply the preregistered SHA-256 bottom-k sample; the importer never substitutes
+provider order or citation popularity for that selection.
 `--resume` when the scope-spec hash is unchanged.
 
 2. Prepare JSONL relevance judgments:
