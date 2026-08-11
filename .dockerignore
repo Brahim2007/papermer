@@ -15,8 +15,12 @@ htmlcov
 artifacts
 results
 outputs
+backups
+staging
 media
 staticfiles
+compose.vps.yaml*
+deploy/bootstrap_hostinger_env.sh
 csv.csv
 *.sqlite3
 *.log
