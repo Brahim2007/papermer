@@ -65,7 +65,7 @@ def test_openalex_scope_rejection_codes(change, reason):
     assert openalex_scope_rejection(work, _spec()) == reason
 
 
-def test_iter_jsonl_supports_gzip_and_resume(tmp_path: Path):
+def test_gzip_reader_resume(tmp_path: Path):
     path = tmp_path / "snapshot.jsonl.gz"
     with gzip.open(path, "wt", encoding="utf-8") as handle:
         handle.write(json.dumps({"id": "W1"}) + "\n")
