@@ -21,6 +21,7 @@ celerybeat-schedule*
 *.pkl
 artifacts/
 results/
+/data/openalex/
 staticfiles/
 csv.csv
 .DS_Store

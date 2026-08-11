@@ -1,0 +1,124 @@
+{
+  "format_version": 2,
+  "name": "papermatrix-graph-ablation-scope-v3-1-1-v2",
+  "status": "preregistered_addendum_waiting_for_human_queries_and_qrels",
+  "supersedes": null,
+  "does_not_modify": "experiments/specs/retrieval_preregistration_v1.json",
+  "corpus": "artifacts/corpus_v3_1_1_20260811/corpus.csv",
+  "corpus_sha256": "2d80460bd329c2c5401478320f3dbd1e6d35806631ce4df1e5d96fa280af765f",
+  "citation_graph": "artifacts/corpus_v3_1_1_20260811/citations.tsv",
+  "citation_graph_sha256": "99936c8426c7b43b0af718966957dfb37b4002df0b1379db0ffcb82f63046b6c",
+  "specter_cache": "artifacts/corpus_v3_1_1_20260811/kaggle_specter2/specter2.npz",
+  "specter_cache_sha256": "66cf1b364ee7af2d2af8ad715997d28d7a2f42aa32d3787ca5307b8313a33447",
+  "frozen_query_split": "artifacts/benchmark_query_split_scope_v1_frozen.json",
+  "frozen_query_split_sha256": "313c5ad51d23e5f71e4aa074f880847b438cf729704766244905eaf429aa399b",
+  "required_query_count": 20,
+  "minimum_qrels_per_query": 20,
+  "human_input_gate": {
+    "queries": "all development queries must be human-authored and pass title-copy validation",
+    "qrels": "pooled candidates must receive two independent judgments and completed adjudication",
+    "current_state_at_registration": "0 of 20 human development queries completed; no ablation executed"
+  },
+  "train_end": "2014-12-31",
+  "test_end": "2024-12-31",
+  "top_k": 100,
+  "save_rankings": true,
+  "primary_metric": "ndcg@10",
+  "secondary_metrics": [
+    "recall@20",
+    "recall@100",
+    "mrr"
+  ],
+  "selection_rule": "select the graph weight with maximum development ndcg@10; break an exact tie by lower query latency p95, then lower graph weight",
+  "confirmatory_baseline": "hybrid-graph-w000",
+  "random_seed": 20260811,
+  "fixed_parameters": {
+    "bm25-k1": 1.2,
+    "bm25-b": 0.75,
+    "rrf-k": 60,
+    "candidate-k": 100,
+    "bm25-weight": 1.0,
+    "specter2-weight": 1.0,
+    "graph-direct-weight": 1.0,
+    "graph-bibliographic-weight": 1.0,
+    "graph-cocitation-weight": 1.0
+  },
+  "development_runs": [
+    {
+      "run_id": "hybrid-graph-w000",
+      "method": "hybrid",
+      "params": {
+        "bm25-k1": 1.2,
+        "bm25-b": 0.75,
+        "rrf-k": 60,
+        "candidate-k": 100,
+        "bm25-weight": 1.0,
+        "specter2-weight": 1.0
+      }
+    },
+    {
+      "run_id": "hybrid-graph-w010",
+      "method": "hybrid_graph",
+      "params": {
+        "bm25-k1": 1.2,
+        "bm25-b": 0.75,
+        "rrf-k": 60,
+        "candidate-k": 100,
+        "bm25-weight": 1.0,
+        "specter2-weight": 1.0,
+        "graph-direct-weight": 1.0,
+        "graph-bibliographic-weight": 1.0,
+        "graph-cocitation-weight": 1.0,
+        "graph-rrf-weight": 0.1
+      }
+    },
+    {
+      "run_id": "hybrid-graph-w025",
+      "method": "hybrid_graph",
+      "params": {
+        "bm25-k1": 1.2,
+        "bm25-b": 0.75,
+        "rrf-k": 60,
+        "candidate-k": 100,
+        "bm25-weight": 1.0,
+        "specter2-weight": 1.0,
+        "graph-direct-weight": 1.0,
+        "graph-bibliographic-weight": 1.0,
+        "graph-cocitation-weight": 1.0,
+        "graph-rrf-weight": 0.25
+      }
+    },
+    {
+      "run_id": "hybrid-graph-w050",
+      "method": "hybrid_graph",
+      "params": {
+        "bm25-k1": 1.2,
+        "bm25-b": 0.75,
+        "rrf-k": 60,
+        "candidate-k": 100,
+        "bm25-weight": 1.0,
+        "specter2-weight": 1.0,
+        "graph-direct-weight": 1.0,
+        "graph-bibliographic-weight": 1.0,
+        "graph-cocitation-weight": 1.0,
+        "graph-rrf-weight": 0.5
+      }
+    },
+    {
+      "run_id": "hybrid-graph-w100",
+      "method": "hybrid_graph",
+      "params": {
+        "bm25-k1": 1.2,
+        "bm25-b": 0.75,
+        "rrf-k": 60,
+        "candidate-k": 100,
+        "bm25-weight": 1.0,
+        "specter2-weight": 1.0,
+        "graph-direct-weight": 1.0,
+        "graph-bibliographic-weight": 1.0,
+        "graph-cocitation-weight": 1.0,
+        "graph-rrf-weight": 1.0
+      }
+    }
+  ]
+}

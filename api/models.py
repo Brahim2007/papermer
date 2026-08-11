@@ -42,7 +42,7 @@ class Article(models.Model):
     publisher = models.TextField(blank=True, default="")
     id = models.CharField(max_length=100, unique=True, primary_key=True)
     pdf = models.URLField(default=None, null=True, blank=True, max_length=500)
-    link = models.URLField(blank=True, default="")
+    link = models.URLField(blank=True, default="", max_length=500)
     abstract = models.TextField(blank=True, default="")
     count = models.IntegerField(default=0)
     comm_count = models.IntegerField(default=0)

@@ -25,6 +25,7 @@ def build_retriever(
     *,
     batch_size: int = 16,
     specter_cache: Specter2CorpusCache | None = None,
+    specter2_encoder: Specter2Encoder | None = None,
     bm25_k1: float = 1.2,
     bm25_b: float = 0.75,
     rrf_k: int = 60,
@@ -76,7 +77,7 @@ def build_retriever(
 
     titles = corpus["title"].fillna("").astype(str).tolist()
     abstracts = corpus["abstract"].fillna("").astype(str).tolist()
-    encoder = Specter2Encoder()
+    encoder = specter2_encoder or Specter2Encoder()
     specter2 = Specter2Retriever(encoder=encoder)
     if specter_cache is not None:
         cached_encoder = specter_cache.metadata.get("encoder", {})

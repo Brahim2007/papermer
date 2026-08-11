@@ -8,9 +8,20 @@ import json
 import os
 from pathlib import Path
 
-import pandas as pd
-
 from experiments.build_temporal_benchmark import file_sha256
+
+
+def load_document_ids(path: Path) -> set[str]:
+    with path.open(encoding="utf-8", newline="") as handle:
+        reader = csv.DictReader(handle)
+        if "id" not in set(reader.fieldnames or ()):
+            raise ValueError("corpus is missing the id column")
+        identifiers = [str(row.get("id") or "").strip() for row in reader]
+    if any(not identifier for identifier in identifiers):
+        raise ValueError("corpus contains a blank document ID")
+    if len(identifiers) != len(set(identifiers)):
+        raise ValueError("corpus document IDs must be unique")
+    return set(identifiers)
 
 
 def main() -> int:
@@ -19,8 +30,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
 
-    corpus = pd.read_csv(args.corpus, usecols=["id"])
-    document_ids = set(corpus["id"].astype(str))
+    document_ids = load_document_ids(args.corpus)
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "PaperMetrics.settings")
     import django

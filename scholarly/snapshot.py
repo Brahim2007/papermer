@@ -45,16 +45,33 @@ def _parse_date(value: Any) -> date | None:
         return None
 
 
-def _topic_names(item: dict) -> set[str]:
+def _topic_hierarchy_values(item: dict) -> tuple[set[str], set[str]]:
+    """Return normalized names and IDs from every OpenAlex topic hierarchy level."""
+    names: set[str] = set()
+    identifiers: set[str] = set()
     topics = list(item.get("topics") or item.get("concepts") or ())
     primary = item.get("primary_topic")
     if primary:
         topics.append(primary)
-    return {
-        str(topic.get("display_name") or "").strip().casefold()
-        for topic in topics
-        if isinstance(topic, dict) and topic.get("display_name")
-    }
+    for topic in topics:
+        if not isinstance(topic, dict):
+            continue
+        for node in (
+            topic,
+            topic.get("subfield"),
+            topic.get("field"),
+            topic.get("domain"),
+        ):
+            if not isinstance(node, dict):
+                continue
+            name = str(node.get("display_name") or "").strip().casefold()
+            if name:
+                names.add(name)
+            identifier = str(node.get("id") or "").strip().rstrip("/").casefold()
+            if identifier:
+                identifiers.add(identifier)
+                identifiers.add(identifier.rsplit("/", 1)[-1])
+    return names, identifiers
 
 
 def openalex_scope_rejection(item: dict, spec: dict) -> str | None:
@@ -87,12 +104,47 @@ def openalex_scope_rejection(item: dict, spec: dict) -> str | None:
     included_topics = {
         str(value).strip().casefold() for value in spec.get("include_topics", ())
     }
-    if included_topics and not (_topic_names(item) & included_topics):
+    included_topic_ids = {
+        str(value).strip().rstrip("/").casefold()
+        for value in spec.get("include_topic_ids", ())
+    }
+    names, identifiers = _topic_hierarchy_values(item)
+    if (included_topics or included_topic_ids) and not (
+        (names & included_topics) or (identifiers & included_topic_ids)
+    ):
         return "topic"
     return None
 
 
 def validate_bulk_scope(spec: dict) -> None:
+    if spec.get("protocol") == "openalex_shared_reference_closure_v1":
+        required = {
+            "format_version",
+            "name",
+            "protocol",
+            "parent_corpus_sha256",
+            "from_date",
+            "to_date",
+            "target_addition_count",
+            "candidate_pool_cap",
+            "min_distinct_parent_citers",
+            "selection",
+        }
+        missing = sorted(required - set(spec))
+        if missing:
+            raise ValueError(f"citation closure scope is missing: {missing}")
+        if date.fromisoformat(spec["to_date"]) < date.fromisoformat(spec["from_date"]):
+            raise ValueError("scope to_date precedes from_date")
+        target = int(spec["target_addition_count"])
+        if target < 1 or int(spec["candidate_pool_cap"]) < target:
+            raise ValueError("citation closure target and candidate cap are invalid")
+        if int(spec["min_distinct_parent_citers"]) < 2:
+            raise ValueError("citation closure requires at least two parent citers")
+        if not (spec.get("include_topics") or spec.get("include_topic_ids")):
+            raise ValueError("at least one topical scope selector is required")
+        if spec["selection"].get("reference_scheme") != "openalex":
+            raise ValueError("citation closure currently requires OpenAlex references")
+        return
     required = {
         "format_version",
         "name",
@@ -111,11 +163,48 @@ def validate_bulk_scope(spec: dict) -> None:
         raise ValueError("scope to_date precedes from_date")
     if int(spec["target_document_count"]) < 1:
         raise ValueError("target_document_count must be positive")
+    if not (spec.get("include_topics") or spec.get("include_topic_ids")):
+        raise ValueError("at least one topical scope selector is required")
     sampling = spec["sampling"]
-    if sampling.get("method") != "deterministic_sha256_bottom_k":
-        raise ValueError("scope must use deterministic_sha256_bottom_k sampling")
-    if not str(sampling.get("seed") or "").strip():
+    method = sampling.get("method")
+    supported = {
+        "deterministic_sha256_bottom_k",
+        "openalex_seeded_stratified_sample_v1",
+    }
+    if method not in supported:
+        raise ValueError(f"unsupported sampling method: {method}")
+    if sampling.get("seed") in (None, ""):
         raise ValueError("sampling seed is required")
+    if method == "openalex_seeded_stratified_sample_v1":
+        strata = sampling.get("strata")
+        if not isinstance(strata, list) or not strata:
+            raise ValueError("seeded stratified sampling requires strata")
+        names = [str(item.get("name") or "") for item in strata]
+        if any(not name for name in names) or len(names) != len(set(names)):
+            raise ValueError("sampling stratum names must be non-empty and unique")
+        quota_total = sum(int(item.get("quota") or 0) for item in strata)
+        if quota_total != int(spec["target_document_count"]):
+            raise ValueError("sampling stratum quotas must equal target_document_count")
+        for item in strata:
+            if int(item.get("quota") or 0) < 1:
+                raise ValueError("sampling stratum quota must be positive")
+            if item.get("seed") in (None, ""):
+                raise ValueError("every sampling stratum requires a seed")
+            reserve_seeds = item.get("reserve_seeds")
+            if not isinstance(reserve_seeds, list) or not reserve_seeds:
+                raise ValueError("every sampling stratum requires reserve seeds")
+            if len({item["seed"], *reserve_seeds}) != 1 + len(reserve_seeds):
+                raise ValueError("sampling seeds must be unique within each stratum")
+            if not str(item.get("primary_topic_subfield_id") or "").strip():
+                raise ValueError("every sampling stratum requires a subfield ID")
+            if not item.get("work_types"):
+                raise ValueError("every sampling stratum requires work types")
+
+
+def snapshot_target_count(spec: dict) -> int:
+    if spec.get("protocol") == "openalex_shared_reference_closure_v1":
+        return int(spec["target_addition_count"])
+    return int(spec["target_document_count"])
 
 
 def deterministic_sample(
@@ -123,6 +212,8 @@ def deterministic_sample(
 ) -> tuple[list[dict], Counter[str]]:
     """Select popularity-neutral bottom-k records by stable OpenAlex ID hash."""
     validate_bulk_scope(spec)
+    if spec["sampling"]["method"] != "deterministic_sha256_bottom_k":
+        raise ValueError("deterministic_sample requires bottom-k sampling")
     target = int(spec["target_document_count"])
     seed = str(spec["sampling"]["seed"])
     heap: list[tuple[int, str, dict]] = []

@@ -13,6 +13,7 @@ from scholarly.snapshot import (
     file_sha256,
     iter_jsonl,
     openalex_scope_rejection,
+    snapshot_target_count,
     validate_bulk_scope,
 )
 
@@ -93,7 +94,7 @@ class Command(BaseCommand):
             self._write_report(output, report)
 
         report["status"] = "completed"
-        target = int(spec["target_document_count"])
+        target = snapshot_target_count(spec)
         report["target_check"] = {
             "target_document_count": target,
             "eligible_records": report["totals"]["eligible"],

@@ -9,6 +9,7 @@ from scholarly.snapshot import (
     deterministic_sample,
     iter_jsonl,
     openalex_scope_rejection,
+    snapshot_target_count,
     validate_bulk_scope,
 )
 
@@ -50,6 +51,39 @@ def test_openalex_scope_accepts_matching_work():
     assert openalex_scope_rejection(_work(), _spec()) is None
 
 
+def test_openalex_scope_accepts_nested_subfield_name():
+    spec = _spec()
+    spec["include_topics"] = ["Artificial Intelligence"]
+    work = _work()
+    work["topics"] = [
+        {
+            "id": "https://openalex.org/T10000",
+            "display_name": "Natural Language Processing Techniques",
+            "subfield": {
+                "id": "https://openalex.org/subfields/1702",
+                "display_name": "Artificial Intelligence",
+            },
+            "field": {"id": "17", "display_name": "Computer Science"},
+        }
+    ]
+    assert openalex_scope_rejection(work, spec) is None
+
+
+def test_openalex_scope_accepts_normalized_hierarchy_id():
+    spec = _spec()
+    spec["include_topics"] = []
+    spec["include_topic_ids"] = ["1702"]
+    work = _work()
+    work["primary_topic"] = {
+        "display_name": "A narrower topic",
+        "subfield": {
+            "id": "https://openalex.org/subfields/1702/",
+            "display_name": "Artificial Intelligence",
+        },
+    }
+    assert openalex_scope_rejection(work, spec) is None
+
+
 @pytest.mark.parametrize(
     ("change", "reason"),
     [
@@ -76,7 +110,52 @@ def test_gzip_reader_resume(tmp_path: Path):
 def test_bulk_scope_requires_neutral_sampling():
     spec = _spec()
     spec["sampling"] = {"method": "top_cited", "seed": "fixed"}
-    with pytest.raises(ValueError, match="deterministic_sha256_bottom_k"):
+    with pytest.raises(ValueError, match="unsupported sampling method"):
+        validate_bulk_scope(spec)
+
+
+def test_bulk_scope_requires_topical_selector():
+    spec = _spec()
+    spec["include_topics"] = []
+    with pytest.raises(ValueError, match="topical scope selector"):
+        validate_bulk_scope(spec)
+
+
+def test_citation_closure_scope_has_an_addition_target():
+    spec = {
+        "format_version": 1,
+        "name": "closure",
+        "protocol": "openalex_shared_reference_closure_v1",
+        "parent_corpus_sha256": "a" * 64,
+        "from_date": "2020-01-01",
+        "to_date": "2025-12-31",
+        "target_addition_count": 25,
+        "candidate_pool_cap": 100,
+        "min_distinct_parent_citers": 2,
+        "include_topic_ids": ["1702"],
+        "selection": {"reference_scheme": "openalex"},
+    }
+
+    validate_bulk_scope(spec)
+    assert snapshot_target_count(spec) == 25
+
+
+def test_seeded_stratified_scope_requires_exact_quota_total():
+    spec = _spec()
+    spec["sampling"] = {
+        "method": "openalex_seeded_stratified_sample_v1",
+        "seed": 1,
+        "strata": [
+            {
+                "name": "ai",
+                "quota": 2,
+                "seed": 11,
+                "primary_topic_subfield_id": "1702",
+                "work_types": ["article"],
+            }
+        ],
+    }
+    with pytest.raises(ValueError, match="quotas must equal"):
         validate_bulk_scope(spec)
 
 
