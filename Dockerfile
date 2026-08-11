@@ -25,6 +25,7 @@ RUN if [ -n "${TORCH_INDEX_URL}" ]; then \
 
 FROM python:3.13-slim-bookworm AS runtime
 
+ARG REQUIREMENTS_FILE=requirements/production.txt
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_DISABLE_PIP_VERSION_CHECK=1 \
@@ -41,9 +42,12 @@ RUN apt-get update \
     && useradd --system --uid 10001 --gid app --home-dir /app app
 
 WORKDIR /app
-COPY --from=builder /wheels /wheels
-RUN python -m pip install /wheels/* \
-    && rm -rf /wheels
+RUN --mount=type=bind,from=builder,source=/wheels,target=/wheels,ro \
+    --mount=type=bind,source=requirements,target=/requirements,ro \
+    python -m pip install \
+        --no-index \
+        --find-links /wheels \
+        --requirement "/${REQUIREMENTS_FILE}"
 
 COPY --chown=app:app . /app
 RUN chmod 0555 /app/deploy/entrypoint.sh \
