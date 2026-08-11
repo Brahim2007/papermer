@@ -34,6 +34,8 @@ services:
       dockerfile: Dockerfile
       args:
         REQUIREMENTS_FILE: requirements/semantic-production.txt
+        TORCH_INDEX_URL: https://download.pytorch.org/whl/cpu
+        TORCH_VERSION: "2.6.0"
     environment:
       RUN_MIGRATIONS: "1"
       COLLECT_STATIC: "1"

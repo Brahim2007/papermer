@@ -3,14 +3,24 @@
 FROM python:3.13-slim-bookworm AS builder
 
 ARG REQUIREMENTS_FILE=requirements/production.txt
+ARG TORCH_INDEX_URL=
+ARG TORCH_VERSION=
 ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
     PIP_NO_CACHE_DIR=1
 
 WORKDIR /build
 COPY requirements/ requirements/
-RUN python -m pip wheel \
-    --wheel-dir /wheels \
-    --requirement "${REQUIREMENTS_FILE}"
+RUN if [ -n "${TORCH_INDEX_URL}" ]; then \
+        test -n "${TORCH_VERSION}"; \
+        python -m pip wheel \
+            --wheel-dir /wheels \
+            --index-url "${TORCH_INDEX_URL}" \
+            "torch==${TORCH_VERSION}"; \
+    fi \
+    && python -m pip wheel \
+        --wheel-dir /wheels \
+        --find-links /wheels \
+        --requirement "${REQUIREMENTS_FILE}"
 
 
 FROM python:3.13-slim-bookworm AS runtime
