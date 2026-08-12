@@ -71,6 +71,7 @@ class InterfaceFoundationTests(SimpleTestCase):
 
     def test_design_system_assets_are_discoverable(self):
         self.assertIsNotNone(finders.find("css/app.css"))
+        self.assertIsNotNone(finders.find("icons/ui.svg"))
         self.assertIsNotNone(finders.find("js/app.js"))
         self.assertIsNotNone(finders.find("js/onboarding.js"))
         for asset in (
@@ -104,6 +105,9 @@ class InterfaceFoundationTests(SimpleTestCase):
         footer = (root / "footer.html").read_text(encoding="utf-8")
         self.assertIn('aria-controls="primary-navigation"', navigation)
         self.assertIn("data-site-navigation", navigation)
+        self.assertGreaterEqual(navigation.count("<svg"), 8)
+        for legacy_icon in (">⌕<", ">◇<", ">▤<", ">◎<", ">⌁<"):
+            self.assertNotIn(legacy_icon, navigation)
         self.assertIn('method="post" action="{% url \'logout\' %}"', navigation)
         self.assertNotIn("onclick=", navigation.lower())
         self.assertGreaterEqual(footer.count("<nav"), 3)

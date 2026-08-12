@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load static i18n %}
 <footer class="site-footer">
   <div class="site-footer__signal" aria-hidden="true"><span></span><span></span><span></span></div>
   <div class="site-footer__inner">
@@ -14,5 +14,5 @@
     <nav class="footer-nav" aria-label="{% trans 'Research links' %}"><strong>{% trans "Research" %}</strong><a href="{% url 'about' %}#philosophy-heading">{% trans "Our philosophy" %}</a><a href="{% url 'about' %}#workflow-heading">{% trans "How retrieval works" %}</a><a href="{% url 'about' %}#new-heading">{% trans "What is new" %}</a>{% if request.user.is_staff %}<a href="{% url 'evaluation_dashboard' %}">{% trans "Evaluation dashboard" %}</a>{% endif %}</nav>
     <nav class="footer-nav" aria-label="{% trans 'Platform links' %}"><strong>{% trans "Platform" %}</strong><a href="{% url 'about' %}">{% trans "About PaperMetrix" %}</a><a href="{% url 'faq' %}">{% trans "Questions and answers" %}</a><a href="{% url 'healthz' %}"><span class="status-dot" aria-hidden="true"></span>{% trans "System status" %}</a>{% if request.user.is_authenticated %}<a href="{% url 'profile' %}">{% trans "Research profile" %}</a>{% else %}<a href="{% url 'login' %}">{% trans "Log in" %}</a>{% endif %}</nav>
   </div>
-  <div class="footer-bottom"><div><p>© {% now "Y" %} PaperMetrix</p><p>{% trans "Research prototype—not a measure of scientific quality." %}</p></div><a href="#main-content">{% trans "Back to top" %} <span aria-hidden="true">↑</span></a></div>
+  <div class="footer-bottom"><div><p>© {% now "Y" %} PaperMetrix</p><p>{% trans "Research prototype—not a measure of scientific quality." %}</p></div><a href="#main-content">{% trans "Back to top" %} <svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#arrow-up"></use></svg></a></div>
 </footer>

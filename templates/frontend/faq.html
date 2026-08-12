@@ -10,7 +10,7 @@
     <h1 id="faq-title">{% trans "Questions deserve clear answers." %}</h1>
     <p>{% trans "Understand how search works, what the ranking means, where the data comes from, and where human judgment still matters." %}</p>
   </div>
-  <div class="faq-hero__guide"><span aria-hidden="true">?</span><div><strong>{% trans "New to PaperMetrix?" %}</strong><p>{% trans "Start with search, inspect the explanation on each result, then save useful papers to a library." %}</p><a href="{% url 'search' %}">{% trans "Start searching" %} →</a></div></div>
+  <div class="faq-hero__guide"><span aria-hidden="true"><svg class="ui-icon"><use href="{% static 'icons/ui.svg' %}#help"></use></svg></span><div><strong>{% trans "New to PaperMetrix?" %}</strong><p>{% trans "Start with search, inspect the explanation on each result, then save useful papers to a library." %}</p><a href="{% url 'search' %}">{% trans "Start searching" %} →</a></div></div>
 </section>
 
 <section class="faq-shell" aria-labelledby="faq-browse-heading">
@@ -18,12 +18,12 @@
     <div><span class="eyebrow">{% trans "Find an answer" %}</span><h2 id="faq-browse-heading">{% trans "Browse by question or topic." %}</h2></div>
     <div class="faq-search">
       <label for="faq-search">{% trans "Search questions and answers" %}</label>
-      <div class="faq-search__control"><span aria-hidden="true">⌕</span><input id="faq-search" type="search" autocomplete="off" placeholder="{% trans 'Try: ranking, full text, LLM, privacy…' %}" data-faq-search><button type="button" data-faq-clear hidden>{% trans "Clear" %}</button></div>
+      <div class="faq-search__control"><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#search"></use></svg><input id="faq-search" type="search" autocomplete="off" placeholder="{% trans 'Try: ranking, full text, LLM, privacy…' %}" data-faq-search><button type="button" data-faq-clear hidden>{% trans "Clear" %}</button></div>
       <p class="faq-search__status" role="status" aria-live="polite" data-faq-status data-results-label="{% trans 'matching questions' %}" data-empty-label="{% trans 'No matching questions. Try a broader term.' %}">{% trans "Showing all questions" %}</p>
     </div>
   </div>
 
-  <div class="faq-empty" data-faq-empty hidden><span aria-hidden="true">⌕</span><h2>{% trans "No answer found" %}</h2><p>{% trans "Try a shorter term, or explore the categories below." %}</p></div>
+  <div class="faq-empty" data-faq-empty hidden><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#search"></use></svg><h2>{% trans "No answer found" %}</h2><p>{% trans "Try a shorter term, or explore the categories below." %}</p></div>
 
   <div class="faq-groups" data-faq-groups>
     <section class="faq-group" aria-labelledby="faq-starting" data-faq-group>

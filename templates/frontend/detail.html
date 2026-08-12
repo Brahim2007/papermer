@@ -52,13 +52,13 @@
 
         <div class="paper-primary-actions" role="group" aria-label="{% trans 'Primary paper actions' %}">
           {% if object.pdf %}
-            <a class="button button--primary" href="{{ object.pdf }}" rel="noopener noreferrer" target="_blank">{% trans "Read PDF" %}<span aria-hidden="true"> ↗</span><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
+            <a class="button button--primary" href="{{ object.pdf }}" rel="noopener noreferrer" target="_blank">{% trans "Read PDF" %}<svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#external-link"></use></svg><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
           {% endif %}
           {% if object.doi %}
-            <a class="button button--secondary" href="https://doi.org/{{ object.doi }}" rel="noopener noreferrer" target="_blank">{% trans "View publisher" %}<span aria-hidden="true"> ↗</span><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
+            <a class="button button--secondary" href="https://doi.org/{{ object.doi }}" rel="noopener noreferrer" target="_blank">{% trans "View publisher" %}<svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#external-link"></use></svg><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
             <button class="button button--ghost paper-copy-button" type="button" data-copy-value="{{ object.doi }}">{% trans "Copy DOI" %}</button>
           {% elif object.link %}
-            <a class="button button--secondary" href="{{ object.link }}" rel="noopener noreferrer" target="_blank">{% trans "View publisher" %}<span aria-hidden="true"> ↗</span><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
+            <a class="button button--secondary" href="{{ object.link }}" rel="noopener noreferrer" target="_blank">{% trans "View publisher" %}<svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#external-link"></use></svg><span class="sr-only"> ({% trans "opens in a new tab" %})</span></a>
           {% endif %}
           <span class="copy-status" role="status" aria-live="polite" data-copy-status></span>
         </div>

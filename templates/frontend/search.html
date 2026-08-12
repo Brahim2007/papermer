@@ -15,7 +15,7 @@
 
     <form id="paper-search-form" class="search-bar search-bar--hero" method="get" action="{% url 'search' %}" role="search" data-search-form>
       <label class="sr-only" for="search-query">{% trans "Search scientific papers" %}</label>
-      <span class="search-bar__icon" aria-hidden="true">⌕</span>
+      <svg class="ui-icon search-bar__icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#search"></use></svg>
       <input id="search-query" name="query" type="search" value="{{ query }}" required autofocus autocomplete="off" placeholder="{% trans 'Describe the paper, method, problem, or evidence you need…' %}">
       <button class="button button--primary" type="submit">{% trans "Search papers" %}</button>
     </form>
@@ -64,7 +64,7 @@
   {% if query %}
     <div class="search-results__summary" data-server-summary>
       <div><strong>{% blocktrans count counter=article_list|length %}{{ counter }} result{% plural %}{{ counter }} results{% endblocktrans %}</strong><span>{% blocktrans %}for “{{ query }}”{% endblocktrans %}</span></div>
-      <span class="retrieval-label" data-server-method><span aria-hidden="true">◎</span> {% trans "Metadata fallback" %}</span>
+      <span class="retrieval-label" data-server-method><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#layers"></use></svg> {% trans "Metadata fallback" %}</span>
     </div>
 
     {% if request.user.is_authenticated %}
@@ -115,9 +115,9 @@
     <section class="search-welcome" data-search-start aria-labelledby="search-welcome-title">
       <div class="search-welcome__intro"><span class="eyebrow">{% trans "Built for research questions" %}</span><h2 id="search-welcome-title">{% trans "One search surface, three kinds of evidence." %}</h2><p>{% trans "Start broad, inspect why each paper ranked, then save useful evidence as a seed for future recommendations." %}</p></div>
       <div class="search-start">
-        <div><span aria-hidden="true">⌕</span><strong>{% trans "Describe the information need" %}</strong><p>{% trans "Natural-language questions, exact titles, authors, venues, and identifiers are supported." %}</p></div>
-        <div><span aria-hidden="true">◇</span><strong>{% trans "Inspect ranking evidence" %}</strong><p>{% trans "See matched terms and the component rank contributed by each retrieval channel." %}</p></div>
-        <div><span aria-hidden="true">＋</span><strong>{% trans "Turn results into a trail" %}</strong><p>{% trans "Save papers, revisit them, and use explicit feedback to study recommendation behavior." %}</p></div>
+        <div><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#search"></use></svg><strong>{% trans "Describe the information need" %}</strong><p>{% trans "Natural-language questions, exact titles, authors, venues, and identifiers are supported." %}</p></div>
+        <div><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#layers"></use></svg><strong>{% trans "Inspect ranking evidence" %}</strong><p>{% trans "See matched terms and the component rank contributed by each retrieval channel." %}</p></div>
+        <div><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#plus"></use></svg><strong>{% trans "Turn results into a trail" %}</strong><p>{% trans "Save papers, revisit them, and use explicit feedback to study recommendation behavior." %}</p></div>
       </div>
     </section>
   {% endif %}
