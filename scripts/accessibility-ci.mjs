@@ -33,6 +33,7 @@ try {
     "Filtered search",
   );
   await scan("/about/", "About");
+  await scan("/faq/", "Questions and answers");
   await scan(
     "/ar/search/?query=hybrid+retrieval&year_from=2020&open_access=1",
     "Arabic RTL filtered search",

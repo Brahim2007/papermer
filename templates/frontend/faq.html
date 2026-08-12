@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% load static i18n %}
+{% block title %}{% trans "Questions and answers" %} · PaperMetrix{% endblock %}
+{% block meta_description %}{% trans "Answers about PaperMetrix search, recommendations, scholarly data, artificial intelligence, privacy, and research limitations." %}{% endblock %}
+{% block body_class %}page-faq{% endblock %}
+{% block content %}
+<section class="faq-hero" aria-labelledby="faq-title">
+  <div>
+    <span class="eyebrow">{% trans "PaperMetrix help" %}</span>
+    <h1 id="faq-title">{% trans "Questions deserve clear answers." %}</h1>
+    <p>{% trans "Understand how search works, what the ranking means, where the data comes from, and where human judgment still matters." %}</p>
+  </div>
+  <div class="faq-hero__guide"><span aria-hidden="true">?</span><div><strong>{% trans "New to PaperMetrix?" %}</strong><p>{% trans "Start with search, inspect the explanation on each result, then save useful papers to a library." %}</p><a href="{% url 'search' %}">{% trans "Start searching" %} →</a></div></div>
+</section>
+
+<section class="faq-shell" aria-labelledby="faq-browse-heading">
+  <div class="faq-tools">
+    <div><span class="eyebrow">{% trans "Find an answer" %}</span><h2 id="faq-browse-heading">{% trans "Browse by question or topic." %}</h2></div>
+    <div class="faq-search">
+      <label for="faq-search">{% trans "Search questions and answers" %}</label>
+      <div class="faq-search__control"><span aria-hidden="true">⌕</span><input id="faq-search" type="search" autocomplete="off" placeholder="{% trans 'Try: ranking, full text, LLM, privacy…' %}" data-faq-search><button type="button" data-faq-clear hidden>{% trans "Clear" %}</button></div>
+      <p class="faq-search__status" role="status" aria-live="polite" data-faq-status data-results-label="{% trans 'matching questions' %}" data-empty-label="{% trans 'No matching questions. Try a broader term.' %}">{% trans "Showing all questions" %}</p>
+    </div>
+  </div>
+
+  <div class="faq-empty" data-faq-empty hidden><span aria-hidden="true">⌕</span><h2>{% trans "No answer found" %}</h2><p>{% trans "Try a shorter term, or explore the categories below." %}</p></div>
+
+  <div class="faq-groups" data-faq-groups>
+    <section class="faq-group" aria-labelledby="faq-starting" data-faq-group>
+      <div class="faq-group__heading"><span>01</span><div><h2 id="faq-starting">{% trans "Getting started" %}</h2><p>{% trans "The essentials for finding and organizing literature." %}</p></div></div>
+      <div class="faq-list">
+        <details class="faq-item" data-faq-item><summary><span>{% trans "What is PaperMetrix?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "PaperMetrix is a research platform for discovering, explaining, and organizing scientific literature. It is also an experimental environment for evaluating retrieval and recommendation methods reproducibly." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Do I need an account to search?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "No. Public search and paper details are available without an account. An account is needed for personal libraries, saved papers, research interests, and personalized features." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "How should I write a good search query?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "Describe the research problem with a few distinctive concepts. Include exact technical terms when they matter; you do not need to write a full question or Boolean expression." %}</p></div></details>
+      </div>
+    </section>
+
+    <section class="faq-group" aria-labelledby="faq-ranking" data-faq-group>
+      <div class="faq-group__heading"><span>02</span><div><h2 id="faq-ranking">{% trans "Ranking and recommendations" %}</h2><p>{% trans "What the order means and how to interpret it responsibly." %}</p></div></div>
+      <div class="faq-list">
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Does a higher rank mean a paper is scientifically better?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "No. Rank estimates relevance to the current query. It is not a judgment of methodological quality, truth, novelty, or scientific impact. Researchers should still assess the paper itself." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "How does PaperMetrix rank search results?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "The live baseline combines lexical evidence such as BM25 with scholarly semantic similarity through Reciprocal Rank Fusion. The interface records retrieval components and timing so the ranking remains inspectable." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Why might two similar searches return different papers?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "Small wording changes can alter exact-term and semantic matches. The corpus also grows as metadata is updated. PaperMetrix records request details for controlled experiments, but public search is a live discovery service." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Are citation counts used as proof of relevance?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "No. Citations can provide structural or descriptive signals, but they reflect age, field, visibility, and social processes. They are never treated as an unbiased label of quality or relevance." %}</p></div></details>
+      </div>
+    </section>
+
+    <section class="faq-group" aria-labelledby="faq-data" data-faq-group>
+      <div class="faq-group__heading"><span>03</span><div><h2 id="faq-data">{% trans "Data and access" %}</h2><p>{% trans "Coverage, metadata sources, and links to full text." %}</p></div></div>
+      <div class="faq-list">
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Where does the scholarly metadata come from?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "PaperMetrix reconciles complementary records from sources such as OpenAlex, Semantic Scholar, Crossref, arXiv, and Unpaywall. Provider identifiers and missing-data reasons are retained for provenance." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Does PaperMetrix cover every scientific paper?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "No scholarly index is complete. Coverage depends on the registered corpus scope, dates, languages, document types, and available metadata. Missing papers should not be interpreted as irrelevant." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Can PaperMetrix give me the full paper?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "When an open-access location is known, PaperMetrix links to it. Otherwise it links to the publisher or scholarly record. The platform does not host copyrighted articles or bypass access restrictions." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "What should I do if metadata is incomplete or wrong?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "Check the DOI, publisher page, and source provider before citing the record. Metadata can be incomplete, duplicated, or delayed; the canonical paper remains the authoritative object to inspect." %}</p></div></details>
+      </div>
+    </section>
+
+    <section class="faq-group" aria-labelledby="faq-ai" data-faq-group>
+      <div class="faq-group__heading"><span>04</span><div><h2 id="faq-ai">{% trans "AI, privacy, and research use" %}</h2><p>{% trans "How experimental models and interaction data are handled." %}</p></div></div>
+      <div class="faq-list">
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Does an LLM decide which papers I see?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "Not in the public baseline. LLM query expansion is an isolated, switchable experimental channel with a fixed model and prompt, budget controls, and separate evaluation. Public LLM traffic remains disabled until evidence supports a controlled rollout." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "What interaction data does PaperMetrix record?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "For evaluation, the platform can associate impressions, clicks, saves, and explicit relevance feedback with a retrieval request. These signals support analysis but are not automatically treated as ground-truth relevance." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Can I use PaperMetrix for a systematic review?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "Use it as a complementary discovery tool, not as the sole search source or screening decision-maker. A systematic review requires a registered search strategy, appropriate databases, reproducible screening, and documented inclusion decisions." %}</p></div></details>
+        <details class="faq-item" data-faq-item><summary><span>{% trans "Can results from PaperMetrix be used in research publications?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "Yes, when the corpus, query set, judgments, configuration, code revision, and statistical protocol are frozen and reported. Live interface observations alone are not a publication-ready evaluation." %}</p></div></details>
+      </div>
+    </section>
+  </div>
+</section>
+
+<section class="faq-cta"><div><span class="eyebrow">{% trans "Still exploring?" %}</span><h2>{% trans "See the method, then test it with your own question." %}</h2></div><div><a class="button button--secondary" href="{% url 'about' %}">{% trans "How PaperMetrix works" %}</a><a class="button button--primary" href="{% url 'search' %}">{% trans "Search papers" %}</a></div></section>
+{% endblock %}
+{% block extra_scripts %}<script src="{% static 'js/faq.js' %}?v=20260812-faq-v1"></script>{% endblock %}

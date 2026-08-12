@@ -34,6 +34,7 @@ class UrlConfigurationTests(SimpleTestCase):
             "api_top_articles",
             "api_hot_articles",
             "api_live_search",
+            "faq",
         )
         for name in names:
             path = reverse(name)
@@ -53,6 +54,7 @@ class InterfaceFoundationTests(SimpleTestCase):
             "frontend/index.html",
             "frontend/search.html",
             "frontend/about.html",
+            "frontend/faq.html",
             "frontend/detail.html",
             "frontend/author.html",
             "frontend/library_list.html",
@@ -72,6 +74,7 @@ class InterfaceFoundationTests(SimpleTestCase):
         self.assertIsNotNone(finders.find("js/app.js"))
         self.assertIsNotNone(finders.find("js/onboarding.js"))
         for asset in (
+            "js/faq.js",
             "js/paper-detail.js",
             "js/libraries.js",
             "js/library-detail.js",
@@ -80,6 +83,12 @@ class InterfaceFoundationTests(SimpleTestCase):
             "js/semantic-search.js",
         ):
             self.assertIsNotNone(finders.find(asset))
+
+    def test_accessibility_ci_scans_the_public_faq(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "scripts" / "accessibility-ci.mjs"
+        ).read_text(encoding="utf-8")
+        self.assertIn('scan("/faq/", "Questions and answers")', source)
 
     def test_arabic_catalog_is_compiled(self):
         with translation.override("ar"):
@@ -107,6 +116,7 @@ class AccessibilityGuardTests(SimpleTestCase):
     template_dir = Path(__file__).resolve().parents[1] / "templates" / "frontend"
     redesigned_templates = (
         "about.html",
+        "faq.html",
         "search.html",
         "detail.html",
         "author.html",
@@ -183,6 +193,33 @@ class AboutPageTests(TestCase):
         self.assertContains(response, "A research system, not a black box")
         self.assertContains(response, "What PaperMetrix does—and does not do")
         self.assertContains(response, 'class="about-stats"')
+        self.assertContains(response, reverse("faq"))
+
+
+@override_settings(ALLOWED_HOSTS=["testserver"])
+class FaqPageTests(SimpleTestCase):
+    def test_faq_is_public_and_uses_accessible_native_disclosure(self):
+        with translation.override("en"):
+            response = self.client.get("/faq/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Questions deserve clear answers")
+        self.assertContains(response, 'data-faq-search')
+        self.assertContains(response, 'role="status" aria-live="polite"')
+        self.assertGreaterEqual(response.content.decode().count('<details class="faq-item"'), 12)
+        self.assertNotContains(response, "<aside")
+
+    def test_arabic_faq_uses_rtl_and_translated_content(self):
+        response = self.client.get("/ar/faq/")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, '<html lang="ar" dir="rtl">')
+        self.assertContains(response, "الأسئلة تستحق إجابات واضحة")
+        self.assertContains(response, "الذكاء الاصطناعي والخصوصية والاستخدام البحثي")
+
+    def test_faq_javascript_does_not_inject_html(self):
+        source = (
+            Path(__file__).resolve().parents[1] / "static" / "js" / "faq.js"
+        ).read_text(encoding="utf-8")
+        self.assertNotIn(".innerHTML", source)
 
 
 class LiveRetrievalTests(SimpleTestCase):

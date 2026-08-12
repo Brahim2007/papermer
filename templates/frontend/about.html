@@ -56,6 +56,16 @@
   </div>
 </section>
 
+<section class="about-section about-faq" aria-labelledby="about-faq-heading">
+  <div class="about-section__heading"><span class="eyebrow">{% trans "Common questions" %}</span><h2 id="about-faq-heading">{% trans "Know what the system can—and cannot—tell you." %}</h2><p>{% trans "Short answers about rankings, full text, AI, and the evidence behind PaperMetrix." %}</p></div>
+  <div class="faq-list faq-list--preview">
+    <details class="faq-item"><summary><span>{% trans "Does a higher rank mean a paper is scientifically better?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "No. Rank estimates relevance to the current query. It is not a judgment of methodological quality, truth, or research impact." %}</p></div></details>
+    <details class="faq-item"><summary><span>{% trans "How does PaperMetrix find papers?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "It combines lexical retrieval for exact terminology with scholarly semantic representations. Experimental citation and LLM channels remain independently measurable and can be disabled." %}</p></div></details>
+    <details class="faq-item"><summary><span>{% trans "Can PaperMetrix give me the full paper?" %}</span><span class="faq-item__icon" aria-hidden="true"></span></summary><div class="faq-item__answer"><p>{% trans "When an open-access location is known, PaperMetrix links to it. Otherwise it links to the publisher or scholarly record and does not bypass access restrictions." %}</p></div></details>
+  </div>
+  <a class="faq-more-link" href="{% url 'faq' %}">{% trans "Browse all questions and answers" %} <span aria-hidden="true">→</span></a>
+</section>
+
 <section class="about-boundary" aria-labelledby="boundary-heading">
   <div><span class="eyebrow">{% trans "A clear boundary" %}</span><h2 id="boundary-heading">{% trans "What PaperMetrix does—and does not do." %}</h2></div>
   <div class="boundary-columns"><div><h3>{% trans "It helps you" %}</h3><ul><li>{% trans "find related and topically relevant literature" %}</li><li>{% trans "inspect why a result was retrieved" %}</li><li>{% trans "organize papers into reusable research collections" %}</li><li>{% trans "run reproducible retrieval experiments" %}</li></ul></div><div><h3>{% trans "It does not claim to" %}</h3><ul><li>{% trans "measure scientific quality from rank alone" %}</li><li>{% trans "replace systematic-review screening" %}</li><li>{% trans "treat citations or clicks as unbiased relevance" %}</li><li>{% trans "let an LLM silently rewrite the benchmark" %}</li></ul></div></div>
