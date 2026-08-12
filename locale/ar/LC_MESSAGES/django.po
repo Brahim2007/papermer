@@ -1411,3 +1411,214 @@ msgstr "روابط البحث"
 
 msgid "Platform links"
 msgstr "روابط المنصة"
+
+#: templates/nav.html templates/frontend/faq.html
+msgid "FAQ"
+msgstr "الأسئلة الشائعة"
+
+msgid "Answers and guidance"
+msgstr "إجابات وإرشادات"
+
+msgid "Questions and answers"
+msgstr "أسئلة وأجوبة"
+
+msgid "Common questions"
+msgstr "أسئلة شائعة"
+
+msgid "Know what the system can—and cannot—tell you."
+msgstr "اعرف ما الذي يستطيع النظام إخبارك به وما الذي لا يستطيع."
+
+msgid "Short answers about rankings, full text, AI, and the evidence behind PaperMetrix."
+msgstr "إجابات موجزة حول الترتيب والنص الكامل والذكاء الاصطناعي والأدلة التي يقوم عليها PaperMetrix."
+
+msgid "Does a higher rank mean a paper is scientifically better?"
+msgstr "هل يعني الترتيب الأعلى أن الورقة أفضل علميًا؟"
+
+msgid "No. Rank estimates relevance to the current query. It is not a judgment of methodological quality, truth, or research impact."
+msgstr "لا. يقدّر الترتيب مدى الصلة بالاستعلام الحالي، ولا يُعد حكمًا على جودة المنهجية أو صحة النتائج أو الأثر البحثي."
+
+msgid "How does PaperMetrix find papers?"
+msgstr "كيف يعثر PaperMetrix على الأوراق؟"
+
+msgid "It combines lexical retrieval for exact terminology with scholarly semantic representations. Experimental citation and LLM channels remain independently measurable and can be disabled."
+msgstr "يجمع بين الاسترجاع المعجمي للمصطلحات الدقيقة والتمثيلات الدلالية العلمية. وتظل قنوات الاستشهادات والنماذج اللغوية التجريبية قابلة للقياس بصورة مستقلة ويمكن تعطيلها."
+
+msgid "Can PaperMetrix give me the full paper?"
+msgstr "هل يمكن لـPaperMetrix توفير النص الكامل للورقة؟"
+
+msgid "When an open-access location is known, PaperMetrix links to it. Otherwise it links to the publisher or scholarly record and does not bypass access restrictions."
+msgstr "عندما يتوفر موقع مفتوح الوصول، يربط PaperMetrix به. وإلا فإنه يربط بسجل الناشر أو السجل العلمي ولا يتجاوز قيود الوصول."
+
+msgid "Browse all questions and answers"
+msgstr "تصفح جميع الأسئلة والأجوبة"
+
+msgid "Answers about PaperMetrix search, recommendations, scholarly data, artificial intelligence, privacy, and research limitations."
+msgstr "إجابات حول البحث والتوصيات والبيانات العلمية والذكاء الاصطناعي والخصوصية والقيود البحثية في PaperMetrix."
+
+msgid "PaperMetrix help"
+msgstr "مساعدة PaperMetrix"
+
+msgid "Questions deserve clear answers."
+msgstr "الأسئلة تستحق إجابات واضحة."
+
+msgid "Understand how search works, what the ranking means, where the data comes from, and where human judgment still matters."
+msgstr "افهم كيف يعمل البحث، وماذا يعني الترتيب، ومن أين تأتي البيانات، وأين يظل الحكم البشري ضروريًا."
+
+msgid "Quick guidance"
+msgstr "إرشاد سريع"
+
+msgid "New to PaperMetrix?"
+msgstr "هل تستخدم PaperMetrix لأول مرة؟"
+
+msgid "Start with search, inspect the explanation on each result, then save useful papers to a library."
+msgstr "ابدأ بالبحث، وافحص تفسير كل نتيجة، ثم احفظ الأوراق المفيدة في مكتبة."
+
+msgid "Start searching"
+msgstr "ابدأ البحث"
+
+msgid "Find an answer"
+msgstr "اعثر على إجابة"
+
+msgid "Browse by question or topic."
+msgstr "تصفح حسب السؤال أو الموضوع."
+
+msgid "Search questions and answers"
+msgstr "ابحث في الأسئلة والأجوبة"
+
+msgid "Try: ranking, full text, LLM, privacy…"
+msgstr "جرّب: الترتيب، النص الكامل، النموذج اللغوي، الخصوصية…"
+
+msgid "Clear"
+msgstr "مسح"
+
+msgid "matching questions"
+msgstr "أسئلة مطابقة"
+
+msgid "No matching questions. Try a broader term."
+msgstr "لا توجد أسئلة مطابقة. جرّب مصطلحًا أعم."
+
+msgid "Showing all questions"
+msgstr "عرض جميع الأسئلة"
+
+msgid "No answer found"
+msgstr "لم نعثر على إجابة"
+
+msgid "Try a shorter term, or explore the categories below."
+msgstr "جرّب مصطلحًا أقصر أو استكشف الفئات أدناه."
+
+msgid "Getting started"
+msgstr "البدء"
+
+msgid "The essentials for finding and organizing literature."
+msgstr "الأساسيات اللازمة للعثور على الأدبيات وتنظيمها."
+
+msgid "What is PaperMetrix?"
+msgstr "ما هو PaperMetrix؟"
+
+msgid "PaperMetrix is a research platform for discovering, explaining, and organizing scientific literature. It is also an experimental environment for evaluating retrieval and recommendation methods reproducibly."
+msgstr "PaperMetrix منصة بحثية لاكتشاف الأدبيات العلمية وتفسيرها وتنظيمها، كما أنها بيئة تجريبية لتقييم طرق الاسترجاع والتوصية بصورة قابلة لإعادة الإنتاج."
+
+msgid "Do I need an account to search?"
+msgstr "هل أحتاج إلى حساب لإجراء البحث؟"
+
+msgid "No. Public search and paper details are available without an account. An account is needed for personal libraries, saved papers, research interests, and personalized features."
+msgstr "لا. البحث العام وتفاصيل الأوراق متاحان دون حساب. يلزم الحساب للمكتبات الشخصية والأوراق المحفوظة والاهتمامات البحثية والميزات المخصصة."
+
+msgid "How should I write a good search query?"
+msgstr "كيف أكتب استعلام بحث جيدًا؟"
+
+msgid "Describe the research problem with a few distinctive concepts. Include exact technical terms when they matter; you do not need to write a full question or Boolean expression."
+msgstr "صِف المشكلة البحثية ببضعة مفاهيم مميزة، وأضف المصطلحات التقنية الدقيقة عند أهميتها. لا تحتاج إلى كتابة سؤال كامل أو تعبير منطقي."
+
+msgid "Ranking and recommendations"
+msgstr "الترتيب والتوصيات"
+
+msgid "What the order means and how to interpret it responsibly."
+msgstr "ما الذي يعنيه ترتيب النتائج وكيف تفسره بمسؤولية."
+
+msgid "No. Rank estimates relevance to the current query. It is not a judgment of methodological quality, truth, novelty, or scientific impact. Researchers should still assess the paper itself."
+msgstr "لا. يقدّر الترتيب مدى الصلة بالاستعلام الحالي، وليس حكمًا على جودة المنهجية أو صحة النتائج أو الجدة أو الأثر العلمي. ويجب على الباحث تقييم الورقة نفسها."
+
+msgid "How does PaperMetrix rank search results?"
+msgstr "كيف يرتب PaperMetrix نتائج البحث؟"
+
+msgid "The live baseline combines lexical evidence such as BM25 with scholarly semantic similarity through Reciprocal Rank Fusion. The interface records retrieval components and timing so the ranking remains inspectable."
+msgstr "يجمع خط الأساس الحي بين الأدلة المعجمية مثل BM25 والتشابه الدلالي العلمي باستخدام دمج الرتب التبادلي. وتسجل الواجهة مكونات الاسترجاع والزمن كي يظل الترتيب قابلًا للفحص."
+
+msgid "Why might two similar searches return different papers?"
+msgstr "لماذا قد يعيد بحثان متشابهان أوراقًا مختلفة؟"
+
+msgid "Small wording changes can alter exact-term and semantic matches. The corpus also grows as metadata is updated. PaperMetrix records request details for controlled experiments, but public search is a live discovery service."
+msgstr "قد تؤثر التغييرات البسيطة في الصياغة على مطابقة المصطلحات والتشابه الدلالي، كما تنمو المدوّنة مع تحديث البيانات الوصفية. يسجل PaperMetrix تفاصيل الطلب للتجارب المضبوطة، بينما يظل البحث العام خدمة اكتشاف حية."
+
+msgid "Are citation counts used as proof of relevance?"
+msgstr "هل تُستخدم أعداد الاستشهادات دليلًا على الصلة؟"
+
+msgid "No. Citations can provide structural or descriptive signals, but they reflect age, field, visibility, and social processes. They are never treated as an unbiased label of quality or relevance."
+msgstr "لا. قد تقدم الاستشهادات إشارات بنيوية أو وصفية، لكنها تتأثر بعمر الورقة والمجال والظهور والعمليات الاجتماعية. ولا تُعامل مطلقًا بوصفها حكمًا غير متحيز على الجودة أو الصلة."
+
+msgid "Data and access"
+msgstr "البيانات والوصول"
+
+msgid "Coverage, metadata sources, and links to full text."
+msgstr "التغطية ومصادر البيانات الوصفية وروابط النص الكامل."
+
+msgid "Where does the scholarly metadata come from?"
+msgstr "من أين تأتي البيانات الوصفية العلمية؟"
+
+msgid "PaperMetrix reconciles complementary records from sources such as OpenAlex, Semantic Scholar, Crossref, arXiv, and Unpaywall. Provider identifiers and missing-data reasons are retained for provenance."
+msgstr "يوحّد PaperMetrix السجلات المتكاملة من مصادر مثل OpenAlex وSemantic Scholar وCrossref وarXiv وUnpaywall، مع الاحتفاظ بمعرّفات المصادر وأسباب غياب البيانات لتوثيق مصدرها."
+
+msgid "Does PaperMetrix cover every scientific paper?"
+msgstr "هل يغطي PaperMetrix جميع الأوراق العلمية؟"
+
+msgid "No scholarly index is complete. Coverage depends on the registered corpus scope, dates, languages, document types, and available metadata. Missing papers should not be interpreted as irrelevant."
+msgstr "لا يوجد فهرس علمي كامل. تعتمد التغطية على نطاق المدوّنة المسجل والتواريخ واللغات وأنواع الوثائق والبيانات الوصفية المتاحة. ولا يعني غياب ورقة أنها غير ذات صلة."
+
+msgid "When an open-access location is known, PaperMetrix links to it. Otherwise it links to the publisher or scholarly record. The platform does not host copyrighted articles or bypass access restrictions."
+msgstr "عندما يتوفر موقع مفتوح الوصول، يربط PaperMetrix به. وإلا فإنه يربط بسجل الناشر أو السجل العلمي. ولا تستضيف المنصة مقالات محمية بحقوق النشر ولا تتجاوز قيود الوصول."
+
+msgid "What should I do if metadata is incomplete or wrong?"
+msgstr "ماذا أفعل إذا كانت البيانات الوصفية ناقصة أو خاطئة؟"
+
+msgid "Check the DOI, publisher page, and source provider before citing the record. Metadata can be incomplete, duplicated, or delayed; the canonical paper remains the authoritative object to inspect."
+msgstr "تحقق من DOI وصفحة الناشر ومصدر البيانات قبل الاستشهاد بالسجل. فقد تكون البيانات ناقصة أو مكررة أو متأخرة، وتظل الورقة الأصلية هي المصدر المعتمد للفحص."
+
+msgid "AI, privacy, and research use"
+msgstr "الذكاء الاصطناعي والخصوصية والاستخدام البحثي"
+
+msgid "How experimental models and interaction data are handled."
+msgstr "كيفية التعامل مع النماذج التجريبية وبيانات التفاعل."
+
+msgid "Does an LLM decide which papers I see?"
+msgstr "هل يقرر نموذج لغوي كبير الأوراق التي أراها؟"
+
+msgid "Not in the public baseline. LLM query expansion is an isolated, switchable experimental channel with a fixed model and prompt, budget controls, and separate evaluation. Public LLM traffic remains disabled until evidence supports a controlled rollout."
+msgstr "ليس في خط الأساس العام. توسيع الاستعلام بالنموذج اللغوي قناة تجريبية معزولة وقابلة للتعطيل، بنموذج وموجّه ثابتين وضوابط للميزانية وتقييم مستقل. وتظل حركة النماذج اللغوية العامة معطلة إلى أن تدعم الأدلة إطلاقًا مضبوطًا."
+
+msgid "What interaction data does PaperMetrix record?"
+msgstr "ما بيانات التفاعل التي يسجلها PaperMetrix؟"
+
+msgid "For evaluation, the platform can associate impressions, clicks, saves, and explicit relevance feedback with a retrieval request. These signals support analysis but are not automatically treated as ground-truth relevance."
+msgstr "لأغراض التقييم، يمكن للمنصة ربط مرات الظهور والنقر والحفظ وملاحظات الصلة الصريحة بطلب الاسترجاع. تدعم هذه الإشارات التحليل، لكنها لا تُعامل تلقائيًا بوصفها حقيقة مرجعية للصلة."
+
+msgid "Can I use PaperMetrix for a systematic review?"
+msgstr "هل يمكنني استخدام PaperMetrix في مراجعة منهجية؟"
+
+msgid "Use it as a complementary discovery tool, not as the sole search source or screening decision-maker. A systematic review requires a registered search strategy, appropriate databases, reproducible screening, and documented inclusion decisions."
+msgstr "استخدمه أداة اكتشاف مكملة، لا مصدر البحث الوحيد ولا متخذ قرار الفرز. تتطلب المراجعة المنهجية استراتيجية بحث مسجلة وقواعد بيانات مناسبة وفرزًا قابلًا لإعادة الإنتاج وقرارات إدراج موثقة."
+
+msgid "Can results from PaperMetrix be used in research publications?"
+msgstr "هل يمكن استخدام نتائج PaperMetrix في المنشورات البحثية؟"
+
+msgid "Yes, when the corpus, query set, judgments, configuration, code revision, and statistical protocol are frozen and reported. Live interface observations alone are not a publication-ready evaluation."
+msgstr "نعم، عندما تُجمّد المدوّنة ومجموعة الاستعلامات والأحكام والإعدادات وإصدار الشفرة والبروتوكول الإحصائي ويُبلّغ عنها. أما ملاحظات الواجهة الحية وحدها فلا تمثل تقييمًا جاهزًا للنشر."
+
+msgid "Still exploring?"
+msgstr "ما زلت تستكشف؟"
+
+msgid "See the method, then test it with your own question."
+msgstr "اطّلع على المنهج، ثم اختبره بسؤالك البحثي."
+
+msgid "How PaperMetrix works"
+msgstr "كيف يعمل PaperMetrix"

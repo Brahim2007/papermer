@@ -6,6 +6,7 @@ from . import get_articles, views
 urlpatterns = [
     path("", views.home, name="home"),
     path("about/", views.about, name="about"),
+    path("faq/", views.faq, name="faq"),
     path("profile/", views.profile, name="profile"),
     path("api/articles/", views.api_get_articles, name="api_get_articles"),
     path("api/search/live/", views.api_live_search, name="api_live_search"),

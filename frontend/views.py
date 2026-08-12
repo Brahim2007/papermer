@@ -1006,6 +1006,10 @@ def about(request):
     return render(request, "frontend/about.html", {"about_stats": stats})
 
 
+def faq(request):
+    return render(request, "frontend/faq.html")
+
+
 def profile(request):
     return redirect("questions" if request.user.is_authenticated else "login")
 
