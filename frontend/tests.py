@@ -206,6 +206,7 @@ class FaqPageTests(SimpleTestCase):
         self.assertContains(response, 'data-faq-search')
         self.assertContains(response, 'role="status" aria-live="polite"')
         self.assertGreaterEqual(response.content.decode().count('<details class="faq-item"'), 12)
+        self.assertNotContains(response, "<aside")
 
     def test_arabic_faq_uses_rtl_and_translated_content(self):
         response = self.client.get("/ar/faq/")
