@@ -19,7 +19,7 @@
     {% for library in object_list %}
       <article class="library-card" data-library-card="{{ library.pk }}">
         <div class="library-card__top">
-          <span class="library-icon" aria-hidden="true">⌑</span>
+          <svg class="ui-icon library-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#folder"></use></svg>
           <button class="icon-button icon-button--danger" type="button" data-delete-library="{{ library.pk }}" data-library-name="{{ library.name }}" aria-label="{% blocktrans with name=library.name %}Delete {{ name }}{% endblocktrans %}">×</button>
         </div>
         <a class="library-card__link" href="{% url 'library_detail' library.pk %}">
@@ -30,7 +30,7 @@
       </article>
     {% empty %}
       <div class="empty-state empty-state--wide" data-library-empty>
-        <span class="empty-state__icon" aria-hidden="true">⌑</span>
+        <svg class="ui-icon empty-state__icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#folder"></use></svg>
         <h2>{% trans "Build your first research collection" %}</h2>
         <p>{% trans "Create a library, then save papers to keep related evidence together." %}</p>
         <button class="button button--primary" type="button" data-dialog-open="create-library-dialog">{% trans "Create a library" %}</button>

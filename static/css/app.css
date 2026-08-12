@@ -111,7 +111,7 @@
   background: color-mix(in srgb, var(--surface) 76%, transparent);
 }
 
-.language-menu summary > span:first-child {
+.language-menu summary > .ui-icon {
   color: var(--primary);
   font-size: 15px;
 }
@@ -394,6 +394,25 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
+
+.ui-icon {
+  display: inline-block;
+  width: 1.15em;
+  height: 1.15em;
+  flex: 0 0 auto;
+  overflow: visible;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: -0.18em;
+}
+
+[dir="rtl"] .ui-icon--directional { transform: scaleX(-1); }
+
+.button .ui-icon,
+.footer-bottom .ui-icon { margin-inline-start: 0.35em; }
 
 a {
   color: var(--primary);
@@ -912,6 +931,7 @@ img {
   background: var(--surface-soft);
   color: var(--primary);
   font-size: 20px;
+  padding: 12px;
 }
 
 .research-composer input {
@@ -1004,6 +1024,7 @@ img {
   border-radius: 10px;
   background: var(--primary-soft);
   color: var(--primary-dark);
+  padding: 8px;
 }
 
 .trust-item strong,
@@ -1434,7 +1455,8 @@ img {
   background: var(--surface);
 }
 
-.search-start > div > span {
+.search-start > div > span,
+.search-start > div > .ui-icon {
   display: grid;
   width: 38px;
   height: 38px;
@@ -1444,6 +1466,8 @@ img {
   background: var(--primary-soft);
   color: var(--primary-dark);
 }
+
+.search-start > div > .ui-icon { padding: 9px; }
 
 .search-start strong {
   display: block;
@@ -2100,7 +2124,7 @@ img {
   box-shadow: 0 0 0 4px rgba(31, 126, 100, 0.12);
 }
 
-.faq-search__control > span { color: var(--primary-dark); font-size: 1.2rem; font-weight: 900; }
+.faq-search__control > .ui-icon { color: var(--primary-dark); font-size: 1.2rem; }
 .faq-search__control input { min-width: 0; padding: 0; border: 0; outline: 0; background: transparent; color: var(--ink); font: inherit; }
 .faq-search__control input::placeholder { color: var(--ink-faint); }
 .faq-search__control button { padding: 8px 10px; border: 0; border-radius: 9px; background: var(--surface-soft); color: var(--primary-dark); font-size: 0.75rem; font-weight: 800; cursor: pointer; }
@@ -2201,7 +2225,7 @@ img {
   text-align: center;
 }
 
-.faq-empty > span { display: block; color: var(--primary); font-size: 2rem; }
+.faq-empty > .ui-icon { width: 2rem; height: 2rem; color: var(--primary); }
 .faq-empty h2 { margin: 13px 0 7px; color: var(--ink); }
 .faq-empty p { margin: 0; color: var(--ink-soft); }
 
@@ -3545,6 +3569,7 @@ img {
   background: var(--primary-soft);
   color: var(--primary-dark);
   font-size: 1.5rem;
+  padding: 11px;
 }
 
 .library-card__link,
@@ -3627,6 +3652,7 @@ img {
   background: var(--primary-soft);
   color: var(--primary);
   font-size: 1.6rem;
+  padding: 15px;
 }
 
 .empty-state h2,

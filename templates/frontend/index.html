@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load static i18n %}
 {% block title %}{% trans "Scientific paper discovery" %} · PaperMetrix{% endblock %}
 {% block meta_description %}{% trans "Search scientific papers and receive transparent, evidence-aware recommendations." %}{% endblock %}
 {% block content %}
@@ -12,22 +12,22 @@
 
     <form class="research-composer" method="get" action="{% url 'search' %}" role="search">
       <div class="research-composer__row">
-        <span class="research-composer__icon" aria-hidden="true">⌕</span>
+        <svg class="ui-icon research-composer__icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#search"></use></svg>
         <label class="sr-only" for="hero-query">{% trans "Search scientific papers" %}</label>
         <input id="hero-query" name="query" type="search" required autocomplete="off" placeholder="{% trans 'Search by question, topic, title, author, or DOI…' %}">
-        <button class="research-composer__submit" type="submit" aria-label="{% trans 'Search' %}">→</button>
+        <button class="research-composer__submit" type="submit" aria-label="{% trans 'Search' %}"><svg class="ui-icon ui-icon--directional" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#arrow-right"></use></svg></button>
       </div>
     </form>
 
     <div class="quick-actions" aria-label="{% trans 'Research shortcuts' %}">
-      <a class="quick-action" href="{% url 'search' %}"><span aria-hidden="true">⌕</span>{% trans "Search papers" %}</a>
+      <a class="quick-action" href="{% url 'search' %}"><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#search"></use></svg>{% trans "Search papers" %}</a>
       {% if request.user.is_authenticated %}
-        <a class="quick-action" href="{% url 'reccomend' %}"><span aria-hidden="true">✦</span>{% trans "My recommendations" %}</a>
-        <a class="quick-action" href="{% url 'library' %}"><span aria-hidden="true">▤</span>{% trans "Reading library" %}</a>
+        <a class="quick-action" href="{% url 'reccomend' %}"><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#sparkles"></use></svg>{% trans "My recommendations" %}</a>
+        <a class="quick-action" href="{% url 'library' %}"><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#library"></use></svg>{% trans "Reading library" %}</a>
       {% else %}
-        <a class="quick-action" href="{% url 'signup' %}"><span aria-hidden="true">✦</span>{% trans "Personalize recommendations" %}</a>
+        <a class="quick-action" href="{% url 'signup' %}"><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#sparkles"></use></svg>{% trans "Personalize recommendations" %}</a>
       {% endif %}
-      <a class="quick-action" href="{% url 'topics' %}"><span aria-hidden="true">◎</span>{% trans "Explore topics" %}</a>
+      <a class="quick-action" href="{% url 'topics' %}"><svg class="ui-icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#topics"></use></svg>{% trans "Explore topics" %}</a>
     </div>
   </div>
 </section>
@@ -35,15 +35,15 @@
 <section class="trust-strip" aria-label="{% trans 'How PaperMetrix works' %}">
   <div class="trust-strip__items">
     <div class="trust-item">
-      <span class="trust-item__icon" aria-hidden="true">◇</span>
+      <svg class="ui-icon trust-item__icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#shield-check"></use></svg>
       <div><strong>{% trans "Multiple scholarly sources" %}</strong><span>{% trans "OpenAlex, Semantic Scholar, Crossref, and arXiv." %}</span></div>
     </div>
     <div class="trust-item">
-      <span class="trust-item__icon" aria-hidden="true">≋</span>
+      <svg class="ui-icon trust-item__icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#layers"></use></svg>
       <div><strong>{% trans "Explainable retrieval" %}</strong><span>{% trans "BM25, SPECTER2, graph signals, and hybrid fusion." %}</span></div>
     </div>
     <div class="trust-item">
-      <span class="trust-item__icon" aria-hidden="true">◷</span>
+      <svg class="ui-icon trust-item__icon" aria-hidden="true"><use href="{% static 'icons/ui.svg' %}#clock"></use></svg>
       <div><strong>{% trans "Temporal integrity" %}</strong><span>{% trans "Evaluation that prevents future-paper leakage." %}</span></div>
     </div>
   </div>
