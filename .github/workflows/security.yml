@@ -28,7 +28,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Independently scan for verified or unknown credentials
-        uses: trufflesecurity/trufflehog@v3.95.2
+        uses: trufflesecurity/trufflehog@v3.97.0
         with:
           path: .
           base: ""
