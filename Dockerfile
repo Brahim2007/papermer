@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM python:3.13-slim-bookworm AS builder
+FROM python:3.15-slim-bookworm AS builder
 
 ARG REQUIREMENTS_FILE=requirements/production.txt
 ARG TORCH_INDEX_URL=
@@ -23,7 +23,7 @@ RUN if [ -n "${TORCH_INDEX_URL}" ]; then \
         --requirement "${REQUIREMENTS_FILE}"
 
 
-FROM python:3.13-slim-bookworm AS runtime
+FROM python:3.15-slim-bookworm AS runtime
 
 ARG REQUIREMENTS_FILE=requirements/production.txt
 ENV PYTHONDONTWRITEBYTECODE=1 \
